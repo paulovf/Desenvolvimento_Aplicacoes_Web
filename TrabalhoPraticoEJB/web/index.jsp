@@ -11,12 +11,15 @@
 <jsp:setProperty name="Usuarios" property="senha"/>
 
 <%
-    if(request.getParameter("nome") != null){
-        String retorno = Usuarios.validarUsuarios();
+    String login = request.getParameter("login");
+    String senha = request.getParameter("senha");
+    if(login != null){
+        String retorno = Usuarios.validarUsuarios(login, senha);
         if(retorno == null){
             out.println("Login incorreto");
         }else{
             out.println(retorno + ", seja bem vindo!");
+            response.sendRedirect("home.jsp");
         }        
     }
 %>
@@ -29,7 +32,7 @@
     <body>
             <form action="index.jsp" method="POST">
                 login: <input type="text" name="login" /><br />
-                senha: <input type="text" name="senha" /><br /><br />
+                senha: <input type="password" name="senha" /><br /><br />
                 <input type="submit" value="Logar" />
             </form>
     </body>

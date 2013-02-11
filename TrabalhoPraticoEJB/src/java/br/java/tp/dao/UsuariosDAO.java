@@ -67,7 +67,7 @@ public class UsuariosDAO {
         this.id = id;
     }
     
-        public EntityManager conecta(){
+    public EntityManager conecta(){
         EntityManager em = Conexao.getManager();
         return em;
     }
@@ -177,12 +177,15 @@ public class UsuariosDAO {
     public String validarUsuarios(){
         try{
             if(conecta() != null){
-                Usuarios c = conecta().find(Usuarios.class, id);
-                if(c.getLogin() == null){
-                    return null;
-                }
-                else{
-                    return c.getNome();
+                Query q = conecta().createQuery("SELECT u FROM Usuarios u WHERE u.login =:login");
+                q.setParameter("login", login);
+                if (q.getSingleResult()!=null){
+                    Usuarios c = (Usuarios) q.getSingleResult();
+                    if(c.getSenha().equals(senha)){
+                        return c.getNome();
+                    }else{
+                        return null;
+                    }                        
                 }
             }
             return null;

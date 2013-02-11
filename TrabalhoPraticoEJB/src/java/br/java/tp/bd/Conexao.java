@@ -7,7 +7,6 @@ package br.java.tp.bd;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,7 +19,7 @@ public class Conexao {
         public static EntityManager getManager(){
         try{
             if (entityManagerFactory == null){
-                entityManagerFactory = Persistence.createEntityManagerFactory("JPATeste2PU");
+                entityManagerFactory = Persistence.createEntityManagerFactory("dbExames");
                 entityManager = entityManagerFactory.createEntityManager();
             }else{
                 if(entityManager == null){
@@ -30,7 +29,7 @@ public class Conexao {
             return entityManager;
             
         }catch (Exception e) {
-            JOptionPane.showInternalMessageDialog(null, "Erro na conexãocom o banco de dados");
+            System.out.println("Erro na conexãocom o banco de dados");
             return null;
         }//try/catch
     }

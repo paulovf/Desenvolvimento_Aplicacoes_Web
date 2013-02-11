@@ -96,7 +96,7 @@ public class UsuariosBean {
         c.alterarUsuarios();
     }
     
-    public String validarUsuarios(){
+    public String validarUsuarios(String login, String senha){
         UsuariosDAO c = new UsuariosDAO(nome, login, senha, id);
         return c.validarUsuarios();
     }    

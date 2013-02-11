@@ -122,5 +122,6 @@ public class Medico implements Serializable {
     public String toString() {
         return "br.java.tp.bean.Medico[ idMedico=" + idMedico + " ]";
     }
+
     
 }
