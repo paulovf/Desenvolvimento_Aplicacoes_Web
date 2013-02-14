@@ -14,6 +14,6 @@
     <body>
         <a href="cadastroMedico.jsp">Cadastrar médico</a>
         <a href="cadastroPaciente.jsp">Cadastrar paciente</a>
-        <a href="cadastroUsuario.jsp">Cadastrar usuario</a>
+        <a href="cadastroUsuarios.jsp">Cadastrar usuario</a>
     </body>
 </html>

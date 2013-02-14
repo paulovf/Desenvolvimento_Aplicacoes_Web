@@ -4,9 +4,7 @@
  */
 package br.java.tp.bean;
 
-import br.java.tp.classes.Agenda;
 import br.java.tp.dao.MedicoDAO;
-import br.java.tp.dao.UsuariosDAO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,6 @@ public class MedicoBean {
     private String nome;
     private String crm;
     private Integer idMedico;
-    private List<Agenda> agendaList;
 
     public MedicoBean() 
     {}
@@ -27,17 +24,6 @@ public class MedicoBean {
         this.nome = nome;
         this.crm = crm;
         this.idMedico = idMedico;
-    }
-
-    public MedicoBean(List<Agenda> agendaList) {
-        this.agendaList = agendaList;
-    }
-
-    public MedicoBean(String nome, String crm, Integer idMedico, List<Agenda> agendaList) {
-        this.nome = nome;
-        this.crm = crm;
-        this.idMedico = idMedico;
-        this.agendaList = agendaList;
     }
 
     public String getNome() {
@@ -63,21 +49,12 @@ public class MedicoBean {
     public void setIdMedico(Integer idMedico) {
         this.idMedico = idMedico;
     }
-
-    public List<Agenda> getAgendaList() {
-        return agendaList;
-    }
-
-    public void setAgendaList(List<Agenda> agendaList) {
-        this.agendaList = agendaList;
-    }
     
     public boolean cadastrarMedico(){
         MedicoDAO medicoDAO = new MedicoDAO();
-        medicoDAO.setIdMedico(idMedico);
+        medicoDAO.setIdMedico(null);
         medicoDAO.setNome(nome);
         medicoDAO.setCrm(crm);
-        medicoDAO.setAgendaList(null);
         return medicoDAO.cadastrarMedico();
     }
     
@@ -86,7 +63,7 @@ public class MedicoBean {
         if (medicoDAO.getIdMedico()!=null){
             List<MedicoBean> medicoBean = new ArrayList();
             for (MedicoDAO m: medicoDAO.getMedicos()){
-                medicoBean.add(new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico(), m.getAgendaList()));
+                medicoBean.add(new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico()));
             }
             return medicoBean;
         }
@@ -100,11 +77,11 @@ public class MedicoBean {
     
     public MedicoBean obterMedicos(){
         MedicoDAO m = new MedicoDAO(idMedico);
-        return new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico(), m.getAgendaList());
+        return new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico());
     }
     
     public void alterarMedico(){
-        MedicoDAO m = new MedicoDAO(nome, crm, idMedico, agendaList);
+        MedicoDAO m = new MedicoDAO(nome, crm, idMedico);
         m.alterarMedico();
     }    
 }

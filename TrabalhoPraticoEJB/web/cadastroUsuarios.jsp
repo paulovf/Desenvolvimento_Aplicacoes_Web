@@ -5,17 +5,18 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="Medico" class="br.java.tp.bean.MedicoBean" scope="session" />
-<jsp:setProperty name="Medico" property="nome"/>
-<jsp:setProperty name="Medico" property="crm"/>
-<jsp:setProperty name="Medico" property="idMedico"/>
+<jsp:useBean id="Usuarios" class="br.java.tp.bean.UsuariosBean" scope="session" />
+<jsp:setProperty name="Usuarios" property="nome"/>
+<jsp:setProperty name="Usuarios" property="login"/>
+<jsp:setProperty name="Usuarios" property="senha"/>
 
 <%
     String nome = request.getParameter("nome");
-    String crm = request.getParameter("crm");
+    String login = request.getParameter("login");
+    String senha = request.getParameter("senha");
     
-    if(nome != null && crm != null){
-        boolean status = Medico.cadastrarMedico();
+    if(nome != null && login != null && senha != null){
+        boolean status = Usuarios.cadastrarUsuarios();
         if(status){
             out.println("Cadastro realisado com sucesso!<br /><a href=\"home.jsp\">Voltar</a>");
         }else{
@@ -30,9 +31,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-            <form action="cadastroMedico.jsp" method="POST">
+            <form action="cadastroUsuarios.jsp" method="POST">
                 Nome: <input type="text" name="nome" /><br />
-                CRM: <input type="text" name="crm" /><br /><br />
+                Login: <input type="text" name="login" /><br />
+                Senha: <input type="password" name="senha" /><br /><br />
                 <input type="submit" value="Salvar" />
             </form>        
     </body>

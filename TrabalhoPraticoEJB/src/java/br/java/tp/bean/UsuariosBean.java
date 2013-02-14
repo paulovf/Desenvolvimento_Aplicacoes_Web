@@ -60,13 +60,13 @@ public class UsuariosBean {
         this.id = id;
     }
     
-    public void cadastrarUsuarios(){
+    public boolean cadastrarUsuarios(){
         UsuariosDAO usuariosDAO = new UsuariosDAO();
         usuariosDAO.setId(null);
         usuariosDAO.setNome(nome);
         usuariosDAO.setLogin(login);
         usuariosDAO.setSenha(senha);
-        usuariosDAO.cadastrarUsuarios();
+        return usuariosDAO.cadastrarUsuarios();
     }
     
     public List<UsuariosBean> listarUsuarios(){

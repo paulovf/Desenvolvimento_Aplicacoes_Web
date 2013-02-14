@@ -20,30 +20,18 @@ public class MedicoDAO {
     private String nome;
     private String crm;
     private Integer idMedico;
-    private List<Agenda> agendaList;
 
     public MedicoDAO() 
     {}
-
-    public MedicoDAO(String nome, String crm, Integer idMedico) {
-        this.nome = nome;
-        this.crm = crm;
-        this.idMedico = idMedico;
-    }
-
-    public MedicoDAO(List<Agenda> agendaList) {
-        this.agendaList = agendaList;
-    }
 
     public MedicoDAO(Integer idMedico) {
         this.idMedico = idMedico;
     }
 
-    public MedicoDAO(String nome, String crm, Integer idMedico, List<Agenda> agendaList) {
+    public MedicoDAO(String nome, String crm, Integer idMedico) {
         this.nome = nome;
         this.crm = crm;
         this.idMedico = idMedico;
-        this.agendaList = agendaList;
     }
 
     public String getNome() {
@@ -69,14 +57,6 @@ public class MedicoDAO {
     public void setIdMedico(Integer idMedico) {
         this.idMedico = idMedico;
     }
-
-    public List<Agenda> getAgendaList() {
-        return agendaList;
-    }
-
-    public void setAgendaList(List<Agenda> agendaList) {
-        this.agendaList = agendaList;
-    }
     
     public EntityManager conecta(){
         EntityManager em = Conexao.getManager();
@@ -86,24 +66,33 @@ public class MedicoDAO {
     public boolean cadastrarMedico(){
         try{
             if(conecta() != null){
-                Medico c = new Medico();
-
-                c.setIdMedico(null);
-                c.setNome(nome);
-                c.setCrm(crm);
-                c.setAgendaList(null);
+                Medico m = new Medico();
+                System.out.println("1");
+                m.setIdMedico(null);
+                System.out.println("2");
+                m.setNome(nome);
+                System.out.println("3");
+                m.setCrm(crm);
+                System.out.println("4");
+                System.out.println(nome);
+                System.out.println(crm);
 
                 conecta().getTransaction().begin();
-                conecta().persist(c);
+                System.out.println("6");
+                conecta().persist(m);
+                System.out.println("7");
                 conecta().getTransaction().commit();
+                System.out.println("8");
                 return true;
             }
             else{
                 return false;
             }
         }catch(Exception e){
+            e.printStackTrace();
             if (conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
+                return false;
             }
             return false;
         }
@@ -115,7 +104,6 @@ public class MedicoDAO {
                 Medico m = conecta().find(Medico.class, idMedico);
                 m.setNome(nome);
                 m.setCrm(crm);
-                m.setAgendaList(agendaList);
                 
                 conecta().getTransaction().begin();
                 conecta().persist(m);
@@ -151,7 +139,7 @@ public class MedicoDAO {
                 q.setParameter("idMedico", idMedico);
                 if (q.getSingleResult()!=null){
                     Medico m = (Medico) q.getSingleResult();
-                    MedicoDAO medicoDAO = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico(), m.getAgendaList());
+                    MedicoDAO medicoDAO = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico());
                     return medicoDAO;
                 }
             }
@@ -174,7 +162,7 @@ public class MedicoDAO {
                 List<MedicoDAO> listaMedicoDAO = new ArrayList();
 
                 for(Medico m: lista){
-                    listaMedicoDAO.add(new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico(), m.getAgendaList()));
+                    listaMedicoDAO.add(new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico()));
                 }
                 return listaMedicoDAO;
             }else{
