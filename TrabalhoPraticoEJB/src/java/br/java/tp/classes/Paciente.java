@@ -5,10 +5,8 @@
 package br.java.tp.classes;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
+import java.sql.Timestamp;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,14 +14,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -58,7 +54,7 @@ public class Paciente implements Serializable {
     @NotNull
     @Column(name = "dataNasc")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataNasc;
+    private Timestamp dataNasc;
     @Size(max = 60)
     @Column(name = "logradouro")
     private String logradouro;
@@ -74,8 +70,6 @@ public class Paciente implements Serializable {
     @Size(max = 2)
     @Column(name = "uf")
     private String uf;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente")
-    private List<Agenda> agendaList;
 
     public Paciente() {
     }
@@ -84,7 +78,7 @@ public class Paciente implements Serializable {
         this.idPaciente = idPaciente;
     }
 
-    public Paciente(Integer idPaciente, String nome, Date dataNasc) {
+    public Paciente(Integer idPaciente, String nome, Timestamp dataNasc) {
         this.idPaciente = idPaciente;
         this.nome = nome;
         this.dataNasc = dataNasc;
@@ -106,11 +100,11 @@ public class Paciente implements Serializable {
         this.nome = nome;
     }
 
-    public Date getDataNasc() {
+    public Timestamp getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(Date dataNasc) {
+    public void setDataNasc(Timestamp dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -152,15 +146,6 @@ public class Paciente implements Serializable {
 
     public void setUf(String uf) {
         this.uf = uf;
-    }
-
-    @XmlTransient
-    public List<Agenda> getAgendaList() {
-        return agendaList;
-    }
-
-    public void setAgendaList(List<Agenda> agendaList) {
-        this.agendaList = agendaList;
     }
 
     @Override

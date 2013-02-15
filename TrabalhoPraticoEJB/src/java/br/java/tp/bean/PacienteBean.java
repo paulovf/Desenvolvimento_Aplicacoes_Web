@@ -5,8 +5,9 @@
 package br.java.tp.bean;
 
 import br.java.tp.dao.PacienteDAO;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 public class PacienteBean {
     private Integer idPaciente;
     private String nome;
-    private Date dataNasc;
+    private String dataNasc;
     private String logradouro;
     private String numero;
     private String bairro;
@@ -30,7 +31,7 @@ public class PacienteBean {
         this.idPaciente = idPasciente;
     }
 
-    public PacienteBean(Integer idPaciente, String nome, Date dataNasc, 
+    public PacienteBean(Integer idPaciente, String nome, String dataNasc, 
             String logradouro, String numero, String bairro, String cidade, 
             String uf) {
         this.idPaciente = idPaciente;
@@ -59,11 +60,11 @@ public class PacienteBean {
         this.nome = nome;
     }
 
-    public Date getDataNasc() {
+    public String getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(Date dataNasc) {
+    public void setDataNasc(String dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -111,8 +112,10 @@ public class PacienteBean {
         PacienteDAO pacienteDAO = new PacienteDAO();
         pacienteDAO.setIdPaciente(null);
         pacienteDAO.setNome(nome);
-        System.out.println(dataNasc);
-        pacienteDAO.setDataNasc(dataNasc);
+        Timestamp d = new Timestamp(Integer.parseInt(dataNasc.substring(0, 4)), 
+                Integer.parseInt(dataNasc.substring(5, 7)), 
+                Integer.parseInt(dataNasc.substring(8, 10)), 0, 0, 0, 0);
+        pacienteDAO.setDataNasc(d);
         pacienteDAO.setLogradouro(logradouro);
         pacienteDAO.setNumero(numero);
         pacienteDAO.setBairro(bairro);
@@ -123,11 +126,12 @@ public class PacienteBean {
     
     public List<PacienteBean> listarPacientes(){
         PacienteDAO pacienteDAO = new PacienteDAO();
+        Date d = new Date(2010, 10, 5);
         if (pacienteDAO.getPacientes()!=null){
             List<PacienteBean> pacienteBeans = new ArrayList();
             for (PacienteDAO p: pacienteDAO.getPacientes()){
-                pacienteBeans.add(new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(),
-                            p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf()));
+                pacienteBeans.add(new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc().toString(), 
+                        p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf()));
             }
             return pacienteBeans;
         }
@@ -141,12 +145,15 @@ public class PacienteBean {
     
     public PacienteBean obterPaciente(){
         PacienteDAO p = new PacienteDAO(idPaciente);
-        return new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 
-                p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
+        return new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc().toString(), 
+              p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
     }
     
     public void alterarPaciente(){
-        PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, 
+        Timestamp d = new Timestamp(Integer.parseInt(dataNasc.substring(0, 4)), 
+                Integer.parseInt(dataNasc.substring(6, 8)), 
+                Integer.parseInt(dataNasc.substring(9, (dataNasc.length()-1))), 0, 0, 0, 0);        
+        PacienteDAO p = new PacienteDAO(idPaciente, nome, d, logradouro, 
                 numero, bairro, cidade, uf);
         p.alterarPaciente();
     }

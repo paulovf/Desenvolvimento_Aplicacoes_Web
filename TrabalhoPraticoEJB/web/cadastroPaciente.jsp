@@ -4,8 +4,6 @@
     Author     : paulo
 --%>
 
-<%@page import="java.sql.Timestamp"%>
-<%@page import="java.sql.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="Paciente" class="br.java.tp.bean.PacienteBean" scope="session" />
 <jsp:setProperty name="Paciente" property="nome"/>
@@ -18,19 +16,19 @@
 
 <%
     String nome = request.getParameter("nome");
-    String data = request.getParameter("dataNasc");
-    Timestamp dataNasc = new Timestamp(Integer.parseInt(data.substring(0, 2)), 
-            Integer.parseInt(data.substring(3, 5)), 
-            Integer.parseInt(data.substring(6, 9)), 0, 0, 0, 0);
+    String dataNasc = request.getParameter("dataNasc");
     String logradouro = request.getParameter("logradouro");
     String numero = request.getParameter("numero");
     String bairro = request.getParameter("bairro");
     String cidade = request.getParameter("cidade");
-    String uf = request.getParameter("uf");       
+    String uf = request.getParameter("uf");
+    
     
     if(nome != null && dataNasc != null && logradouro != null && numero != null 
             && bairro != null && cidade != null && uf != null){
+        System.out.println("1111");
         boolean status = Paciente.cadastrarPaciente();
+        System.out.println("2222");
         if(status){
             out.println("Cadastro realisado com sucesso!<br /><a href=\"home.jsp\">Voltar</a>");
         }else{
