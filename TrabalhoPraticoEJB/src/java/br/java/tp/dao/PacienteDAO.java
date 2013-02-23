@@ -6,7 +6,7 @@ package br.java.tp.dao;
 
 import br.java.tp.bd.Conexao;
 import br.java.tp.classes.Paciente;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public class PacienteDAO {
     private Integer idPaciente;
     private String nome;
-    private Timestamp dataNasc;
+    private Date dataNasc;
     private String logradouro;
     private String numero;
     private String bairro;
@@ -33,7 +33,7 @@ public class PacienteDAO {
         this.idPaciente = idPasciente;
     }
 
-    public PacienteDAO(Integer idPasciente, String nome, Timestamp dataNasc, 
+    public PacienteDAO(Integer idPasciente, String nome, Date dataNasc, 
             String logradouro, String numero, String bairro, String cidade, 
             String uf) {
         this.idPaciente = idPasciente;
@@ -62,11 +62,11 @@ public class PacienteDAO {
         this.nome = nome;
     }
 
-    public Timestamp getDataNasc() {
+    public Date getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(Timestamp dataNasc) {
+    public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -122,36 +122,25 @@ public class PacienteDAO {
                 
                 p.setIdPaciente(null);
                 p.setNome(nome);
-                System.out.println("0");
                 p.setDataNasc(dataNasc);
-                System.out.println("1");
                 p.setLogradouro(logradouro);
                 p.setNumero(numero);
                 p.setBairro(bairro);
                 p.setCidade(cidade);
                 p.setUf(uf);
                 
-                System.out.println("2");
                 conecta().getTransaction().begin();
-                System.out.println("3");
                 conecta().persist(p);
-                System.out.println("4");
                 conecta().getTransaction().commit();
-                System.out.println("5");
                 return true;
             }
             else{
-                System.out.println("6");
                 return false;
             }
         }catch(Exception e){
-            System.out.println("7");
             if (conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
-                System.out.println("8");
-                e.printStackTrace();
             }
-            System.out.println("9");
             return false;
         }
     }
@@ -198,8 +187,8 @@ public class PacienteDAO {
     public PacienteDAO getPaciente(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT p FROM Paciente p WHERE p.idPaciente =:idPaciente");
-                q.setParameter("idPaciente", idPaciente);
+                Query q = conecta().createQuery("SELECT p FROM Paciente p WHERE p.nome =:nome");
+                q.setParameter("nome", nome);
                 if (q.getSingleResult()!=null){
                     Paciente p = (Paciente) q.getSingleResult();
                     PacienteDAO pacienteDAO = new PacienteDAO(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 

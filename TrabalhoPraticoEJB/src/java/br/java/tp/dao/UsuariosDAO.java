@@ -93,6 +93,7 @@ public class UsuariosDAO {
         }catch(Exception e){
             if (conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
+                e.printStackTrace();
             }
             return false;
         }

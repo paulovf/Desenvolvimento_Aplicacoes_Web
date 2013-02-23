@@ -5,7 +5,6 @@
 package br.java.tp.dao;
 
 import br.java.tp.bd.Conexao;
-import br.java.tp.classes.Agenda;
 import br.java.tp.classes.Medico;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,5 +171,25 @@ public class MedicoDAO {
             return null;
         }
     }
+    
+    public MedicoDAO validarMedico(){
+        try{
+            if(conecta() != null){
+                Query query = conecta().createQuery("SELECT m FROM Medico m WHERE m.nome =:nome");
+                query.setParameter("nome", nome);
+                if (query.getSingleResult()!= null){
+                    Medico m = (Medico) query.getSingleResult();
+                    MedicoDAO medicoDAO = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico());
+                    return medicoDAO;
+                }
+            }
+            return null;
+        }catch(Exception e){
+            if(conecta().getTransaction().isActive()){
+                conecta().getTransaction().rollback();
+            }                
+        }
+        return null;
+    }    
     
 }

@@ -4,6 +4,11 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <non-jta-data-source>dbExames</non-jta-data-source>
     <class>br.java.tp.classes.Usuarios</class>
+    <class>br.java.tp.classes.Medico</class>
+    <class>br.java.tp.classes.Paciente</class>
+    <!--<class>br.java.tp.classes.Agenda</class>
+    <class>br.java.tp.classes.AgendaPK</class>
+    <class>br.java.tp.classes.Exame</class>-->
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dbExames"/>

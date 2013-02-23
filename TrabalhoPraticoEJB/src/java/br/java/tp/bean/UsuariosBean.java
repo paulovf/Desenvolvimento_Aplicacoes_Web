@@ -63,13 +63,21 @@ public class UsuariosBean {
         this.id = id;
     }
     
-    public boolean cadastrarUsuarios(){
-        UsuariosDAO usuariosDAO = new UsuariosDAO();
-        usuariosDAO.setId(null);
-        usuariosDAO.setNome(nome);
-        usuariosDAO.setLogin(login);
-        usuariosDAO.setSenha(senha);
-        return usuariosDAO.cadastrarUsuarios();
+    public String cadastrarUsuarios(){
+        if (validarLogin().equals("error")){
+            UsuariosDAO usuariosDAO = new UsuariosDAO();
+            usuariosDAO.setId(null);
+            usuariosDAO.setNome(nome);
+            usuariosDAO.setLogin(login);
+            usuariosDAO.setSenha(senha);
+            if (usuariosDAO.cadastrarUsuarios())
+                return "ok";
+            else
+                return "error";
+        }else{
+            setMensagemRetorno("Usuário já cadastrado.");
+            return "error";
+        }    
     }
     
     public List<UsuariosBean> listarUsuarios(){

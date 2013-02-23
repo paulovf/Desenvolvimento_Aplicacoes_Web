@@ -11,47 +11,80 @@
             <managed-bean-class>br.java.tp.bean.UsuariosBean</managed-bean-class>
             <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    <!--
+    <managed-bean>
+            <managed-bean-name>Medico</managed-bean-name>
+            <managed-bean-class>br.java.tp.bean.MedicoBean</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+            <managed-bean-name>Paciente</managed-bean-name>
+            <managed-bean-class>br.java.tp.bean.PacienteBean</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+            <managed-bean-name>Agenda</managed-bean-name>
+            <managed-bean-class>br.java.tp.bean.AgendaBean</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+        <managed-bean>
+            <managed-bean-name>AgendaPK</managed-bean-name>
+            <managed-bean-class>br.java.tp.bean.AgendaPKBean</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+        <managed-bean>
+            <managed-bean-name>Exame</managed-bean-name>
+            <managed-bean-class>br.java.tp.bean.ExameBean</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <!-- Regras de mapeamento para cadastro de paciente-->
     <navigation-rule>
-            <from-view-id>/listarClientes.jsp</from-view-id>
+            <from-view-id>/cadastroPaciente.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>/alterarCliente.jsp</to-view-id>
-                    <redirect>
-                            <view-param>/listarClientes.jsp</view-param>
-                    </redirect>
+                    <to-view-id>/home.jsp</to-view-id>>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/listarClientes.jsp</to-view-id>
+                    <to-view-id>/cadastroPaciente.jsp</to-view-id>
             </navigation-case>
-    </navigation-rule>
-            
+    </navigation-rule> 
+
+    <!-- Regras de mapeamento para cadastro de médico-->
     <navigation-rule>
-            <from-view-id>/cadastrarCliente.jsp</from-view-id>
+            <from-view-id>/cadastroMedico.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>/alterarCliente.jsp</to-view-id>
-                    <redirect>
-                            <view-param>/cadastrarClientes.jsp</view-param>
-                    </redirect>
+                    <to-view-id>/home.jsp</to-view-id>>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/cadastrarClientes.jsp</to-view-id>
+                    <to-view-id>/cadastroMedico.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
-    -->
+    
+    <!-- Regras de mapeamento para cadastro de ussuários-->
+    <navigation-rule>
+            <from-view-id>/cadastroUsuarios.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/home.jsp</to-view-id>
+            </navigation-case>
+            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/cadastroUsuarios.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    
+    <!-- Regras de mapeamento para o logim de usuários-->
     <navigation-rule>
             <from-view-id>/index.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
                     <to-view-id>/home.jsp</to-view-id>
-                    <redirect>
-                            <view-param>/listarClientes.jsp</view-param>
-                    </redirect>
             </navigation-case>
             
             <navigation-case>

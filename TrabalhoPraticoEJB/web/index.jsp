@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Prova 2</title>
+        <title>TrabalhoPraticoEJB</title>
     </head>
     <body>
         <f:view>
@@ -22,9 +22,7 @@
                     &nbsp;&nbsp;
                     <h:outputText value="#{Usuarios.mensagemRetorno}" style="color:#ff0000"/><br />
                     Senha: <h:inputText id="senha" value="#{Usuarios.senha}"/><br /><br />
-                    <h:commandButton action="#{Usuarios.validarLogin()}" value="Logar"/>
-                    &nbsp;&nbsp;
-                    <h:commandButton action="#{Usuarios.cadastrarUsuario()}" value="Cadastrar Novo Usuario"/>            
+                    <h:commandButton action="#{Usuarios.validarLogin()}" value="Logar"/>           
                 </h:form>
             </h3>
         </f:view>

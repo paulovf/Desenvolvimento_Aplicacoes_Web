@@ -19,7 +19,7 @@ public class Conexao {
         public static EntityManager getManager(){
         try{
             if (entityManagerFactory == null){
-                entityManagerFactory = Persistence.createEntityManagerFactory("dbExames");
+                entityManagerFactory = Persistence.createEntityManagerFactory("TrabalhoPraticoEJB");
                 entityManager = entityManagerFactory.createEntityManager();
             }else{
                 if(entityManager == null){

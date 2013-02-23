@@ -5,35 +5,26 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="Medico" class="br.java.tp.bean.MedicoBean" scope="session" />
-<jsp:setProperty name="Medico" property="nome"/>
-<jsp:setProperty name="Medico" property="crm"/>
-<jsp:setProperty name="Medico" property="idMedico"/>
+<%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
+<%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
 
-<%
-    String nome = request.getParameter("nome");
-    String crm = request.getParameter("crm");
-    
-    if(nome != null && crm != null){
-        boolean status = Medico.cadastrarMedico();
-        if(status){
-            out.println("Cadastro realisado com sucesso!<br /><a href=\"home.jsp\">Voltar</a>");
-        }else{
-            out.println("Cadastro incorreto");
-        }        
-    }
-%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>TrabalhoPraticoEJB</title>
     </head>
     <body>
-            <form action="cadastroMedico.jsp" method="POST">
-                Nome: <input type="text" name="nome" /><br />
-                CRM: <input type="text" name="crm" /><br /><br />
-                <input type="submit" value="Salvar" />
-            </form>        
+        <f:view>
+            <h3>Cadastro de Médico:<br /><br />
+                <h:form id="cadastro" prependId="false">
+                    Nome: <h:inputText id="nome" value="#{Medico.nome}"/>
+                    &nbsp;&nbsp;
+                    <h:outputText value="#{Medico.mensagemRetorno}" style="color:#ff0000"/><br />
+                    CRM: <h:inputText id="crm" value="#{Medico.crm}"/><br /><br />
+                    <h:commandButton action="#{Medico.cadastrarMedico()}" value="Cadastrar"/>
+                </h:form>
+            </h3>
+        </f:view> 
     </body>
 </html>

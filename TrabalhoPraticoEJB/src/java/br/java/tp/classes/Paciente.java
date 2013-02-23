@@ -5,7 +5,7 @@
 package br.java.tp.classes;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Paulo Vitor
+ * @author paulo
  */
 @Entity
 @Table(name = "paciente")
@@ -43,6 +43,7 @@ public class Paciente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idPaciente")
     private Integer idPaciente;
     @Basic(optional = false)
@@ -54,7 +55,7 @@ public class Paciente implements Serializable {
     @NotNull
     @Column(name = "dataNasc")
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp dataNasc;
+    private Date dataNasc;
     @Size(max = 60)
     @Column(name = "logradouro")
     private String logradouro;
@@ -78,10 +79,21 @@ public class Paciente implements Serializable {
         this.idPaciente = idPaciente;
     }
 
-    public Paciente(Integer idPaciente, String nome, Timestamp dataNasc) {
+    public Paciente(Integer idPaciente, String nome, Date dataNasc) {
         this.idPaciente = idPaciente;
         this.nome = nome;
         this.dataNasc = dataNasc;
+    }
+
+    public Paciente(Integer idPaciente, String nome, Date dataNasc, String logradouro, String numero, String bairro, String cidade, String uf) {
+        this.idPaciente = idPaciente;
+        this.nome = nome;
+        this.dataNasc = dataNasc;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
     }
 
     public Integer getIdPaciente() {
@@ -100,11 +112,11 @@ public class Paciente implements Serializable {
         this.nome = nome;
     }
 
-    public Timestamp getDataNasc() {
+    public Date getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(Timestamp dataNasc) {
+    public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -170,7 +182,7 @@ public class Paciente implements Serializable {
 
     @Override
     public String toString() {
-        return "br.java.tp.bean.Paciente[ idPaciente=" + idPaciente + " ]";
+        return "br.java.tp.classes.Paciente[ idPaciente=" + idPaciente + " ]";
     }
     
 }

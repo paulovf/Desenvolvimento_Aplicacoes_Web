@@ -5,53 +5,33 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="Paciente" class="br.java.tp.bean.PacienteBean" scope="session" />
-<jsp:setProperty name="Paciente" property="nome"/>
-<jsp:setProperty name="Paciente" property="dataNasc"/>
-<jsp:setProperty name="Paciente" property="logradouro"/>
-<jsp:setProperty name="Paciente" property="numero"/>
-<jsp:setProperty name="Paciente" property="bairro"/>
-<jsp:setProperty name="Paciente" property="cidade"/>
-<jsp:setProperty name="Paciente" property="uf"/>
+<%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
+<%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
 
-<%
-    String nome = request.getParameter("nome");
-    String dataNasc = request.getParameter("dataNasc");
-    String logradouro = request.getParameter("logradouro");
-    String numero = request.getParameter("numero");
-    String bairro = request.getParameter("bairro");
-    String cidade = request.getParameter("cidade");
-    String uf = request.getParameter("uf");
-    
-    
-    if(nome != null && dataNasc != null && logradouro != null && numero != null 
-            && bairro != null && cidade != null && uf != null){
-        System.out.println("1111");
-        boolean status = Paciente.cadastrarPaciente();
-        System.out.println("2222");
-        if(status){
-            out.println("Cadastro realisado com sucesso!<br /><a href=\"home.jsp\">Voltar</a>");
-        }else{
-            out.println("Cadastro incorreto");
-        }        
-    }
-%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>TrabalhoPraticoEJB</title>
     </head>
     <body>
-            <form action="cadastroPaciente.jsp" method="POST">
-                Nome: <input type="text" name="nome" /><br />
-                Data Nascimento: <input type="text" name="dataNasc" /><br />
-                rua: <input type="text" name="logradouro" /><br />
-                número: <input type="text" name="numero" /><br />
-                bairro: <input type="text" name="bairro" /><br />
-                cidade: <input type="text" name="cidade" /><br />
-                UF: <input type="text" name="uf" /><br /><br />
-                <input type="submit" value="Salvar" />
-            </form>        
+        <f:view>
+            <h3>Cadastro de Paciente:<br /><br />
+                <h:form id="cadastro" prependId="false">
+                    Nome: <h:inputText id="nome" value="#{Paciente.nome}"/>
+                    &nbsp;&nbsp;
+                    <h:outputText value="#{Paciente.mensagemRetorno}" style="color:#ff0000"/><br />
+                        Data de Nascimento: <h:inputText id="dataNasc" value="#{Paciente.dataNasc}">
+                    <f:convertDateTime pattern="dd/mm/yyyy" />
+                    </h:inputText><br />
+                    Rua: <h:inputText id="logradouro" value="#{Paciente.logradouro}"/><br />
+                    Nº. : <h:inputText id="numero" value="#{Paciente.numero}"/><br />
+                    Bairro: <h:inputText id="bairro" value="#{Paciente.bairro}"/><br />
+                    Cidade: <h:inputText id="cidade" value="#{Paciente.cidade}"/><br />
+                    UF: <h:inputText id="uf" value="#{Paciente.uf}"/><br /><br />
+                    <h:commandButton action="#{Paciente.cadastrarPaciente()}" value="Cadastrar"/>
+                </h:form>
+            </h3>
+        </f:view>
     </body>
 </html>

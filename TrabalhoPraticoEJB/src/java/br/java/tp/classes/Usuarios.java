@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Paulo Vitor
+ * @author paulo
  */
 @Entity
 @Table(name = "usuarios")
@@ -36,6 +36,7 @@ public class Usuarios implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -50,7 +51,7 @@ public class Usuarios implements Serializable {
     private String login;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 16)
+    @Size(min = 1, max = 40)
     @Column(name = "senha")
     private String senha;
 
@@ -122,7 +123,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "br.java.tp.bean.Usuarios[ id=" + id + " ]";
+        return "br.java.tp.classes.Usuarios[ id=" + id + " ]";
     }
     
 }

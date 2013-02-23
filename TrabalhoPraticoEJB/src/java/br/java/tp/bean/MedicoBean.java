@@ -16,7 +16,10 @@ public class MedicoBean {
     private String nome;
     private String crm;
     private Integer idMedico;
-
+    private boolean achou;
+    private List<MedicoBean> medicoBeans = new ArrayList();
+    private String mensagemRetorno; 
+    
     public MedicoBean() 
     {}
 
@@ -50,12 +53,44 @@ public class MedicoBean {
         this.idMedico = idMedico;
     }
     
-    public boolean cadastrarMedico(){
-        MedicoDAO medicoDAO = new MedicoDAO();
-        medicoDAO.setIdMedico(null);
-        medicoDAO.setNome(nome);
-        medicoDAO.setCrm(crm);
-        return medicoDAO.cadastrarMedico();
+    public boolean isAchou() {
+        return achou;
+    }
+
+    public void setAchou(boolean achou) {
+        this.achou = achou;
+    }
+
+    public String getMensagemRetorno() {
+        return mensagemRetorno;
+    }
+
+    public void setMensagemRetorno(String mensagemRetorno) {
+        this.mensagemRetorno = mensagemRetorno;
+    }    
+        
+    public String cadastrarMedico(){
+        if(nome.equalsIgnoreCase("")){
+            setMensagemRetorno("Forneça um nome válido");
+            return "error";
+        }else if (crm.equalsIgnoreCase("")){
+            setMensagemRetorno("Forneça um valor válido para o campo crm");
+            return "error";
+        }
+        else{
+                if (validarMedico().equals("ok")){
+                    MedicoDAO medicoDAO = new MedicoDAO();
+                    medicoDAO.setIdMedico(null);
+                    medicoDAO.setNome(nome);
+                    medicoDAO.setCrm(crm);
+                    medicoDAO.cadastrarMedico();
+                    return "ok";
+                }else{
+                    limparDadosMedico();
+                    setMensagemRetorno("Médico já cadastrado");
+                    return "error";
+                }
+        }
     }
     
     public List<MedicoBean> listarMedico(){
@@ -79,6 +114,29 @@ public class MedicoBean {
         MedicoDAO m = new MedicoDAO(idMedico);
         return new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico());
     }
+    
+    public String validarMedico(){
+        MedicoDAO medicoDAO = new MedicoDAO(nome, crm, idMedico);
+        MedicoDAO medicoDAO2 = medicoDAO.validarMedico();
+        if(medicoDAO2 != null){
+            setMensagemRetorno("Médico já cadastrado.");
+            return "error";
+        }
+        else{
+            return "ok";
+        }
+    }
+       
+    public void limparDadosMedico(){
+        setIdMedico(null);
+        setNome("");
+        setCrm("");
+        setMensagemRetorno("");
+    }
+    
+    public String listar(){
+        return "listar";
+    }    
     
     public void alterarMedico(){
         MedicoDAO m = new MedicoDAO(nome, crm, idMedico);
