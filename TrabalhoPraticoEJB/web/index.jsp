@@ -5,35 +5,28 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
+<%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
 
-<jsp:useBean id="Usuarios" class="br.java.tp.bean.UsuariosBean" scope="session" />
-<jsp:setProperty name="Usuarios" property="login"/>
-<jsp:setProperty name="Usuarios" property="senha"/>
-
-<%
-    String login = request.getParameter("login");
-    String senha = request.getParameter("senha");
-    if(login != null){
-        String retorno = Usuarios.validarUsuarios(login, senha);
-        if(retorno == null){
-            out.println("Login incorreto");
-        }else{
-            out.println(retorno + ", seja bem vindo!");
-            response.sendRedirect("home.jsp");
-        }        
-    }
-%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Prova 2</title>
     </head>
     <body>
-            <form action="index.jsp" method="POST">
-                login: <input type="text" name="login" /><br />
-                senha: <input type="password" name="senha" /><br /><br />
-                <input type="submit" value="Logar" />
-            </form>
+        <f:view>
+            <h3>Login do Sistema:<br /><br />
+                <h:form id="cadastro" prependId="false">
+                    Login: <h:inputText id="login" value="#{Usuarios.login}"/>
+                    &nbsp;&nbsp;
+                    <h:outputText value="#{Usuarios.mensagemRetorno}" style="color:#ff0000"/><br />
+                    Senha: <h:inputText id="senha" value="#{Usuarios.senha}"/><br /><br />
+                    <h:commandButton action="#{Usuarios.validarLogin()}" value="Logar"/>
+                    &nbsp;&nbsp;
+                    <h:commandButton action="#{Usuarios.cadastrarUsuario()}" value="Cadastrar Novo Usuario"/>            
+                </h:form>
+            </h3>
+        </f:view>
     </body>
 </html>

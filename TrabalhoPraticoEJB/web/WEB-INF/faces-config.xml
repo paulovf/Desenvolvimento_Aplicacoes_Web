@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <managed-bean>
+            <managed-bean-name>Usuarios</managed-bean-name>
+            <managed-bean-class>br.java.tp.bean.UsuariosBean</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <!--
+    <navigation-rule>
+            <from-view-id>/listarClientes.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/alterarCliente.jsp</to-view-id>
+                    <redirect>
+                            <view-param>/listarClientes.jsp</view-param>
+                    </redirect>
+            </navigation-case>
+            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/listarClientes.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+            
+    <navigation-rule>
+            <from-view-id>/cadastrarCliente.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/alterarCliente.jsp</to-view-id>
+                    <redirect>
+                            <view-param>/cadastrarClientes.jsp</view-param>
+                    </redirect>
+            </navigation-case>
+            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/cadastrarClientes.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    -->
+    <navigation-rule>
+            <from-view-id>/index.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/home.jsp</to-view-id>
+                    <redirect>
+                            <view-param>/listarClientes.jsp</view-param>
+                    </redirect>
+            </navigation-case>
+            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/index.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+
+</faces-config>

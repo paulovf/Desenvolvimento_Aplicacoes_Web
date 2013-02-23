@@ -17,6 +17,9 @@ public class UsuariosBean {
     private String login;
     private String senha;
     private Integer id;
+    private boolean achou;
+    private List<UsuariosBean> usuariosBeans = new ArrayList();
+    private String mensagemRetorno;      
 
     public UsuariosBean() 
     {}
@@ -86,19 +89,77 @@ public class UsuariosBean {
         usuariosDAO.deletarUsuarios();
     }
     
-    public UsuariosBean obterClientes(){
+    public UsuariosBean obterUsuarios(){
         UsuariosDAO c = new UsuariosDAO(id);
         return new UsuariosBean(c.getNome(), c.getLogin(), c.getSenha(), c.getId());
     }
     
-    public void alterarClientes(){
+    public void alterarUsuarios(){
         UsuariosDAO c = new UsuariosDAO(nome, login, senha, id);
         c.alterarUsuarios();
     }
     
-    public String validarUsuarios(String login, String senha){
-        UsuariosDAO c = new UsuariosDAO(nome, login, senha, id);
-        return c.validarUsuarios();
+    public boolean isAchou() {
+        return achou;
+    }
+
+    public void setAchou(boolean achou) {
+        this.achou = achou;
+    }
+
+    public String getMensagemRetorno() {
+        return mensagemRetorno;
+    }
+
+    public void setMensagemRetorno(String mensagemRetorno) {
+        this.mensagemRetorno = mensagemRetorno;
+    }
+    
+    public void cadastrarUsuario(){
+        
+        if(!login.equalsIgnoreCase("") || !senha.equalsIgnoreCase("")){
+            UsuariosDAO usuariosDAO = new UsuariosDAO();
+            usuariosDAO.setId(null);
+            usuariosDAO.setNome(nome);
+            usuariosDAO.setLogin(login);
+            usuariosDAO.setSenha(senha);
+           
+            if (usuariosDAO.cadastrarUsuarios()){
+                limparDadosUsuario();
+                setMensagemRetorno("Usuario cadstrado com sucesso.");
+            }
+            else{
+                setMensagemRetorno("Usuario já cadastrado ou incorreto.");
+            }            
+        }
+    }
+    
+    public String validarLogin(){
+        UsuariosDAO usuariosDAO = new UsuariosDAO(nome, login, senha, id);
+        UsuariosDAO usuarioDAO2 = usuariosDAO.validarUsuarios();
+        if(usuarioDAO2 != null){
+            if(usuarioDAO2.getSenha().equalsIgnoreCase(senha)){
+                return "ok";
+            }else{
+                setMensagemRetorno("Usuário não cadastrado ou login incorreto");
+                return "error";
+            }
+        }
+        else{
+            setMensagemRetorno("Usuário não cadastrado ou login incorreto");
+            return "error";
+        }
+    }
+       
+    public void limparDadosUsuario(){
+        setId(null);
+        setLogin("");
+        setSenha("");
+        setMensagemRetorno("");
+    }
+    
+    public String listar(){
+        return "listar";
     }    
     
 }

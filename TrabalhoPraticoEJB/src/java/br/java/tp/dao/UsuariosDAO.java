@@ -174,27 +174,25 @@ public class UsuariosDAO {
         }
     }
     
-    public String validarUsuarios(){
+    public UsuariosDAO validarUsuarios(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT u FROM Usuarios u WHERE u.login =:login");
-                q.setParameter("login", login);
-                if (q.getSingleResult()!=null){
-                    Usuarios c = (Usuarios) q.getSingleResult();
-                    if(c.getSenha().equals(senha)){
-                        return c.getNome();
-                    }else{
-                        return null;
-                    }                        
+                Query query = conecta().createQuery("SELECT u FROM Usuarios u WHERE u.login =:login");
+                query.setParameter("login", login);
+                if (query.getSingleResult()!= null){
+                    Usuarios u = (Usuarios) query.getSingleResult();
+                    UsuariosDAO usuariosDAO = new UsuariosDAO(u.getNome(), u.getLogin(), 
+                            u.getSenha(), u.getId());
+                    return usuariosDAO;
                 }
             }
             return null;
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
-            }
-            return null;
+            }                
         }
+        return null;
     }
     
 }
