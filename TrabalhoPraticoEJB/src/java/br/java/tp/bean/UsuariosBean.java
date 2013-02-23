@@ -64,6 +64,7 @@ public class UsuariosBean {
     }
     
     public String cadastrarUsuarios(){
+        limparDadosUsuario();
         if (validarLogin().equals("error")){
             UsuariosDAO usuariosDAO = new UsuariosDAO();
             usuariosDAO.setId(null);
@@ -75,6 +76,7 @@ public class UsuariosBean {
             else
                 return "error";
         }else{
+            limparDadosUsuario();
             setMensagemRetorno("Usuário já cadastrado.");
             return "error";
         }    

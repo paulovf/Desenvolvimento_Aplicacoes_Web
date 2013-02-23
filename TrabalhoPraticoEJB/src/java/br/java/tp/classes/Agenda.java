@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Paulo Vitor
+ * @author paulo
  */
 @Entity
 @Table(name = "agenda")
@@ -46,12 +46,12 @@ public class Agenda implements Serializable {
     @JoinColumn(name = "idPaciente", referencedColumnName = "idPaciente", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Paciente paciente;
-    @JoinColumn(name = "idMedico", referencedColumnName = "idMedico", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Medico medico;
     @JoinColumn(name = "idExame", referencedColumnName = "idExame", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Exame exame;
+    @JoinColumn(name = "idMedico", referencedColumnName = "idMedico", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Medico medico;
 
     public Agenda() {
     }
@@ -96,20 +96,20 @@ public class Agenda implements Serializable {
         this.paciente = paciente;
     }
 
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
     public Exame getExame() {
         return exame;
     }
 
     public void setExame(Exame exame) {
         this.exame = exame;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class Agenda implements Serializable {
 
     @Override
     public String toString() {
-        return "br.java.tp.bean.Agenda[ agendaPK=" + agendaPK + " ]";
+        return "br.java.tp.classes.Agenda[ agendaPK=" + agendaPK + " ]";
     }
     
 }

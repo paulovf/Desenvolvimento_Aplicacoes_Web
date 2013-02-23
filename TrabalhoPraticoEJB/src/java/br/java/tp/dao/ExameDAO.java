@@ -5,7 +5,7 @@
 package br.java.tp.dao;
 
 import br.java.tp.bd.Conexao;
-import br.java.tp.classes.Medico;
+import br.java.tp.classes.Exame;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -15,22 +15,30 @@ import javax.persistence.Query;
  *
  * @author paulo
  */
-public class MedicoDAO {
+public class ExameDAO {
     private String nome;
-    private String crm;
-    private Integer idMedico;
+    private float valor;
+    private Integer idExame;
 
-    public MedicoDAO() 
-    {}
-
-    public MedicoDAO(Integer idMedico) {
-        this.idMedico = idMedico;
+    public ExameDAO() {
     }
 
-    public MedicoDAO(String nome, String crm, Integer idMedico) {
+    public ExameDAO(Integer idExame) {
+        this.idExame = idExame;
+    }
+
+    public ExameDAO(String nome, float valor, Integer idExame) {
         this.nome = nome;
-        this.crm = crm;
-        this.idMedico = idMedico;
+        this.valor = valor;
+        this.idExame = idExame;
+    }
+
+    public Integer getIdExame() {
+        return idExame;
+    }
+
+    public void setIdExame(Integer idExame) {
+        this.idExame = idExame;
     }
 
     public String getNome() {
@@ -41,20 +49,12 @@ public class MedicoDAO {
         this.nome = nome;
     }
 
-    public String getCrm() {
-        return crm;
+    public float getValor() {
+        return valor;
     }
 
-    public void setCrm(String crm) {
-        this.crm = crm;
-    }
-
-    public Integer getIdMedico() {
-        return idMedico;
-    }
-
-    public void setIdMedico(Integer idMedico) {
-        this.idMedico = idMedico;
+    public void setValor(float valor) {
+        this.valor = valor;
     }
     
     public EntityManager conecta(){
@@ -62,18 +62,16 @@ public class MedicoDAO {
         return em;
     }
     
-    public boolean cadastrarMedico(){
+    public boolean cadastrarExame(){
         try{
             if(conecta() != null){
-                Medico m = new Medico();
-                m.setIdMedico(null);
-                m.setNome(nome);
-                m.setCrm(crm);
-                System.out.println(nome);
-                System.out.println(crm);
+                Exame e = new Exame();
+                e.setIdExame(null);
+                e.setNome(nome);
+                e.setValor(valor);
 
                 conecta().getTransaction().begin();
-                conecta().persist(m);
+                conecta().persist(e);
                 conecta().getTransaction().commit();
                 return true;
             }
@@ -89,15 +87,15 @@ public class MedicoDAO {
         }
     }
     
-    public void alterarMedico(){
+    public void alterarExame(){
         try{
             if(conecta() != null){
-                Medico m = conecta().find(Medico.class, idMedico);
-                m.setNome(nome);
-                m.setCrm(crm);
+                Exame e = conecta().find(Exame.class, idExame);
+                e.setNome(nome);
+                e.setValor(valor);
                 
                 conecta().getTransaction().begin();
-                conecta().persist(m);
+                conecta().persist(e);
                 conecta().getTransaction().commit();
             }
         }catch(Exception e){
@@ -107,13 +105,13 @@ public class MedicoDAO {
         }          
     }
 
-    public void deletarMedico(){
+    public void deletarExame(){
         try{
             if(conecta() != null){
-                Medico m = conecta().find(Medico.class, idMedico);
+                Exame e = conecta().find(Exame.class, idExame);
 
                 conecta().getTransaction().begin();
-                conecta().remove(m);
+                conecta().remove(e);
                 conecta().getTransaction().commit();
             }
         }catch(Exception e){
@@ -123,15 +121,15 @@ public class MedicoDAO {
         }        
     }
     
-    public MedicoDAO getMedico(){
+    public ExameDAO getExame(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT m FROM Medico m WHERE m.idMedico =:idMedico");
-                q.setParameter("idMedico", idMedico);
+                Query q = conecta().createQuery("SELECT e FROM Exame e WHERE e.nome =:nome");
+                q.setParameter("nome", nome);
                 if (q.getSingleResult()!=null){
-                    Medico m = (Medico) q.getSingleResult();
-                    MedicoDAO medicoDAO = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico());
-                    return medicoDAO;
+                    Exame e = (Exame) q.getSingleResult();
+                    ExameDAO exameDAO = new ExameDAO(e.getNome(), e.getValor(), e.getIdExame());
+                    return exameDAO;
                 }
             }
             return null;
@@ -144,23 +142,23 @@ public class MedicoDAO {
         return null;
     }
     
-    public List<MedicoDAO> getMedicos(){
+    public List<ExameDAO> getExames(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT m FROM Medico m");
+                Query q = conecta().createQuery("SELECT e FROM Exame e");
 
-                List<Medico> lista = q.getResultList();
-                List<MedicoDAO> listaMedicoDAO = new ArrayList();
+                List<Exame> lista = q.getResultList();
+                List<ExameDAO> listaExameDAO = new ArrayList();
 
-                for(Medico m: lista){
-                    listaMedicoDAO.add(new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico()));
+                for(Exame e: lista){
+                    listaExameDAO.add(new ExameDAO(e.getNome(), e.getValor(), e.getIdExame()));
                 }
-                return listaMedicoDAO;
+                return listaExameDAO;
             }else{
                 return null;
             }
         }catch(Exception e){
             return null;
         }
-    }    
+    }  
 }

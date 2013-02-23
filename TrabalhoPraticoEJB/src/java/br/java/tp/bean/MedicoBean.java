@@ -70,6 +70,7 @@ public class MedicoBean {
     }    
         
     public String cadastrarMedico(){
+        limparDadosMedico();
         if(nome.equalsIgnoreCase("")){
             setMensagemRetorno("Forneça um nome válido");
             return "error";
@@ -117,7 +118,7 @@ public class MedicoBean {
     
     public String validarMedico(){
         MedicoDAO medicoDAO = new MedicoDAO(nome, crm, idMedico);
-        MedicoDAO medicoDAO2 = medicoDAO.validarMedico();
+        MedicoDAO medicoDAO2 = medicoDAO.getMedico();
         if(medicoDAO2 != null){
             setMensagemRetorno("Médico já cadastrado.");
             return "error";

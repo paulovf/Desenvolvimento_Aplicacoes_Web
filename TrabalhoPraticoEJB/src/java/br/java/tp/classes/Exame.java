@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Paulo Vitor
+ * @author paulo
  */
 @Entity
 @Table(name = "exame")
@@ -35,10 +35,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Exame.findByNome", query = "SELECT e FROM Exame e WHERE e.nome = :nome"),
     @NamedQuery(name = "Exame.findByValor", query = "SELECT e FROM Exame e WHERE e.valor = :valor")})
 public class Exame implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exame")
+    private List<Agenda> agendaList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idExame")
     private Integer idExame;
     @Basic(optional = false)
@@ -50,8 +53,6 @@ public class Exame implements Serializable {
     @NotNull
     @Column(name = "valor")
     private float valor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exame")
-    private List<Agenda> agendaList;
 
     public Exame() {
     }
@@ -90,15 +91,6 @@ public class Exame implements Serializable {
         this.valor = valor;
     }
 
-    @XmlTransient
-    public List<Agenda> getAgendaList() {
-        return agendaList;
-    }
-
-    public void setAgendaList(List<Agenda> agendaList) {
-        this.agendaList = agendaList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,7 +113,16 @@ public class Exame implements Serializable {
 
     @Override
     public String toString() {
-        return "br.java.tp.bean.Exame[ idExame=" + idExame + " ]";
+        return "br.java.tp.classes.Exame[ idExame=" + idExame + " ]";
+    }
+
+    @XmlTransient
+    public List<Agenda> getAgendaList() {
+        return agendaList;
+    }
+
+    public void setAgendaList(List<Agenda> agendaList) {
+        this.agendaList = agendaList;
     }
     
 }

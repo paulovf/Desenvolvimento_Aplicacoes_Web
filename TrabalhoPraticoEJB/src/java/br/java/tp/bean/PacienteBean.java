@@ -127,6 +127,7 @@ public class PacienteBean {
     }
         
     public String cadastrarPaciente(){
+        limparDadosPaciente();
         if(nome.equalsIgnoreCase("") || dataNasc == null || logradouro.equalsIgnoreCase("")
                 || numero.equalsIgnoreCase("") || bairro.equalsIgnoreCase("") ||
                 cidade.equalsIgnoreCase("") || uf.equalsIgnoreCase("")){

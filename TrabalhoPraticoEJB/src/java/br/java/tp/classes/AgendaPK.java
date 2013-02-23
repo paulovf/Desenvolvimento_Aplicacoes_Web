@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Paulo Vitor
+ * @author paulo
  */
 @Embeddable
 public class AgendaPK implements Serializable {
@@ -113,7 +113,7 @@ public class AgendaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "br.java.tp.bean.AgendaPK[ dataHora=" + dataHora + ", idMedico=" + idMedico + ", idExame=" + idExame + ", idPaciente=" + idPaciente + " ]";
+        return "br.java.tp.classes.AgendaPK[ dataHora=" + dataHora + ", idMedico=" + idMedico + ", idExame=" + idExame + ", idPaciente=" + idPaciente + " ]";
     }
     
 }

@@ -36,6 +36,20 @@
             <managed-bean-class>br.java.tp.bean.ExameBean</managed-bean-class>
             <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+
+    <!-- Regras de mapeamento para cadastro de exames-->
+    <navigation-rule>
+            <from-view-id>/cadastroExame.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/home.jsp</to-view-id>>
+            </navigation-case>
+            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/cadastroExame.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
     
     <!-- Regras de mapeamento para cadastro de paciente-->
     <navigation-rule>
