@@ -5,7 +5,6 @@
 package br.java.tp.bean;
 
 import br.java.tp.dao.ExameDAO;
-import br.java.tp.dao.MedicoDAO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,11 +78,12 @@ public class ExameBean {
     }
     
      public String cadastrarExame(){
-         limparDadosMedico();
         if(nome.equalsIgnoreCase("")){
+            limparDadosExame();
             setMensagemRetorno("Forneça um nome válido");
             return "error";
         }else if (valor <= 0.0){
+            limparDadosExame();
             setMensagemRetorno("Forneça um valor válido");
             return "error";
         }
@@ -96,7 +96,7 @@ public class ExameBean {
                     exameDAO.cadastrarExame();
                     return "ok";
                 }else{
-                    limparDadosMedico();
+                    limparDadosExame();
                     setMensagemRetorno("Exame já cadastrado");
                     return "error";
                 }
@@ -137,7 +137,7 @@ public class ExameBean {
         }
     }
        
-    public void limparDadosMedico(){
+    public void limparDadosExame(){
         setIdExame(null);
         setNome("");
         setValor(0);

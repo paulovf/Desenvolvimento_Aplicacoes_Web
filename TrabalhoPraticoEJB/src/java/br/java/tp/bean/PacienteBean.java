@@ -4,7 +4,7 @@
  */
 package br.java.tp.bean;
 
-import br.java.tp.dao.PacienteDAO;;
+import br.java.tp.dao.PacienteDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -127,10 +127,10 @@ public class PacienteBean {
     }
         
     public String cadastrarPaciente(){
-        limparDadosPaciente();
         if(nome.equalsIgnoreCase("") || dataNasc == null || logradouro.equalsIgnoreCase("")
                 || numero.equalsIgnoreCase("") || bairro.equalsIgnoreCase("") ||
                 cidade.equalsIgnoreCase("") || uf.equalsIgnoreCase("")){
+           limparDadosPaciente();
            setMensagemRetorno("preencha todos os campos corretamente");
            return "error";
         }else{
@@ -157,7 +157,6 @@ public class PacienteBean {
     
     public List<PacienteBean> listarPacientes(){
         PacienteDAO pacienteDAO = new PacienteDAO();
-        Date d = new Date(2010, 10, 5);
         if (pacienteDAO.getPacientes()!=null){
             List<PacienteBean> pacienteBeans = new ArrayList();
             for (PacienteDAO p: pacienteDAO.getPacientes()){
