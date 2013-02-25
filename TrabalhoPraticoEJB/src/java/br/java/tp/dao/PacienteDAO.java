@@ -145,7 +145,7 @@ public class PacienteDAO {
         }
     }
     
-    public void alterarPaciente(){
+    public boolean alterarPaciente(){
         try{
             if(conecta() != null){
                 Paciente p = conecta().find(Paciente.class, idPaciente);
@@ -160,12 +160,15 @@ public class PacienteDAO {
                 conecta().getTransaction().begin();
                 conecta().persist(p);
                 conecta().getTransaction().commit();
+                return true;
             }
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
-            }                                
-        }          
+            }
+            return false;
+        }
+        return false;
     }
 
     public void deletarPaciente(){

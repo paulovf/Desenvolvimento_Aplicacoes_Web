@@ -8,6 +8,7 @@ import br.java.tp.dao.PacienteDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -197,11 +198,63 @@ public class PacienteBean {
               p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
     }
     
-    public void alterarPaciente(){       
-        PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, 
-                numero, bairro, cidade, uf);
-        p.alterarPaciente();
+    public String alterarPaciente(){
+        if(nome.equalsIgnoreCase("") || dataNasc == null || logradouro.equalsIgnoreCase("")
+               || numero.equalsIgnoreCase("") || bairro.equalsIgnoreCase("") ||
+              cidade.equalsIgnoreCase("") || uf.equalsIgnoreCase("")){
+            setMensagemRetornoErro("preencha todos os campos corretamente");
+           return "error";
+        }else{
+            PacienteDAO pacienteDAO = new PacienteDAO(idPaciente);
+            if(pacienteDAO.getPaciente() == null){
+                PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, numero, bairro, cidade, uf);
+                if (p.alterarPaciente()){
+                    setMensagemRetornoOK("alteração realizada com sucesso");
+                    return "ok";
+                }else{
+                    setMensagemRetornoErro("Erro ao alterar paciente");
+                    return "erro";
+                }
+            }else{
+                setMensagemRetornoErro("Paciente Já cadastrado");
+                return "erro";
+            }
+        }
     }
+    
+    public String loadPaciente(Integer id){
+        System.out.println("0");
+        ListDataModel ldm = new ListDataModel(pacienteBeans);
+        System.out.println("1");
+        pacienteBeans = (List<PacienteBean>) ldm.getWrappedData();
+                System.out.println("2");
+        int pos = -1;
+        for(int i = 0; i < pacienteBeans.size(); i++){
+            if(pacienteBeans.get(i).getIdPaciente() == id){
+                pos = i;
+            }
+        }
+        System.out.println("3");
+        if(pos > -1){
+            System.out.println("4");
+            nome = pacienteBeans.get(pos).getNome();
+            idPaciente = pacienteBeans.get(pos).getIdPaciente();
+            dataNasc = pacienteBeans.get(pos).getDataNasc();
+            logradouro = pacienteBeans.get(pos).getLogradouro();
+            numero = pacienteBeans.get(pos).getNumero();
+            bairro = pacienteBeans.get(pos).getBairro();
+            cidade = pacienteBeans.get(pos).getCidade();
+            uf = pacienteBeans.get(pos).getUf();
+            setMensagemRetornoOK("Paciente atualizado com sucesso");
+            System.out.println("5");
+            return "ok";
+        }
+        else{
+            System.out.println("6");
+            setMensagemRetornoErro("Por favor, selecione um cliente");
+            return "error";
+        }
+    }    
     
     public void limparDadosPaciente(){
         setIdPaciente(null);

@@ -32,8 +32,6 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="cadastroPaciente.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="alterarPaciente.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="excluirPaciente.jsp">Excluir</a></li>
                             <li><a tabindex="-1" href="listarPaciente.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -41,8 +39,6 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Médico</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../medico/cadastroMedico.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="../medico/alterarMedico.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="../medico/excluirMedico.jsp">Excluir</a></li>
                             <li><a tabindex="-1" href="../medico/listarMedico.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -50,8 +46,6 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Exame</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../exame/cadastroExame.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="../exame/alterarExame.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="../exame/excluirExame.jsp">Excluir</a></li>
                             <li><a tabindex="-1" href="../exame/listarExame.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -59,8 +53,6 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Agenda</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../agenda/cadastroAgenda.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="../agenda/alterarAgenda.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="../agenda/excluirAgenda.jsp">Excluir</a></li>
                             <li><a tabindex="-1" href="../agenda/listarAgenda.jsp">Listar</a></li>
                         </ul>
                     </li>
