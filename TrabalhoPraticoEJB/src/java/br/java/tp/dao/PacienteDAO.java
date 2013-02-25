@@ -29,8 +29,8 @@ public class PacienteDAO {
     public PacienteDAO() 
     {}
 
-    public PacienteDAO(Integer idPasciente) {
-        this.idPaciente = idPasciente;
+    public PacienteDAO(String nome) {
+        this.nome = nome;
     }
 
     public PacienteDAO(Integer idPasciente, String nome, Date dataNasc, 
@@ -174,7 +174,7 @@ public class PacienteDAO {
     public void deletarPaciente(){
         try{
             if(conecta() != null){
-                Paciente p = conecta().find(Paciente.class, idPaciente);
+                Paciente p = conecta().find(Paciente.class, nome);
 
                 conecta().getTransaction().begin();
                 conecta().remove(p);

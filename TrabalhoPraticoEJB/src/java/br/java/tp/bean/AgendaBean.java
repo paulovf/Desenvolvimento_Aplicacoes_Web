@@ -166,7 +166,7 @@ public class AgendaBean {
                 
                 PacienteBean paciente = new PacienteBean();
                 paciente.setIdPaciente(a.getIdPaciente());
-                pacienteBean = paciente.obterPaciente();
+                pacienteBean = paciente.obterPaciente(paciente.getNome());
                 
                 MedicoBean medico = new MedicoBean();
                 medico.setIdMedico(a.getIdMedico());

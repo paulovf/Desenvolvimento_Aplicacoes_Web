@@ -26,12 +26,13 @@
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="../home.jsp">Home</a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="home.jsp">Home</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="cadastroPaciente.jsp">Cadastro</a></li>
+                            <li><a tabindex="-1" href="pesquisarPaciente.jsp">Pesquisar Cliente</a></li>
                             <li><a tabindex="-1" href="listarPaciente.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -39,6 +40,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Médico</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../medico/cadastroMedico.jsp">Cadastro</a></li>
+                            <li><a tabindex="-1" href="../medico/pesquisarMedico.jsp">Pesquisar Médico</a></li>
                             <li><a tabindex="-1" href="../medico/listarMedico.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -46,6 +48,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Exame</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../exame/cadastroExame.jsp">Cadastro</a></li>
+                            <li><a tabindex="-1" href="../exame/pesquisarExame.jsp">Pesquisar Exame</a></li>
                             <li><a tabindex="-1" href="../exame/listarExame.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -53,6 +56,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Agenda</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../agenda/cadastroAgenda.jsp">Cadastro</a></li>
+                            <li><a tabindex="-1" href="../agenda/pesquisarAgenda.jsp">Pesquisar Agenda</a></li>
                             <li><a tabindex="-1" href="../agenda/listarAgenda.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -78,7 +82,7 @@
                                     <f:facet name="header">
                                         <h:outputText value=""/>
                                     </f:facet>
-                                    <h:commandLink action="#{pac.excluirPaciente(Paciente.idPaciente)}">
+                                    <h:commandLink action="#{Paciente.removerPaciente(pac.idPaciente)}">
                                         <img src="../img/excluir.png" border="0" width="20" height="20" />
                                     </h:commandLink>
                                 </h:column>

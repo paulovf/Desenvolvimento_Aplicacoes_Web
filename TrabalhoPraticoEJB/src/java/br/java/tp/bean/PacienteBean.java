@@ -187,16 +187,38 @@ public class PacienteBean {
         return null;
     }
     
-    public void removerPaciente(Integer idPaciente){
-        PacienteDAO pacienteDAO = new PacienteDAO(idPaciente);
+    public void removerPaciente(String nome){
+        PacienteDAO pacienteDAO = new PacienteDAO(nome);
         pacienteDAO.deletarPaciente();
     }
     
-    public PacienteBean obterPaciente(){
-        PacienteDAO p = new PacienteDAO(idPaciente);
+    public PacienteBean obterPaciente(String nome){
+        PacienteDAO p = new PacienteDAO(nome);
         return new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(),
               p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
     }
+    
+    public String obterPaciente(){
+        PacienteDAO p = new PacienteDAO(nome);
+        PacienteDAO pacienteDAO2 = p.getPaciente();
+        System.out.println(pacienteDAO2.getNome()+ "--"+ pacienteDAO2.getIdPaciente());
+        if (pacienteDAO2.getIdPaciente() != null){
+            idPaciente = pacienteDAO2.getIdPaciente();
+            nome = pacienteDAO2.getNome();
+            logradouro = pacienteDAO2.getLogradouro();
+            numero = pacienteDAO2.getNumero();
+            bairro = pacienteDAO2.getBairro();
+            cidade = pacienteDAO2.getBairro();
+            uf = pacienteDAO2.getUf();
+            dataNasc = pacienteDAO2.getDataNasc();
+            System.out.println("888");
+            setMensagemRetornoOK("que bagaça");
+            return "ok";
+        }else{
+            setMensagemRetornoErro("Usuário não cadastrado.");
+            return "error";
+        }
+    }    
     
     public String alterarPaciente(){
         if(nome.equalsIgnoreCase("") || dataNasc == null || logradouro.equalsIgnoreCase("")
@@ -205,7 +227,7 @@ public class PacienteBean {
             setMensagemRetornoErro("preencha todos os campos corretamente");
            return "error";
         }else{
-            PacienteDAO pacienteDAO = new PacienteDAO(idPaciente);
+            PacienteDAO pacienteDAO = new PacienteDAO(nome);
             if(pacienteDAO.getPaciente() == null){
                 PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, numero, bairro, cidade, uf);
                 if (p.alterarPaciente()){
@@ -227,10 +249,10 @@ public class PacienteBean {
         ListDataModel ldm = new ListDataModel(pacienteBeans);
         System.out.println("1");
         pacienteBeans = (List<PacienteBean>) ldm.getWrappedData();
-                System.out.println("2");
+        System.out.println("2");
         int pos = -1;
         for(int i = 0; i < pacienteBeans.size(); i++){
-            if(pacienteBeans.get(i).getIdPaciente() == id){
+            if(pacienteBeans.get(i).isAchou()){
                 pos = i;
             }
         }

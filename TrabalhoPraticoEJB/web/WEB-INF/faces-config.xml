@@ -94,9 +94,24 @@
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/paciente/listarPaciente.jspp</to-view-id>
+                    <to-view-id>/faces/paciente/listarPaciente.jsp</to-view-id>
             </navigation-case>
-    </navigation-rule>     
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/faces/paciente/pesquisarPaciente.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/faces/paciente/listarPaciente.jsp</to-view-id>
+                    <redirect>
+                            <view-param>/faces/paciente/resultado.jsp</view-param>
+                    </redirect>
+            </navigation-case>
+            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/faces/paciente/pesquisarPaciente.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
 
     <!-- Regras de mapeamento para cadastro de médico-->
     <navigation-rule>

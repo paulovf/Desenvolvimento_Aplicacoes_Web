@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cadastrar Pacientes</title>
+        <title>Pesquisar Pacientes</title>
         <link href="../css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="../css/bootstrap-responsive.css" rel="stylesheet" media="screen">
         <link href="../css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
@@ -69,23 +69,14 @@
             </div>        
             <div class="container">
                 <f:view>
-                    <h3>Cadastro de Paciente:<br /><br />
-                        <h:form id="cadastro" prependId="false">
-                            Nome: <h:inputText id="nome" value="#{Paciente.nome}"/><br />
-                                Data de Nascimento: <h:inputText id="dataNasc" value="#{Paciente.dataNasc}">
-                            <f:convertDateTime pattern="dd/mm/yyyy" />
-                            </h:inputText><br />
-                            Rua: <h:inputText id="logradouro" value="#{Paciente.logradouro}"/><br />
-                            Nº. : <h:inputText id="numero" value="#{Paciente.numero}"/><br />
-                            Bairro: <h:inputText id="bairro" value="#{Paciente.bairro}"/><br />
-                            Cidade: <h:inputText id="cidade" value="#{Paciente.cidade}"/><br />
-                            UF: <h:inputText id="uf" value="#{Paciente.uf}"/><br /><br />
-                            <h:commandButton action="#{Paciente.cadastrarPaciente()}" value="Cadastrar"/>
-                            &nbsp;&nbsp;
-                            <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
-                            <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
-                        </h:form>
-                    </h3>
+                    <h:form>
+                        <h3>Pesquisar Paciente:</h3><br /><br />
+                        Nome do Paciente: <h:inputText id="nome" value="#{Paciente.nome}"/><br /><br />
+                        <h:commandButton action="#{Paciente.obterPaciente()}" value="Pesquisar"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <h:outputText value="#{pac.mensagemRetornoErro}" />
+                        <h:outputText value="#{pac.mensagemRetornoOK}" />
+                    </h:form>
                 </f:view>
             </div>            
         </div>
