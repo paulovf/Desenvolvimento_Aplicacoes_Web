@@ -18,7 +18,7 @@ public class MedicoBean {
     private Integer idMedico;
     private boolean achou;
     private List<MedicoBean> medicoBeans = new ArrayList();
-    private String mensagemRetorno; 
+    private String mensagemRetornoErro, mensagemRetornoOK;
     
     public MedicoBean() 
     {}
@@ -61,20 +61,36 @@ public class MedicoBean {
         this.achou = achou;
     }
 
-    public String getMensagemRetorno() {
-        return mensagemRetorno;
+    public String getMensagemRetornoErro() {
+        return mensagemRetornoErro;
     }
 
-    public void setMensagemRetorno(String mensagemRetorno) {
-        this.mensagemRetorno = mensagemRetorno;
-    }    
+    public void setMensagemRetornoErro(String mensagemRetornoErro) {
+        this.mensagemRetornoErro = mensagemRetornoErro;
+    }
+
+    public String getMensagemRetornoOK() {
+        return mensagemRetornoOK;
+    }
+
+    public void setMensagemRetornoOK(String mensagemRetornoOK) {
+        this.mensagemRetornoOK = mensagemRetornoOK;
+    }
+
+    public List<MedicoBean> getMedicoBeans() {
+        return medicoBeans;
+    }
+
+    public void setMedicoBeans(List<MedicoBean> medicoBeans) {
+        this.medicoBeans = medicoBeans;
+    }
         
     public String cadastrarMedico(){
         if(nome.equalsIgnoreCase("")){
-            setMensagemRetorno("Forneça um nome válido");
+            setMensagemRetornoErro("Forneça um nome válido");
             return "error";
         }else if (crm.equalsIgnoreCase("")){
-            setMensagemRetorno("Forneça um valor válido para o campo crm");
+            setMensagemRetornoErro("Forneça um valor válido para o campo crm");
             return "error";
         }
         else{
@@ -84,10 +100,12 @@ public class MedicoBean {
                     medicoDAO.setNome(nome);
                     medicoDAO.setCrm(crm);
                     medicoDAO.cadastrarMedico();
+                    limparDadosMedico();
+                    setMensagemRetornoOK("Médico cadastardo com sucesso!");
                     return "ok";
                 }else{
                     limparDadosMedico();
-                    setMensagemRetorno("Médico já cadastrado");
+                    setMensagemRetornoErro("Médico já cadastrado");
                     return "error";
                 }
         }
@@ -119,7 +137,6 @@ public class MedicoBean {
         MedicoDAO medicoDAO = new MedicoDAO(nome, crm, idMedico);
         MedicoDAO medicoDAO2 = medicoDAO.getMedico();
         if(medicoDAO2 != null){
-            setMensagemRetorno("Médico já cadastrado.");
             return "error";
         }
         else{
@@ -131,7 +148,8 @@ public class MedicoBean {
         setIdMedico(null);
         setNome("");
         setCrm("");
-        setMensagemRetorno("");
+        setMensagemRetornoOK("");
+        setMensagemRetornoErro("");
     }
     
     public String listar(){

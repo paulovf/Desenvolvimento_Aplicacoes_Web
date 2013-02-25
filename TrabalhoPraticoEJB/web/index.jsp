@@ -12,19 +12,29 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>TrabalhoPraticoEJB</title>
+        <title>Cadastro de Exames</title>
+        <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="style.css" rel="stylesheet" media="screen">
     </head>
     <body>
-        <f:view>
-            <h3>Login do Sistema:<br /><br />
-                <h:form id="cadastro" prependId="false">
-                    Login: <h:inputText id="login" value="#{Usuarios.login}"/>
-                    &nbsp;&nbsp;
-                    <h:outputText value="#{Usuarios.mensagemRetorno}" style="color:#ff0000"/><br />
-                    Senha: <h:inputText id="senha" value="#{Usuarios.senha}"/><br /><br />
-                    <h:commandButton action="#{Usuarios.validarLogin()}" value="Logar"/>           
-                </h:form>
-            </h3>
-        </f:view>
+        <div class="container-fluid">
+        </div>
+        <div class="offset7">
+            <f:view>
+                <h3>Login do Sistema:<br /><br />
+                    <h:form id="cadastro" prependId="false">
+                        Login: <h:inputText id="login" value="#{Usuarios.login}"/><br />
+                        Senha: <h:inputText id="senha" value="#{Usuarios.senha}"/><br /><br />
+                        <h:commandButton action="#{Usuarios.validarLogin()}" value="Logar"/>
+                        &nbsp;&nbsp;
+                        <h:outputText value="#{Usuarios.mensagemRetornoErro}" style="color:#ff0000"/>
+                        <h:outputText value="#{Usuarios.mensagemRetornoOK}" style="color:#00CC00"/>
+                    </h:form>
+                </h3>
+            </f:view>
+        </div>
     </body>
 </html>

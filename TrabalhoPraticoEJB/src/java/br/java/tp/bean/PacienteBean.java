@@ -24,7 +24,7 @@ public class PacienteBean {
     private String uf;
     private boolean achou;
     private List<PacienteBean> pacienteBeans = new ArrayList();
-    private String mensagemRetorno;     
+    private String mensagemRetornoErro, mensagemRetornoOK;
 
     public PacienteBean() 
     {}
@@ -118,12 +118,28 @@ public class PacienteBean {
         this.achou = achou;
     }
 
-    public String getMensagemRetorno() {
-        return mensagemRetorno;
+    public String getMensagemRetornoErro() {
+        return mensagemRetornoErro;
     }
 
-    public void setMensagemRetorno(String mensagemRetorno) {
-        this.mensagemRetorno = mensagemRetorno;
+    public void setMensagemRetornoErro(String mensagemRetornoErro) {
+        this.mensagemRetornoErro = mensagemRetornoErro;
+    }
+
+    public String getMensagemRetornoOK() {
+        return mensagemRetornoOK;
+    }
+
+    public void setMensagemRetornoOK(String mensagemRetornoOK) {
+        this.mensagemRetornoOK = mensagemRetornoOK;
+    }
+
+    public List<PacienteBean> getPacienteBeans() {
+        return pacienteBeans;
+    }
+
+    public void setPacienteBeans(List<PacienteBean> pacienteBeans) {
+        this.pacienteBeans = pacienteBeans;
     }
         
     public String cadastrarPaciente(){
@@ -131,7 +147,7 @@ public class PacienteBean {
                 || numero.equalsIgnoreCase("") || bairro.equalsIgnoreCase("") ||
                 cidade.equalsIgnoreCase("") || uf.equalsIgnoreCase("")){
            limparDadosPaciente();
-           setMensagemRetorno("preencha todos os campos corretamente");
+           setMensagemRetornoErro("preencha todos os campos corretamente");
            return "error";
         }else{
             PacienteDAO pacienteDAO = new PacienteDAO();
@@ -145,11 +161,13 @@ public class PacienteBean {
             pacienteDAO.setUf(uf);
             if(pacienteDAO.getPaciente() == null){
                 pacienteDAO.cadastrarPaciente();
+                limparDadosPaciente();
+                setMensagemRetornoOK("Paciente cadastrado com sucesso!");
                 return "ok";
             }
             else{
                 limparDadosPaciente();
-                setMensagemRetorno("Paciente já cadastrado");
+                setMensagemRetornoErro("Paciente já cadastrado");
                 return "error";
             }            
         }
@@ -187,6 +205,7 @@ public class PacienteBean {
     
     public void limparDadosPaciente(){
         setIdPaciente(null);
+        setDataNasc(null);
         setNome("");
         setLogradouro("");
         setBairro("");
@@ -194,7 +213,8 @@ public class PacienteBean {
         setNumero("");
         setIdPaciente(null);
         setUf("");
-        setMensagemRetorno("");
+        setMensagemRetornoErro("");
+        setMensagemRetornoOK("");
     }
     
     public String listar(){

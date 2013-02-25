@@ -7,9 +7,6 @@ package br.java.tp.dao;
 import br.java.tp.bd.Conexao;
 import br.java.tp.classes.Agenda;
 import br.java.tp.classes.AgendaPK;
-import br.java.tp.classes.Exame;
-import br.java.tp.classes.Medico;
-import br.java.tp.classes.Paciente;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,36 +17,64 @@ import javax.persistence.Query;
  *
  * @author paulo
  */
-public class AgendaDAO {
-    protected AgendaPK agendaPK;
+
+public class AgendaDAO{
+    private Date dataHora;
+    private Integer idPaciente;
+    private Integer idMedico;
+    private Integer idExame;
     private String obs;
     private String resultado;
-    private Paciente paciente;
-    private Exame exame;
-    private Medico medico;
 
     public AgendaDAO() {
     }
 
-    public AgendaDAO(Date data) {
-        agendaPK.setDataHora(data);
+    public AgendaDAO(Date dataHora, Integer idPaciente, Integer idMedico, Integer idExame) {
+        this.dataHora = dataHora;
+        this.idPaciente = idPaciente;
+        this.idMedico = idMedico;
+        this.idExame = idExame;
     }
 
-    public AgendaDAO(AgendaPK agendaPK, String obs, String resultado, Paciente paciente, Exame exame, Medico medico) {
-        this.agendaPK = agendaPK;
+    public AgendaDAO(Date dataHora, Integer idPaciente, Integer idMedico, Integer idExame, String obs, String resultado) {
+        this.dataHora = dataHora;
+        this.idPaciente = idPaciente;
+        this.idMedico = idMedico;
+        this.idExame = idExame;
         this.obs = obs;
         this.resultado = resultado;
-        this.paciente = paciente;
-        this.exame = exame;
-        this.medico = medico;
     }
 
-    public AgendaPK getAgendaPK() {
-        return agendaPK;
+    public Date getDataHora() {
+        return dataHora;
     }
 
-    public void setAgendaPK(AgendaPK agendaPK) {
-        this.agendaPK = agendaPK;
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public Integer getIdExame() {
+        return idExame;
+    }
+
+    public void setIdExame(Integer idExame) {
+        this.idExame = idExame;
+    }
+
+    public Integer getIdMedico() {
+        return idMedico;
+    }
+
+    public void setIdMedico(Integer idMedico) {
+        this.idMedico = idMedico;
+    }
+
+    public Integer getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(Integer idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getObs() {
@@ -68,109 +93,64 @@ public class AgendaDAO {
         this.resultado = resultado;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Exame getExame() {
-        return exame;
-    }
-
-    public void setExame(Exame exame) {
-        this.exame = exame;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-    
-    public EntityManager conecta(){
+    public EntityManager conecta() {
         EntityManager em = Conexao.getManager();
         return em;
     }
-    
-    public boolean cadastrarAgenda(){
-        try{
-            if(conecta() != null){
-                Agenda a = new Agenda();
-                a.setAgendaPK(agendaPK);
-                a.setExame(exame);
-                a.setMedico(medico);
-                a.setPaciente(paciente);
-                a.setResultado(resultado);
-                a.setObs(obs);
 
-                conecta().getTransaction().begin();
-                conecta().persist(a);
-                conecta().getTransaction().commit();
+    public boolean cadastrarAgenda() {
+        EntityManager em = conecta();
+        try {
+            if (em != null) {
+                AgendaPK a = new AgendaPK(dataHora, idMedico, idExame, idPaciente);
+                Agenda agenda = new Agenda();
+                agenda.setAgendaPK(a);
+                agenda.setObs(obs);
+                agenda.setResultado(resultado);
+
+                em.getTransaction().begin();
+                em.persist(agenda);
+                em.getTransaction().commit();
                 return true;
             }
-            else{
-                return false;
-            }
-        }catch(Exception e){
-            if (conecta().getTransaction().isActive()){
-                conecta().getTransaction().rollback();
-                return false;
+            return false;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             return false;
         }
     }
-    
-    public void alterarAgenda(){
-        try{
-            if(conecta() != null){
-                Agenda a = conecta().find(Agenda.class, agendaPK);
-                a.setExame(exame);
-                a.setMedico(medico);
-                a.setObs(obs);
-                a.setPaciente(paciente);
-                a.setResultado(resultado);
-                
-                conecta().getTransaction().begin();
-                conecta().persist(a);
-                conecta().getTransaction().commit();
-            }
-        }catch(Exception e){
-            if(conecta().getTransaction().isActive()){
-                conecta().getTransaction().rollback();
-            }                                
-        }          
-    }
 
-    public void deletarAgenda(){
-        try{
-            if(conecta() != null){
-                Agenda a = conecta().find(Agenda.class, agendaPK);
-
-                conecta().getTransaction().begin();
-                conecta().remove(a);
-                conecta().getTransaction().commit();
+    public List<AgendaDAO> obterAgendas() {
+        EntityManager em = conecta();
+        try {
+            Query q = em.createQuery("SELECT a FROM Agenda a");
+            List<Agenda> a = q.getResultList();
+            List<AgendaDAO> agenda = new ArrayList<AgendaDAO>();
+            for (Agenda ag : a) {
+                AgendaPK apk = ag.getAgendaPK();
+                agenda.add(new AgendaDAO(apk.getDataHora(), apk.getIdPaciente(), apk.getIdMedico(), apk.getIdExame(),
+                        ag.getObs(), ag.getResultado()));
             }
-        }catch(Exception e){
-            if(conecta().getTransaction().isActive()){
-                conecta().getTransaction().rollback();
-            }                                
-        }        
+            return agenda;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            return null;
+        }
     }
     
-    public AgendaDAO getAgenda(){
+    public AgendaDAO obterAgenda(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT a FROM Agenda a WHERE a.dataHora =:agendaPK.getDataHora()");
-                q.setParameter("dataHora", agendaPK.getDataHora());
+                Query q = conecta().createQuery("SELECT a FROM Agenda a WHERE a.dataHora =:dataHora");
+                q.setParameter("dataHora", dataHora);
                 if (q.getSingleResult()!=null){
                     Agenda a = (Agenda) q.getSingleResult();
-                    AgendaDAO agendaDAO = new AgendaDAO(a.getAgendaPK(), a.getObs(), a.getResultado(), 
-                            a.getPaciente(), a.getExame(), a.getMedico());
+                    AgendaDAO agendaDAO = new AgendaDAO(a.getAgendaPK().getDataHora(), a.getAgendaPK().getIdPaciente(), 
+                            a.getAgendaPK().getIdMedico(), a.getAgendaPK().getIdExame(), a.getObs(), a.getResultado());
                     return agendaDAO;
                 }
             }
@@ -183,26 +163,39 @@ public class AgendaDAO {
         
         return null;
     }
-    
-    public List<AgendaDAO> getAgendas(Date dataInicio, Date dataFim){
-        try{
-            if(conecta() != null){
-                Query q = conecta().createQuery("SELECT a FROM Agenda a WHERE a.dataHora BETWEEN " + dataInicio + 
-                        " AND " + dataFim);
 
-                List<Agenda> lista = q.getResultList();
-                List<AgendaDAO> listaAgendaDAO = new ArrayList();
+    public void alterarAgenda() {
+        EntityManager em = conecta();
+        try {
+            AgendaPK agendaPK = new AgendaPK(dataHora, idMedico, idExame, idPaciente);
+            Agenda agenda = em.find(Agenda.class, agendaPK);
+            agenda.setObs(obs);
+            agenda.setResultado(resultado);
 
-                for(Agenda a: lista){
-                    listaAgendaDAO.add(new AgendaDAO(a.getAgendaPK(), a.getObs(), a.getResultado(), a.getPaciente(), 
-                            a.getExame(), a.getMedico()));
-                }
-                return listaAgendaDAO;
-            }else{
-                return null;
+            em.getTransaction().begin();
+            em.persist(agenda);
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
-        }catch(Exception e){
-            return null;
         }
-    }    
+    }
+
+    public void removerAgenda() {
+        EntityManager em = conecta();
+        try {
+            AgendaPK agendaPK = new AgendaPK(dataHora, idMedico, idExame, idPaciente);
+            Agenda agenda = em.find(Agenda.class, agendaPK);
+
+            em.getTransaction().begin();
+            em.remove(agenda);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+    }
 }

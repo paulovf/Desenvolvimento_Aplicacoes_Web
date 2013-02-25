@@ -4,52 +4,77 @@
  */
 package br.java.tp.bean;
 
-import br.java.tp.classes.AgendaPK;
-import br.java.tp.classes.Exame;
-import br.java.tp.classes.Medico;
-import br.java.tp.classes.Paciente;
 import br.java.tp.dao.AgendaDAO;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 /**
  *
  * @author paulo
  */
 public class AgendaBean {
-    protected AgendaPK agendaPK;
+    private Date dataHora;
+    private Integer idPaciente;
+    private Integer idMedico;
+    private Integer idExame;
     private String obs;
     private String resultado;
-    private Paciente paciente;
-    private Exame exame;
-    private Medico medico;
-    private boolean achou;
-    private List<AgendaBean> agendaBeans = new ArrayList();
-    private String mensagemRetorno;
+    private List<AgendaBean> agendaBeans = new ArrayList<AgendaBean>();
+    private PacienteBean pacienteBean;
+    private MedicoBean medicoBean;
+    private ExameBean exameBean;
+    private String mensagemRetornoErro, mensagemRetornoOK;
 
     public AgendaBean() {
     }
 
-    public AgendaBean(AgendaPK agendaPK) {
-        this.agendaPK = agendaPK;
-    }
-    
-    public AgendaBean(AgendaPK agendaPK, String obs, String resultado, Paciente paciente, Exame exame, Medico medico) {
-        this.agendaPK = agendaPK;
+    public AgendaBean(Date dataHora, Integer idPaciente, Integer idMedico, Integer idExame, String obs, String resultado) {
+        this.dataHora = dataHora;
+        this.idPaciente = idPaciente;
+        this.idMedico = idMedico;
+        this.idExame = idExame;
         this.obs = obs;
         this.resultado = resultado;
-        this.paciente = paciente;
-        this.exame = exame;
-        this.medico = medico;
     }
 
-    public AgendaPK getAgendaPK() {
-        return agendaPK;
+    public Date getDataHora() {
+        return dataHora;
     }
 
-    public void setAgendaPK(AgendaPK agendaPK) {
-        this.agendaPK = agendaPK;
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public Integer getIdExame() {
+        return idExame;
+    }
+
+    public void setIdExame(Integer idExame) {
+        this.idExame = idExame;
+    }
+
+    public Integer getIdMedico() {
+        return idMedico;
+    }
+
+    public void setIdMedico(Integer idMedico) {
+        this.idMedico = idMedico;
+    }
+
+    public Integer getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(Integer idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getObs() {
@@ -68,143 +93,181 @@ public class AgendaBean {
         this.resultado = resultado;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public ExameBean getExameBean() {
+        return exameBean;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setExameBean(ExameBean exameBean) {
+        this.exameBean = exameBean;
     }
 
-    public Exame getExame() {
-        return exame;
+    public MedicoBean getMedicoBean() {
+        return medicoBean;
     }
 
-    public void setExame(Exame exame) {
-        this.exame = exame;
+    public void setMedicoBean(MedicoBean medicoBean) {
+        this.medicoBean = medicoBean;
     }
 
-    public Medico getMedico() {
-        return medico;
+    public PacienteBean getPacienteBean() {
+        return pacienteBean;
     }
 
-    public void setMedico(Medico medico) {
-        this.medico = medico;
+    public void setPacienteBean(PacienteBean pacienteBean) {
+        this.pacienteBean = pacienteBean;
     }
 
-    public boolean isAchou() {
-        return achou;
+    public List<AgendaBean> getAgendaBeans() {
+        return agendaBeans;
     }
 
-    public void setAchou(boolean achou) {
-        this.achou = achou;
+    public void setAgendaBeans(List<AgendaBean> agendaBeans) {
+        this.agendaBeans = agendaBeans;
     }
 
-    public String getMensagemRetorno() {
-        return mensagemRetorno;
+    public String getMensagemRetornoErro() {
+        return mensagemRetornoErro;
     }
 
-    public void setMensagemRetorno(String mensagemRetorno) {
-        this.mensagemRetorno = mensagemRetorno;
+    public void setMensagemRetornoErro(String mensagemRetornoErro) {
+        this.mensagemRetornoErro = mensagemRetornoErro;
     }
-    
-    public String cadastrarAgenda(){
+
+    public String getMensagemRetornoOK() {
+        return mensagemRetornoOK;
+    }
+
+    public void setMensagemRetornoOK(String mensagemRetornoOK) {
+        this.mensagemRetornoOK = mensagemRetornoOK;
+    }
+
+    public String cadastrarAgenda() {
         try{
-        if(agendaPK.getDataHora() == null){
-            limparDadosAgenda();
-            setMensagemRetorno("Forneça uma data válida");
-            return "error";
-        }else if (medico.getIdMedico() == 0){
-            limparDadosAgenda();
-            setMensagemRetorno("Forneça o id do Médico");
-            return "error";
-        }else if (exame.getIdExame() == 0){
-            limparDadosAgenda();
-            setMensagemRetorno("Forneça o id do Exame");
-            return "error";
-        }else if (paciente.getIdPaciente() == 0){
-            limparDadosAgenda();
-            setMensagemRetorno("Forneça o id do Paciente");
-            return "error";
-        }else if (resultado.equalsIgnoreCase("")){
-            limparDadosAgenda();
-            setMensagemRetorno("Forneça um resultado válido");
-            return "error";
-        }else{
-            if (validarAgenda().equals("ok")){
-                AgendaDAO agendaDAO = new AgendaDAO();
-                agendaDAO.setAgendaPK(agendaPK);
-                agendaDAO.setExame(exame);
-                agendaDAO.setMedico(medico);
-                agendaDAO.setObs(obs);
-                agendaDAO.setPaciente(paciente);
-                agendaDAO.setResultado(resultado);
-                agendaDAO.cadastrarAgenda();
+            AgendaDAO agenda = new AgendaDAO(dataHora, idPaciente, idMedico, idExame, obs, resultado);
+            if (agenda.cadastrarAgenda()){
+                limparDsdosAgenda();
+                setMensagemRetornoOK("Agenda Cadastrada com Sucesso");
                 return "ok";
-            }else{
-                limparDadosAgenda();
-                setMensagemRetorno("Agenda já cadastrada nesta data e hora");
-                return "error";
             }
-        }
         }catch(Exception e){
             e.printStackTrace();
-            return "erros";
         }
+        setMensagemRetornoErro("Erro ao cadastrar Agenda!");
+        return "error";
     }
-    
-    public List<AgendaBean> listarAgendas(Date dataInicio, Date dataFim){
-        AgendaDAO agendaDAO = new AgendaDAO();
-        if (agendaDAO.getAgendaPK().getDataHora()!=null){
-            List<AgendaBean> agendaBean = new ArrayList();
-            for (AgendaDAO a: agendaDAO.getAgendas(dataInicio, dataFim)){
-                agendaBean.add(new AgendaBean(a.getAgendaPK(), a.getObs(), a.getResultado(), 
-                        a.getPaciente(), a.getExame(), a.getMedico()));
+
+    public DataModel<AgendaBean> obterAgendas() {
+        AgendaDAO ag = new AgendaDAO();
+        if (ag.obterAgendas() != null) {
+            agendaBeans.removeAll(agendaBeans);
+            for (AgendaDAO a : ag.obterAgendas()) {
+                AgendaBean agenda = new AgendaBean(a.getDataHora(), a.getIdPaciente(), a.getIdMedico(), a.getIdExame(),
+                        a.getObs(), a.getResultado());
+                
+                PacienteBean paciente = new PacienteBean();
+                paciente.setIdPaciente(a.getIdPaciente());
+                pacienteBean = paciente.obterPaciente();
+                
+                MedicoBean medico = new MedicoBean();
+                medico.setIdMedico(a.getIdMedico());
+                medicoBean = medico.obterMedicos();
+                
+                ExameBean exame = new ExameBean();
+                exame.setIdExame(a.getIdExame());
+                exameBean = exame.obterExames();
+                
+                agenda.setPacienteBean(pacienteBean);
+                agenda.setMedicoBean(medicoBean);
+                agenda.setExameBean(exameBean);
+                
+                agendaBeans.add(agenda);
+                System.out.println();
             }
-            return agendaBean;
+            return new ListDataModel(agendaBeans);
         }
         return null;
     }
-    
-    public void removerAgenda(Date data){
-        AgendaDAO agendaDAO = new AgendaDAO(data);
-        agendaDAO.deletarAgenda();
-    }
-    
-    public AgendaBean obterAgenda(Date data){
-        AgendaDAO a = new AgendaDAO(data);
-        return new AgendaBean(a.getAgendaPK(), a.getObs(), a.getResultado(), a.getPaciente(), 
-                a.getExame(), a.getMedico());
-    }
-    
-    public String validarAgenda(){
-        AgendaDAO agendaDAO = new AgendaDAO(agendaPK, obs, resultado, paciente, exame, medico);
-        AgendaDAO agendaDAO2 = agendaDAO.getAgenda();
-        if(agendaDAO2 != null){
-            setMensagemRetorno("Agenda já cadastrada nesta ata e hora.");
-            return "error";
+
+    public String loadAgendamento() throws ParseException {
+        Map parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String dataStr = parametros.get("dataHora").toString();
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+        Date data2 = inputFormat.parse(dataStr);
+            
+        String idPac = parametros.get("idPaciente").toString();
+        Integer idPac2 = Integer.parseInt(idPac);
+        
+        String idMed = parametros.get("idMedico").toString();
+        Integer idMed2 = Integer.parseInt(idMed);
+        
+        String idExa = parametros.get("idExame").toString();
+        Integer idExa2 = Integer.parseInt(idExa);
+        
+        int i;
+        for (i=0;i<agendaBeans.size();i++){
+            if (agendaBeans.get(i).getDataHora().compareTo(data2)==0 && idExa2==agendaBeans.get(i).getIdExame()
+                    && idPac2==agendaBeans.get(i).getIdPaciente() && idMed2==agendaBeans.get(i).getIdMedico()){
+                break;
+            }
         }
-        else{
-            return "ok";
-        }
+        
+        this.dataHora = data2;
+        this.idPaciente = idPac2;
+        this.idMedico = idMed2;
+        this.idExame = idExa2;
+        this.obs = agendaBeans.get(i).getObs();
+        this.resultado = agendaBeans.get(i).getResultado();
+        this.pacienteBean = agendaBeans.get(i).getPacienteBean();
+        this.exameBean = agendaBeans.get(i).getExameBean();
+        this.medicoBean = agendaBeans.get(i).getMedicoBean();
+        
+        return "carrega";
     }
-       
-    public void limparDadosAgenda(){
-        setAgendaPK(null);
-        setMedico(null);
-        setExame(null);
-        setObs("");
-        setPaciente(null);
-        setResultado("");
-        setMensagemRetorno("");
-    }
-    
-    public String listar(){
-        return "listar";
-    }    
     
     public void alterarAgenda(){
-        AgendaDAO a = new AgendaDAO(agendaPK, obs, resultado, paciente, exame, medico);
-        a.alterarAgenda();
+        AgendaDAO agendaDAO = new AgendaDAO(dataHora, idPaciente, idMedico, idExame);
+        agendaDAO.alterarAgenda();
+    }
+
+    public String buscaPaciente(){
+        Map parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String idPac = parametros.get("idPaciente").toString();
+        Integer idPac2 = Integer.parseInt(idPac);
+        
+        AgendaBean agenda = new AgendaBean();
+        agenda.setIdPaciente(idPaciente);
+        String nomePaciente = agenda.buscaPaciente();
+        return null;
+    }
+    
+    public String remove() throws ParseException {
+        Map parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String dataStr = parametros.get("dataHora").toString();
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+        Date data2 = inputFormat.parse(dataStr);
+            
+        String idPac = parametros.get("idPaciente").toString();
+        Integer idPac2 = Integer.parseInt(idPac);
+        
+        String idMed = parametros.get("idMedico").toString();
+        Integer idMed2 = Integer.parseInt(idMed);
+        
+        String idExa = parametros.get("idExame").toString();
+        Integer idExa2 = Integer.parseInt(idExa);
+        
+        AgendaDAO agendaDAO = new AgendaDAO(data2, idPac2, idMed2, idExa2);
+        agendaDAO.removerAgenda();
+        return "";
+    }
+    
+    public void limparDsdosAgenda(){
+        setDataHora(null);
+        setIdExame(null);
+        setIdMedico(null);
+        setIdPaciente(null);
+        setObs("");
+        setResultado("");
+        setMensagemRetornoErro("");
+        setMensagemRetornoOK("");
     }
 }

@@ -19,7 +19,7 @@ public class UsuariosBean {
     private Integer id;
     private boolean achou;
     private List<UsuariosBean> usuariosBeans = new ArrayList();
-    private String mensagemRetorno;      
+    private String mensagemRetornoErro, mensagemRetornoOK;      
 
     public UsuariosBean() 
     {}
@@ -62,24 +62,56 @@ public class UsuariosBean {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public List<UsuariosBean> getUsuariosBeans() {
+        return usuariosBeans;
+    }
+
+    public void setUsuariosBeans(List<UsuariosBean> usuariosBeans) {
+        this.usuariosBeans = usuariosBeans;
+    }
     
-    public String cadastrarUsuarios(){
-        limparDadosUsuario();
-        if (validarLogin().equals("error")){
+    public boolean isAchou() {
+        return achou;
+    }
+
+    public void setAchou(boolean achou) {
+        this.achou = achou;
+    }    
+
+    public String getMensagemRetornoErro() {
+        return mensagemRetornoErro;
+    }
+
+    public void setMensagemRetornoErro(String mensagemRetornoErro) {
+        this.mensagemRetornoErro = mensagemRetornoErro;
+    }
+
+    public String getMensagemRetornoOK() {
+        return mensagemRetornoOK;
+    }
+
+    public void setMensagemRetornoOK(String mensagemRetornoOK) {
+        this.mensagemRetornoOK = mensagemRetornoOK;
+    }
+    
+    public void cadastrarUsuario(){
+        
+        if(!login.equalsIgnoreCase("") || !senha.equalsIgnoreCase("")){
             UsuariosDAO usuariosDAO = new UsuariosDAO();
             usuariosDAO.setId(null);
             usuariosDAO.setNome(nome);
             usuariosDAO.setLogin(login);
             usuariosDAO.setSenha(senha);
-            if (usuariosDAO.cadastrarUsuarios())
-                return "ok";
-            else
-                return "error";
-        }else{
-            limparDadosUsuario();
-            setMensagemRetorno("Usuário já cadastrado.");
-            return "error";
-        }    
+           
+            if (usuariosDAO.cadastrarUsuarios()){
+                limparDadosUsuario();
+                setMensagemRetornoOK("Usuario cadstrado com sucesso.");
+            }
+            else{
+                setMensagemRetornoErro("Usuario já cadastrado ou incorreto.");
+            }            
+        }
     }
     
     public List<UsuariosBean> listarUsuarios(){
@@ -108,42 +140,7 @@ public class UsuariosBean {
         UsuariosDAO c = new UsuariosDAO(nome, login, senha, id);
         c.alterarUsuarios();
     }
-    
-    public boolean isAchou() {
-        return achou;
-    }
-
-    public void setAchou(boolean achou) {
-        this.achou = achou;
-    }
-
-    public String getMensagemRetorno() {
-        return mensagemRetorno;
-    }
-
-    public void setMensagemRetorno(String mensagemRetorno) {
-        this.mensagemRetorno = mensagemRetorno;
-    }
-    
-    public void cadastrarUsuario(){
         
-        if(!login.equalsIgnoreCase("") || !senha.equalsIgnoreCase("")){
-            UsuariosDAO usuariosDAO = new UsuariosDAO();
-            usuariosDAO.setId(null);
-            usuariosDAO.setNome(nome);
-            usuariosDAO.setLogin(login);
-            usuariosDAO.setSenha(senha);
-           
-            if (usuariosDAO.cadastrarUsuarios()){
-                limparDadosUsuario();
-                setMensagemRetorno("Usuario cadstrado com sucesso.");
-            }
-            else{
-                setMensagemRetorno("Usuario já cadastrado ou incorreto.");
-            }            
-        }
-    }
-    
     public String validarLogin(){
         UsuariosDAO usuariosDAO = new UsuariosDAO(nome, login, senha, id);
         UsuariosDAO usuarioDAO2 = usuariosDAO.validarUsuarios();
@@ -151,12 +148,12 @@ public class UsuariosBean {
             if(usuarioDAO2.getSenha().equalsIgnoreCase(senha)){
                 return "ok";
             }else{
-                setMensagemRetorno("Usuário não cadastrado ou login incorreto");
+                setMensagemRetornoErro("Usuário não cadastrado ou login incorreto");
                 return "error";
             }
         }
         else{
-            setMensagemRetorno("Usuário não cadastrado ou login incorreto");
+            setMensagemRetornoOK("Usuário não cadastrado ou login incorreto");
             return "error";
         }
     }
@@ -165,7 +162,8 @@ public class UsuariosBean {
         setId(null);
         setLogin("");
         setSenha("");
-        setMensagemRetorno("");
+        setMensagemRetornoErro("");
+        setMensagemRetornoOK("");
     }
     
     public String listar(){
