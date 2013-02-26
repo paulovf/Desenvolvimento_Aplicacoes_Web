@@ -187,8 +187,8 @@ public class PacienteBean {
         return null;
     }
     
-    public void removerPaciente(String nome){
-        PacienteDAO pacienteDAO = new PacienteDAO(nome);
+    public void removerPaciente(Integer id){
+        PacienteDAO pacienteDAO = new PacienteDAO(id);
         pacienteDAO.deletarPaciente();
     }
     
@@ -212,7 +212,6 @@ public class PacienteBean {
             uf = pacienteDAO2.getUf();
             dataNasc = pacienteDAO2.getDataNasc();
             System.out.println("888");
-            setMensagemRetornoOK("que bagaça");
             return "ok";
         }else{
             setMensagemRetornoErro("Usuário não cadastrado.");
@@ -245,35 +244,26 @@ public class PacienteBean {
     }
     
     public String loadPaciente(Integer id){
-        System.out.println("0");
-        ListDataModel ldm = new ListDataModel(pacienteBeans);
+        System.out.println("0" + id);
+        PacienteDAO pacienteDAO = new PacienteDAO(id);
         System.out.println("1");
-        pacienteBeans = (List<PacienteBean>) ldm.getWrappedData();
-        System.out.println("2");
-        int pos = -1;
-        for(int i = 0; i < pacienteBeans.size(); i++){
-            if(pacienteBeans.get(i).isAchou()){
-                pos = i;
-            }
-        }
-        System.out.println("3");
-        if(pos > -1){
+        PacienteDAO p = pacienteDAO.getPaciente();
+        System.out.println("2" + p.getNome());
+        if(p.getIdPaciente() != null){
+            System.out.println("3");
+            idPaciente = p.getIdPaciente();
+            nome = p.getNome();
+            logradouro = p.getLogradouro();
+            numero = p.getNumero();
+            bairro = p.getBairro();
+            cidade = p.getCidade();
+            uf = p.getUf();
             System.out.println("4");
-            nome = pacienteBeans.get(pos).getNome();
-            idPaciente = pacienteBeans.get(pos).getIdPaciente();
-            dataNasc = pacienteBeans.get(pos).getDataNasc();
-            logradouro = pacienteBeans.get(pos).getLogradouro();
-            numero = pacienteBeans.get(pos).getNumero();
-            bairro = pacienteBeans.get(pos).getBairro();
-            cidade = pacienteBeans.get(pos).getCidade();
-            uf = pacienteBeans.get(pos).getUf();
-            setMensagemRetornoOK("Paciente atualizado com sucesso");
-            System.out.println("5");
             return "ok";
         }
         else{
-            System.out.println("6");
-            setMensagemRetornoErro("Por favor, selecione um cliente");
+            System.out.println("5");
+            setMensagemRetornoErro("Por favor, selecione um paciente");
             return "error";
         }
     }    

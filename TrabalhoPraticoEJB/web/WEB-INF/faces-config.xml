@@ -74,18 +74,6 @@
             </navigation-case>
     </navigation-rule>
     <navigation-rule>
-            <from-view-id>/faces/paciente/alterarPaciente.jsp</from-view-id>
-            <navigation-case>
-                    <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/paciente/listarPaciente.jsp</to-view-id>>
-            </navigation-case>
-            
-            <navigation-case>
-                    <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/paciente/alterarPaciente.jsp</to-view-id>
-            </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
             <from-view-id>/faces/paciente/litarPaciente.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
@@ -110,6 +98,18 @@
             <navigation-case>
                     <from-outcome>error</from-outcome>
                     <to-view-id>/faces/paciente/pesquisarPaciente.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/faces/paciente/alterarPaciente.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/faces/paciente/listarPaciente.jsp</to-view-id>>
+            </navigation-case>
+            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/faces/paciente/alterarPaciente.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
 

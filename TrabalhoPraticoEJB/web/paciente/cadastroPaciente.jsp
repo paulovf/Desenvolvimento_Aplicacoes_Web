@@ -26,13 +26,13 @@
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="home.jsp">Home</a>
+                        <a class="dropdown-toggle" href="../home.jsp">Home</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="cadastroPaciente.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="pesquisarPaciente.jsp">Pesquisar Cliente</a></li>
+                            <li><a tabindex="-1" href="pesquisarPaciente.jsp">Pesquisar Paciente</a></li>
                             <li><a tabindex="-1" href="listarPaciente.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -69,7 +69,8 @@
             </div>        
             <div class="container">
                 <f:view>
-                    <h3>Cadastro de Paciente:<br /><br />
+                    <h3>Cadastro de Paciente:</h3><br /><br />
+                    <h5>
                         <h:form id="cadastro" prependId="false">
                             Nome: <h:inputText id="nome" value="#{Paciente.nome}"/><br />
                                 Data de Nascimento: <h:inputText id="dataNasc" value="#{Paciente.dataNasc}">
@@ -85,7 +86,7 @@
                             <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
                             <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
                         </h:form>
-                    </h3>
+                    </h5>
                 </f:view>
             </div>            
         </div>

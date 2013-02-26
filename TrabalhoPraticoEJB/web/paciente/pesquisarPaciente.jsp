@@ -26,13 +26,13 @@
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="home.jsp">Home</a>
+                        <a class="dropdown-toggle" href="../home.jsp">Home</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="cadastroPaciente.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="pesquisarPaciente.jsp">Pesquisar Cliente</a></li>
+                            <li><a tabindex="-1" href="pesquisarPaciente.jsp">Pesquisar Paciente</a></li>
                             <li><a tabindex="-1" href="listarPaciente.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -71,11 +71,13 @@
                 <f:view>
                     <h:form>
                         <h3>Pesquisar Paciente:</h3><br /><br />
-                        Nome do Paciente: <h:inputText id="nome" value="#{Paciente.nome}"/><br /><br />
-                        <h:commandButton action="#{Paciente.obterPaciente()}" value="Pesquisar"/>
-                        &nbsp;&nbsp;&nbsp;
-                        <h:outputText value="#{pac.mensagemRetornoErro}" />
-                        <h:outputText value="#{pac.mensagemRetornoOK}" />
+                        <h5>
+                            Nome do Paciente: <h:inputText id="nome" value="#{Paciente.nome}"/><br /><br />
+                            <h:commandButton action="#{Paciente.obterPaciente()}" value="Pesquisar"/>
+                            &nbsp;&nbsp;&nbsp;
+                            <h:outputText value="#{pac.mensagemRetornoErro}" />
+                            <h:outputText value="#{pac.mensagemRetornoOK}" />
+                        </h5>
                     </h:form>
                 </f:view>
             </div>            

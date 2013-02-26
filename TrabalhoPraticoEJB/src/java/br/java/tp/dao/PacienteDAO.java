@@ -6,8 +6,8 @@ package br.java.tp.dao;
 
 import br.java.tp.bd.Conexao;
 import br.java.tp.classes.Paciente;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -31,6 +31,10 @@ public class PacienteDAO {
 
     public PacienteDAO(String nome) {
         this.nome = nome;
+    }
+
+    public PacienteDAO(Integer idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public PacienteDAO(Integer idPasciente, String nome, Date dataNasc, 
@@ -172,26 +176,35 @@ public class PacienteDAO {
     }
 
     public void deletarPaciente(){
+        System.out.println("0");
         try{
+            System.out.println("1");
             if(conecta() != null){
-                Paciente p = conecta().find(Paciente.class, nome);
-
+                System.out.println("2" + idPaciente);
+                Paciente p = conecta().find(Paciente.class, idPaciente);
+                System.out.println("3");
                 conecta().getTransaction().begin();
+                System.out.println("4");
                 conecta().remove(p);
+                System.out.println("5");
                 conecta().getTransaction().commit();
+                System.out.println("6");
             }
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
+                System.out.println("7");
                 conecta().getTransaction().rollback();
-            }                                
+            }
+            e.printStackTrace();
+            System.out.println("8");
         }        
     }
     
     public PacienteDAO getPaciente(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT p FROM Paciente p WHERE p.nome =:nome");
-                q.setParameter("nome", nome);
+                Query q = conecta().createQuery("SELECT p FROM Paciente p WHERE p.idPaciente =:idPaciente");
+                q.setParameter("idPaciente", idPaciente);
                 if (q.getSingleResult()!=null){
                     Paciente p = (Paciente) q.getSingleResult();
                     PacienteDAO pacienteDAO = new PacienteDAO(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 

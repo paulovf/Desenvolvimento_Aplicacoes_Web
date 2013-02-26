@@ -22,7 +22,7 @@
     <body>
         <div class="container-fluid">
         </div>
-        <div class="offset7">
+        <div class="offset6">
             <f:view>
                 <h3>Login do Sistema:<br /><br />
                     <h:form id="cadastro" prependId="false">

@@ -25,13 +25,13 @@
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="home.jsp">Home</a>
+                        <a class="dropdown-toggle" href="home.jsp">Home</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="paciente/cadastroPaciente.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="paciente/pesquisarPaciente.jsp">Pesquisar Cliente</a></li>
+                            <li><a tabindex="-1" href="paciente/pesquisarPaciente.jsp">Pesquisar Paciente</a></li>
                             <li><a tabindex="-1" href="paciente/listarPaciente.jsp">Listar</a></li>
                         </ul>
                     </li>
