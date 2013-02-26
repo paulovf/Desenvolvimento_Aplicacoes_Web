@@ -32,7 +32,7 @@
                         Bairro: <h:inputText id="bairro" value="#{Paciente.bairro}"/><br />
                         Cidade: <h:inputText id="cidade" value="#{Paciente.cidade}"/><br />
                         UF: <h:inputText id="uf" value="#{Paciente.uf}"/><br /><br />
-                        <h:commandButton action="#{Paciente.alterarPaciente()}" value="Cadastrar"/>
+                        <h:commandButton action="#{Paciente.alterarPaciente()}" value="Alterar"/>
                         &nbsp;&nbsp;
                         <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
                         <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>

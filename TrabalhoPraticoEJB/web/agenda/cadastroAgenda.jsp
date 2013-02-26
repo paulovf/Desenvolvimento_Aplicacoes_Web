@@ -79,7 +79,7 @@
                             Paciente: <h:inputText id="idPaciente" value="#{Agenda.idPaciente}"/><br />
                             Exame: <h:inputText id="idExame" value="#{Agenda.idExame}"/><br />
                             Data e Hora: <h:inputText id="dataHora" value="#{Agenda.dataHora}">
-                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
                             </h:inputText><br />
                             Resultado: <h:inputText id="resultado" value="#{Agenda.resultado}"/><br />
                             Observação: <h:inputText id="obs" value="#{Agenda.obs}"/><br /><br />

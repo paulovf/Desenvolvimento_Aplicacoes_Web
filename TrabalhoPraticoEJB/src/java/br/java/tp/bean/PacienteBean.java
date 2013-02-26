@@ -8,7 +8,6 @@ import br.java.tp.dao.PacienteDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -230,6 +229,7 @@ public class PacienteBean {
             if(pacienteDAO.getPaciente() == null){
                 PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, numero, bairro, cidade, uf);
                 if (p.alterarPaciente()){
+                    limparDadosPaciente();
                     setMensagemRetornoOK("alteração realizada com sucesso");
                     return "ok";
                 }else{
@@ -244,13 +244,10 @@ public class PacienteBean {
     }
     
     public String loadPaciente(Integer id){
-        System.out.println("0" + id);
         PacienteDAO pacienteDAO = new PacienteDAO(id);
-        System.out.println("1");
         PacienteDAO p = pacienteDAO.getPaciente();
-        System.out.println("2" + p.getNome());
         if(p.getIdPaciente() != null){
-            System.out.println("3");
+            limparDadosPaciente();
             idPaciente = p.getIdPaciente();
             nome = p.getNome();
             logradouro = p.getLogradouro();
@@ -258,11 +255,10 @@ public class PacienteBean {
             bairro = p.getBairro();
             cidade = p.getCidade();
             uf = p.getUf();
-            System.out.println("4");
+            dataNasc = p.getDataNasc();
             return "ok";
         }
         else{
-            System.out.println("5");
             setMensagemRetornoErro("Por favor, selecione um paciente");
             return "error";
         }

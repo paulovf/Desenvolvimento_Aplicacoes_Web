@@ -34,110 +34,69 @@
 
     <!-- Regras de mapeamento para cadastro de agendas-->
     <navigation-rule>
-            <from-view-id>/faces/agenda/cadastroAgenda.jsp</from-view-id>
+            <from-view-id>agenda/cadastroAgenda.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/home.jsp</to-view-id>>
+                    <to-view-id>home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/agenda/cadastroAgenda.jsp</to-view-id>
+                    <to-view-id>agenda/cadastroAgenda.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
 
     <!-- Regras de mapeamento para cadastro de exames-->
     <navigation-rule>
-            <from-view-id>/faces/exame/cadastroExame.jsp</from-view-id>
+            <from-view-id>exame/cadastroExame.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/home.jsp</to-view-id>>
+                    <to-view-id>home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/exame/cadastroExame.jsp</to-view-id>
+                    <to-view-id>exame/cadastroExame.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
     
     <!-- Regras de mapeamento para cadastro de paciente-->
     <navigation-rule>
-            <from-view-id>/faces/paciente/cadastroPaciente.jsp</from-view-id>
+            <from-view-id>/paciente/listarPaciente.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/home.jsp</to-view-id>>
-            </navigation-case>
-            
-            <navigation-case>
-                    <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/paciente/cadastroPaciente.jsp</to-view-id>
-            </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-            <from-view-id>/faces/paciente/litarPaciente.jsp</from-view-id>
-            <navigation-case>
-                    <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/paciente/alterarPaciente.jsp</to-view-id>
-            </navigation-case>
-            
-            <navigation-case>
-                    <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/paciente/listarPaciente.jsp</to-view-id>
-            </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-            <from-view-id>/faces/paciente/pesquisarPaciente.jsp</from-view-id>
-            <navigation-case>
-                    <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/paciente/listarPaciente.jsp</to-view-id>
+                    <to-view-id>/paciente/alterarPaciente.jsp</to-view-id>
                     <redirect>
-                            <view-param>/faces/paciente/resultado.jsp</view-param>
+                        <view-param>/paciente/listarpaciente.jsp</view-param>
                     </redirect>
             </navigation-case>
-            
-            <navigation-case>
-                    <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/paciente/pesquisarPaciente.jsp</to-view-id>
-            </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-            <from-view-id>/faces/paciente/alterarPaciente.jsp</from-view-id>
-            <navigation-case>
-                    <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/paciente/listarPaciente.jsp</to-view-id>>
-            </navigation-case>
-            
-            <navigation-case>
-                    <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/paciente/alterarPaciente.jsp</to-view-id>
-            </navigation-case>
-    </navigation-rule>
+    </navigation-rule>    
 
     <!-- Regras de mapeamento para cadastro de médico-->
     <navigation-rule>
-            <from-view-id>/faces/medico/cadastroMedico.jsp</from-view-id>
+            <from-view-id>medico/cadastroMedico.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/home.jsp</to-view-id>>
+                    <to-view-id>home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/medico/cadastroMedico.jsp</to-view-id>
+                    <to-view-id>medico/cadastroMedico.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
     
     <!-- Regras de mapeamento para cadastro de ussuários-->
     <navigation-rule>
-            <from-view-id>/faces/usuario/cadastroUsuarios.jsp</from-view-id>
+            <from-view-id>usuario/cadastroUsuarios.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>/faces/home.jsp</to-view-id>
+                    <to-view-id>home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/faces/usuario/cadastroUsuarios.jsp</to-view-id>
+                    <to-view-id>/usuario/cadastroUsuarios.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
     
