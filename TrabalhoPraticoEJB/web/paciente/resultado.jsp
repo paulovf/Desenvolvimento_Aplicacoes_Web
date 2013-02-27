@@ -70,13 +70,26 @@
             <div class="container">
                 <f:view>
                     <h:form>
-                    <h3>Pesquisar Paciente:</h3><br /><br />
+                    <h3>Pesquisar Paciente:</h3><br />
                         <h5>
-                            <h:outputText id="nome" value="#{Paciente.nome}" />
+                            <ul>
+                                <li><u>Nome:</u> &nbsp;&nbsp;&nbsp;<h:outputText id="nome" value="#{Paciente.nome}" /></li>
+                                <li><u>Data de Nascimento:</u> &nbsp;&nbsp;&nbsp;<h:outputText id="dataNasc" value="#{Paciente.dataNasc}" /></li>
+                                <li><u>Rua:</u> &nbsp;&nbsp;&nbsp;<h:outputText id="logradouro" value="#{Paciente.logradouro}" /></li>
+                                <li><u>Nº. :</u> &nbsp;&nbsp;&nbsp;<h:outputText id="numero" value="#{Paciente.numero}" /></li>
+                                <li><u>Bairro:</u> &nbsp;&nbsp;&nbsp;<h:outputText id="bairro" value="#{Paciente.bairro}" /></li>
+                                <li><u>Cidade:</u> &nbsp;&nbsp;&nbsp;<h:outputText id="cidade" value="#{Paciente.cidade}" /></li>
+                                <li><u>UF:</u> &nbsp;&nbsp;&nbsp;<h:outputText id="uf" value="#{Paciente.uf}" /></li>
+                            </ul>
                         </h5>
+                        <h:commandButton action="alterarPaciente.jsp" value="Alterar"/>&nbsp;&nbsp;&nbsp;
+                        <h:commandButton action="#{Paciente.removerPaciente(Paciente.idPaciente)}" value="Excluir"/>
+                        <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
+                        <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
                         <br /><br />
-                        <h:outputText value="#{pac.mensagemRetornoErro}" />
-                        <h:outputText value="#{pac.mensagemRetornoOK}" />
+                        <h:commandLink action="pesquisarPaciente.jsp">
+                            <img src="../img/voltar.jpg" border="0" width="190" height="33" />
+                        </h:commandLink>                         
                     </h:form>
                 </f:view>
             </div>            

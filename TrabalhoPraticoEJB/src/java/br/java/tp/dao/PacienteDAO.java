@@ -203,8 +203,8 @@ public class PacienteDAO {
     public PacienteDAO getPaciente(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT p FROM Paciente p WHERE p.idPaciente =:idPaciente");
-                q.setParameter("idPaciente", idPaciente);
+                Query q = conecta().createQuery("SELECT p FROM Paciente p WHERE p.nome =:nome");
+                q.setParameter("nome", nome);
                 if (q.getSingleResult()!=null){
                     Paciente p = (Paciente) q.getSingleResult();
                     PacienteDAO pacienteDAO = new PacienteDAO(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 
@@ -216,9 +216,9 @@ public class PacienteDAO {
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
-            }                
-        }
-        
+            }
+            e.printStackTrace();
+        }        
         return null;
     }
     

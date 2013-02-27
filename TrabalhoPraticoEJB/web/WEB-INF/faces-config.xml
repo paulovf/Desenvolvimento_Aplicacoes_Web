@@ -64,11 +64,26 @@
     <navigation-rule>
             <from-view-id>/paciente/listarPaciente.jsp</from-view-id>
             <navigation-case>
-                    <from-outcome>ok</from-outcome>
+                    <from-outcome>ok_alterar</from-outcome>
                     <to-view-id>/paciente/alterarPaciente.jsp</to-view-id>
-                    <redirect>
-                        <view-param>/paciente/listarpaciente.jsp</view-param>
-                    </redirect>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/paciente/pesquisarPaciente.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/paciente/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/paciente/resultado.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/paciente/pesquisarPaciente.jsp</to-view-id>
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>medico/resultado.jsp</to-view-id>
+            </navigation-case>                    
             </navigation-case>
     </navigation-rule>    
 

@@ -75,8 +75,8 @@
                             Nome do Paciente: <h:inputText id="nome" value="#{Paciente.nome}"/><br /><br />
                             <h:commandButton action="#{Paciente.obterPaciente()}" value="Pesquisar"/>
                             &nbsp;&nbsp;&nbsp;
-                            <h:outputText value="#{pac.mensagemRetornoErro}" />
-                            <h:outputText value="#{pac.mensagemRetornoOK}" />
+                        <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
+                        <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
                         </h5>
                     </h:form>
                 </f:view>

@@ -174,6 +174,7 @@ public class PacienteBean {
     }
     
     public List<PacienteBean> listarPacientes(){
+        limparDadosPaciente();
         PacienteDAO pacienteDAO = new PacienteDAO();
         if (pacienteDAO.getPacientes()!=null){
             List<PacienteBean> pacienteBeans = new ArrayList();
@@ -186,33 +187,39 @@ public class PacienteBean {
         return null;
     }
     
-    public void removerPaciente(Integer id){
+    public String removerPaciente(Integer id){
         PacienteDAO pacienteDAO = new PacienteDAO(id);
         pacienteDAO.deletarPaciente();
+        return "ok";
     }
     
     public PacienteBean obterPaciente(String nome){
+        limparDadosPaciente();
         PacienteDAO p = new PacienteDAO(nome);
+        p = p.getPaciente();
         return new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(),
               p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
     }
     
     public String obterPaciente(){
-        PacienteDAO p = new PacienteDAO(nome);
-        PacienteDAO pacienteDAO2 = p.getPaciente();
-        System.out.println(pacienteDAO2.getNome()+ "--"+ pacienteDAO2.getIdPaciente());
-        if (pacienteDAO2.getIdPaciente() != null){
-            idPaciente = pacienteDAO2.getIdPaciente();
-            nome = pacienteDAO2.getNome();
-            logradouro = pacienteDAO2.getLogradouro();
-            numero = pacienteDAO2.getNumero();
-            bairro = pacienteDAO2.getBairro();
-            cidade = pacienteDAO2.getBairro();
-            uf = pacienteDAO2.getUf();
-            dataNasc = pacienteDAO2.getDataNasc();
-            System.out.println("888");
-            return "ok";
-        }else{
+        try{
+            PacienteDAO p = new PacienteDAO(nome);
+            PacienteDAO pacienteDAO2 = p.getPaciente();
+            if (pacienteDAO2.getIdPaciente() != null){
+                idPaciente = pacienteDAO2.getIdPaciente();
+                nome = pacienteDAO2.getNome();
+                logradouro = pacienteDAO2.getLogradouro();
+                numero = pacienteDAO2.getNumero();
+                bairro = pacienteDAO2.getBairro();
+                cidade = pacienteDAO2.getBairro();
+                uf = pacienteDAO2.getUf();
+                dataNasc = pacienteDAO2.getDataNasc();
+                return "ok";
+            }else{
+                setMensagemRetornoErro("Usuário não cadastrado.");
+                return "error";
+            }
+        }catch(Exception e){
             setMensagemRetornoErro("Usuário não cadastrado.");
             return "error";
         }
@@ -222,41 +229,36 @@ public class PacienteBean {
         if(nome.equalsIgnoreCase("") || dataNasc == null || logradouro.equalsIgnoreCase("")
                || numero.equalsIgnoreCase("") || bairro.equalsIgnoreCase("") ||
               cidade.equalsIgnoreCase("") || uf.equalsIgnoreCase("")){
-            setMensagemRetornoErro("preencha todos os campos corretamente");
+           setMensagemRetornoErro("preencha todos os campos corretamente");
            return "error";
         }else{
-            PacienteDAO pacienteDAO = new PacienteDAO(nome);
-            if(pacienteDAO.getPaciente() == null){
-                PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, numero, bairro, cidade, uf);
-                if (p.alterarPaciente()){
-                    limparDadosPaciente();
-                    setMensagemRetornoOK("alteração realizada com sucesso");
-                    return "ok";
-                }else{
-                    setMensagemRetornoErro("Erro ao alterar paciente");
-                    return "erro";
-                }
+            PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, numero, bairro, cidade, uf);
+            if (p.alterarPaciente()){
+                limparDadosPaciente();
+                setMensagemRetornoOK("alteração realizada com sucesso");
+                return "ok";
             }else{
-                setMensagemRetornoErro("Paciente Já cadastrado");
+                setMensagemRetornoErro("Erro ao alterar paciente");
                 return "erro";
             }
         }
     }
     
-    public String loadPaciente(Integer id){
-        PacienteDAO pacienteDAO = new PacienteDAO(id);
+    public String loadPaciente(String nome){
+        limparDadosPaciente();
+        PacienteDAO pacienteDAO = new PacienteDAO(nome);
         PacienteDAO p = pacienteDAO.getPaciente();
         if(p.getIdPaciente() != null){
             limparDadosPaciente();
             idPaciente = p.getIdPaciente();
-            nome = p.getNome();
+            this.nome = p.getNome();
             logradouro = p.getLogradouro();
             numero = p.getNumero();
             bairro = p.getBairro();
             cidade = p.getCidade();
             uf = p.getUf();
             dataNasc = p.getDataNasc();
-            return "ok";
+            return "ok_alterar";
         }
         else{
             setMensagemRetornoErro("Por favor, selecione um paciente");

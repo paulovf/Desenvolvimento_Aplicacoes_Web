@@ -96,7 +96,7 @@
                                     <f:facet name="header">
                                         <h:outputText value="Nome"/>
                                     </f:facet>
-                                    <h:commandLink action="#{Paciente.loadPaciente(pac.idPaciente)}">
+                                    <h:commandLink action="#{Paciente.loadPaciente(pac.nome)}">
                                         <h:outputText value="#{pac.nome}" />
                                     </h:commandLink>
                                 </h:column>
@@ -141,8 +141,8 @@
                             </h:dataTable>
                         </h5>
                         <br /><br />
-                        <h:outputText value="#{pac.mensagemRetornoErro}" />
-                        <h:outputText value="#{pac.mensagemRetornoOK}" />
+                        <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
+                        <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
                     </h:form>
                 </f:view>
             </div>            
