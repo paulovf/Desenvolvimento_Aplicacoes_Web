@@ -17,10 +17,13 @@
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="style.css" rel="stylesheet" media="screen">
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>        
     </head>
     <body>
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <%
+            if (session.getAttribute("login") != null || session.getAttribute("senha") != null) {
+                out.println("Clique <a href='logoff.jsp'>aqui</a> para sair do sistema<br/><br/><br/><br/>");%>
         <div class="container">
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
@@ -67,5 +70,10 @@
                 </div>
             </div>
         </div>
+        <%
+            } else {
+                out.println("Você não está logado no sistema. <br/> Clique <a href='index.jsp'>Aqui</a> para logar-se.<br/><br/>");
+            }
+        %>        
     </body>
 </html>  
