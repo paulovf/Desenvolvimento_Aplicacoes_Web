@@ -212,10 +212,9 @@ public class PacienteBean {
         return null;
     }
     
-    public String removerPaciente(Integer id){
+    public void removerPaciente(Integer id){
         PacienteDAO pacienteDAO = new PacienteDAO(id);
         pacienteDAO.deletarPaciente();
-        return "ok";
     }
     
     public PacienteBean obterPaciente(String nome){
@@ -330,9 +329,5 @@ public class PacienteBean {
             setMensagemRetornoErro(null, i);
             i++;
         }        
-    }
-    
-    public String listar(){
-        return "listar";
-    }    
+    } 
 }

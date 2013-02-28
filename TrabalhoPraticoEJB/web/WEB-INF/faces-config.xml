@@ -107,15 +107,46 @@
 
     <!-- Regras de mapeamento para cadastro de médico-->
     <navigation-rule>
-            <from-view-id>/medico/cadastroMedico.jsp</from-view-id>
+            <from-view-id>/medico/listarMedico.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok_alterar</from-outcome>
+                    <to-view-id>/medico/alterarMedico.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/medico/alterarMedico.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/medico/listarMedico.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>    
+    <navigation-rule>
+            <from-view-id>/medico/pesquisarMedico.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/medico/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/medico/resultado.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/medico/pesquisarMedico.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/medico/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/medico/cadastrarMedico.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
                     <to-view-id>/home.jsp</to-view-id>
-            </navigation-case>
-            
+            </navigation-case>            
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>/medico/cadastroMedico.jsp</to-view-id>
+                    <to-view-id>/medico/cadastrarMedico.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
     

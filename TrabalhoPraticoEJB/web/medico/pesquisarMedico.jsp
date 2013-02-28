@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cadastrar Pacientes</title>
+        <title>Pesquisar Médicos</title>
         <link href="../css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="../css/bootstrap-responsive.css" rel="stylesheet" media="screen">
         <link href="../css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
@@ -69,19 +69,16 @@
             </div>        
             <div class="container">
                 <f:view>
-                    <h3>Cadastro de Médico:</h3><br /><br />
-                    <h5>
-                        <h:form id="cadastro" prependId="false">
-                            Nome: <h:inputText id="nome" value="#{Medico.nome}" maxlength="60" />&nbsp;&nbsp;
-                            <h:outputText value="#{Medico.mensagemRetornoErro[0]}" style="color:#ff0000"/><br />
-                            CRM: <h:inputText id="crm" value="#{Medico.crm}" maxlength="15" />&nbsp;&nbsp;
-                            <h:outputText value="#{Medico.mensagemRetornoErro[1]}" style="color:#ff0000"/><br /><br />
-                            <h:commandButton action="#{Medico.cadastrarMedico()}" value="Cadastrar"/>
-                            &nbsp;&nbsp;
-                            <h:outputText value="#{Medico.mensagemRetornoErro[2]}" style="color:#ff0000"/>
-                            <h:outputText value="#{Medico.mensagemRetornoOK}" style="color:#00CC00"/>
-                        </h:form>
-                    </h5>
+                    <h:form>
+                        <h3>Pesquisar Médico:</h3><br /><br />
+                        <h5>
+                            Nome do Médico: <h:inputText id="nome" value="#{Medico.nome}"/><br /><br />
+                            <h:commandButton action="#{Medico.obterMedico()}" value="Pesquisar"/>
+                            &nbsp;&nbsp;&nbsp;
+                        <h:outputText value="#{Medico.mensagemRetornoErro[2]}" style="color:#ff0000"/>
+                        <h:outputText value="#{Medico.mensagemRetornoOK}" style="color:#00CC00"/>
+                        </h5>
+                    </h:form>
                 </f:view>
             </div>            
         </div>

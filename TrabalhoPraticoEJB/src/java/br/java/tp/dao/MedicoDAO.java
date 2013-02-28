@@ -23,6 +23,10 @@ public class MedicoDAO {
     public MedicoDAO() 
     {}
 
+    public MedicoDAO(String nome) {
+        this.nome = nome;
+    }
+    
     public MedicoDAO(Integer idMedico) {
         this.idMedico = idMedico;
     }
@@ -89,7 +93,7 @@ public class MedicoDAO {
         }
     }
     
-    public void alterarMedico(){
+    public boolean alterarMedico(){
         try{
             if(conecta() != null){
                 Medico m = conecta().find(Medico.class, idMedico);
@@ -99,12 +103,15 @@ public class MedicoDAO {
                 conecta().getTransaction().begin();
                 conecta().persist(m);
                 conecta().getTransaction().commit();
+                return true;
             }
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
-            }                                
-        }          
+            }
+            return false;
+        }
+        return false;
     }
 
     public void deletarMedico(){
@@ -126,8 +133,8 @@ public class MedicoDAO {
     public MedicoDAO getMedico(){
         try{
             if(conecta() != null){
-                Query q = conecta().createQuery("SELECT m FROM Medico m WHERE m.idMedico =:idMedico");
-                q.setParameter("idMedico", idMedico);
+                Query q = conecta().createQuery("SELECT m FROM Medico m WHERE m.nome =:nome");
+                q.setParameter("nome", nome);
                 if (q.getSingleResult()!=null){
                     Medico m = (Medico) q.getSingleResult();
                     MedicoDAO medicoDAO = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico());
@@ -138,7 +145,8 @@ public class MedicoDAO {
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
-            }                
+            }
+            e.printStackTrace();
         }
         
         return null;

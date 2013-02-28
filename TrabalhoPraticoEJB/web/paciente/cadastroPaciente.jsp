@@ -73,19 +73,19 @@
                     <h3>Cadastro de Paciente:</h3><br /><br />
                     <h5>
                         <h:form id="cadastro" prependId="false">
-                            Nome: <h:inputText id="nome" value="#{Paciente.nome}"/>&nbsp;&nbsp;
+                            Nome: <h:inputText id="nome" value="#{Paciente.nome}" maxlength="60"/>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[0]}" style="color:#ff0000"/><br />
                             Data de Nascimento: <h:inputText id="dataNasc" value="#{Paciente.dataNasc}" onkeypress="return dateMask(this, event);">
                             <f:convertDateTime pattern="dd/mm/yyyy" />
                             </h:inputText>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[1]}" style="color:#ff0000"/><br />
-                            Rua: <h:inputText id="logradouro" value="#{Paciente.logradouro}"/>&nbsp;&nbsp;
+                            Rua: <h:inputText id="logradouro" value="#{Paciente.logradouro}" maxlength="60"/>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[2]}" style="color:#ff0000"/><br />
-                            Nº. : <h:inputText id="numero" value="#{Paciente.numero}"/>&nbsp;&nbsp;
+                            Nº. : <h:inputText id="numero" value="#{Paciente.numero}" maxlength="10"/>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[3]}" style="color:#ff0000"/><br />
-                            Bairro: <h:inputText id="bairro" value="#{Paciente.bairro}"/>&nbsp;&nbsp;
+                            Bairro: <h:inputText id="bairro" value="#{Paciente.bairro}" maxlength="60"/>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[4]}" style="color:#ff0000"/><br />
-                            Cidade: <h:inputText id="cidade" value="#{Paciente.cidade}"/>&nbsp;&nbsp;
+                            Cidade: <h:inputText id="cidade" value="#{Paciente.cidade}" maxlength="60"/>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[5]}" style="color:#ff0000"/><br />
                             UF: 
                                 <h:selectOneListbox value="#{Paciente.uf}" size="1">
