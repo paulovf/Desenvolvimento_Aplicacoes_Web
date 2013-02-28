@@ -76,7 +76,7 @@
                             <h:outputText value="#{Medico.mensagemRetornoErro[0]}" style="color:#ff0000"/><br />
                             CRM: <h:inputText id="crm" value="#{Medico.crm}" maxlength="15" />&nbsp;&nbsp;
                             <h:outputText value="#{Medico.mensagemRetornoErro[1]}" style="color:#ff0000"/><br /><br />
-                            <h:commandButton action="#{Medico.alterarMedico()}" value="Cadastrar"/>
+                            <h:commandButton action="#{Medico.alterarMedico()}" value="Alterar"/>
                             &nbsp;&nbsp;
                             <h:outputText value="#{Medico.mensagemRetornoErro[2]}" style="color:#ff0000"/>
                             <h:outputText value="#{Medico.mensagemRetornoOK}" style="color:#00CC00"/>

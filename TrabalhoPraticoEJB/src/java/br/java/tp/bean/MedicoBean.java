@@ -122,10 +122,11 @@ public class MedicoBean {
     public List<MedicoBean> listarMedicos(){
         limparDadosMedico();
         MedicoDAO medicoDAO = new MedicoDAO();
-        if (medicoDAO.getIdMedico()!=null){
+        if (medicoDAO.getMedicos()!=null){
             List<MedicoBean> medicoBean = new ArrayList();
             for (MedicoDAO m: medicoDAO.getMedicos()){
                 medicoBean.add(new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico()));
+                System.out.println(m.getNome());
             }
             return medicoBean;
         }
@@ -164,6 +165,7 @@ public class MedicoBean {
     }
     
     public String alterarMedico(){
+        limparMensagemErro();
         if(nome.length() < 3){
             setMensagemRetornoErro("Forneça um nome válido", 0);
             return "error";
@@ -192,25 +194,17 @@ public class MedicoBean {
     }
     
     public String loadMedico(String nome){
-        System.out.println("0");
         limparDadosMedico();
-        System.out.println("1");
         MedicoDAO medicoDAO = new MedicoDAO(nome);
-        System.out.println("2");
         MedicoDAO m = medicoDAO.getMedico();
-        System.out.println("3");
         if(m.getMedico() != null){
-            System.out.println("4");
             limparDadosMedico();
-            System.out.println("5");
             idMedico = m.getIdMedico();
             this.nome = m.getNome();
             crm = m.getCrm();
-            System.out.println("6");
             return "ok_alterar";
         }
         else{
-            System.out.println("7");
             setMensagemRetornoErro("Por favor, selecione um Médico", 2);
             return "error";
         }

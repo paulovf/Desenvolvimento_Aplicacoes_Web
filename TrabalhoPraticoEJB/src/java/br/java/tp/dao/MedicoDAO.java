@@ -146,7 +146,6 @@ public class MedicoDAO {
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
             }
-            e.printStackTrace();
         }
         
         return null;
