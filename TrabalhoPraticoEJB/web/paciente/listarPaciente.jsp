@@ -141,7 +141,7 @@
                             </h:dataTable>
                         </h5>
                         <br /><br />
-                        <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
+                        <h:outputText value="#{Paciente.mensagemRetornoErro[6]}" style="color:#ff0000"/>
                         <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
                     </h:form>
                 </f:view>

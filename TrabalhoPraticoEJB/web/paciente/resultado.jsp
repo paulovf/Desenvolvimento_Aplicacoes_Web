@@ -84,7 +84,7 @@
                         </h5>
                         <h:commandButton action="alterarPaciente.jsp" value="Alterar"/>&nbsp;&nbsp;&nbsp;
                         <h:commandButton action="#{Paciente.removerPaciente(Paciente.idPaciente)}" value="Excluir"/>
-                        <h:outputText value="#{Paciente.mensagemRetornoErro}" style="color:#ff0000"/>
+                        <h:outputText value="#{Paciente.mensagemRetornoErro[6]}" style="color:#ff0000"/>
                         <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
                         <br /><br />
                         <h:commandLink action="pesquisarPaciente.jsp">

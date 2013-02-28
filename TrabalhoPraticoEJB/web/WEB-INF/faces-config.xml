@@ -34,29 +34,29 @@
 
     <!-- Regras de mapeamento para cadastro de agendas-->
     <navigation-rule>
-            <from-view-id>agenda/cadastroAgenda.jsp</from-view-id>
+            <from-view-id>/agenda/cadastroAgenda.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>home.jsp</to-view-id>
+                    <to-view-id>/home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>agenda/cadastroAgenda.jsp</to-view-id>
+                    <to-view-id>/agenda/cadastroAgenda.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
 
     <!-- Regras de mapeamento para cadastro de exames-->
     <navigation-rule>
-            <from-view-id>exame/cadastroExame.jsp</from-view-id>
+            <from-view-id>/exame/cadastroExame.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>home.jsp</to-view-id>
+                    <to-view-id>/home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>
-                    <from-outcome>error</from-outcome>
-                    <to-view-id>exame/cadastroExame.jsp</to-view-id>
+                    <from-outcome>/error</from-outcome>
+                    <to-view-id>/exame/cadastroExame.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
     
@@ -69,6 +69,13 @@
             </navigation-case>
     </navigation-rule>
     <navigation-rule>
+            <from-view-id>/paciente/alterarPaciente.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/paciente/listarPaciente.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>    
+    <navigation-rule>
             <from-view-id>/paciente/pesquisarPaciente.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
@@ -80,33 +87,44 @@
             <navigation-case>
                     <from-outcome>ok</from-outcome>
                     <to-view-id>/paciente/pesquisarPaciente.jsp</to-view-id>
+            </navigation-case>
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>medico/resultado.jsp</to-view-id>
-            </navigation-case>                    
+                    <to-view-id>/paciente/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/paciente/cadastrarPaciente.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/home.jsp</to-view-id>
+            </navigation-case>            
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/paciente/cadastrarPaciente.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>    
 
     <!-- Regras de mapeamento para cadastro de médico-->
     <navigation-rule>
-            <from-view-id>medico/cadastroMedico.jsp</from-view-id>
+            <from-view-id>/medico/cadastroMedico.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>home.jsp</to-view-id>
+                    <to-view-id>/home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>
                     <from-outcome>error</from-outcome>
-                    <to-view-id>medico/cadastroMedico.jsp</to-view-id>
+                    <to-view-id>/medico/cadastroMedico.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
     
     <!-- Regras de mapeamento para cadastro de ussuários-->
     <navigation-rule>
-            <from-view-id>usuario/cadastroUsuarios.jsp</from-view-id>
+            <from-view-id>/usuario/cadastroUsuarios.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
-                    <to-view-id>home.jsp</to-view-id>
+                    <to-view-id>/home.jsp</to-view-id>
             </navigation-case>
             
             <navigation-case>

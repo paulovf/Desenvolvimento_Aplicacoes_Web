@@ -24,7 +24,7 @@ public class PacienteBean {
     private String uf;
     private boolean achou;
     private List<PacienteBean> pacienteBeans = new ArrayList();
-    private String mensagemRetornoErro, mensagemRetornoOK;
+    private String mensagemRetornoErro[] = new String[7], mensagemRetornoOK;
 
     public PacienteBean() 
     {}
@@ -118,12 +118,12 @@ public class PacienteBean {
         this.achou = achou;
     }
 
-    public String getMensagemRetornoErro() {
+    public String[] getMensagemRetornoErro() {
         return mensagemRetornoErro;
     }
 
-    public void setMensagemRetornoErro(String mensagemRetornoErro) {
-        this.mensagemRetornoErro = mensagemRetornoErro;
+    public void setMensagemRetornoErro(String mensagemRetornoErro, int indice) {
+        this.mensagemRetornoErro[indice] = mensagemRetornoErro;
     }
 
     public String getMensagemRetornoOK() {
@@ -143,13 +143,38 @@ public class PacienteBean {
     }
         
     public String cadastrarPaciente(){
-        if(nome.equalsIgnoreCase("") || dataNasc == null || logradouro.equalsIgnoreCase("")
-                || numero.equalsIgnoreCase("") || bairro.equalsIgnoreCase("") ||
-                cidade.equalsIgnoreCase("") || uf.equalsIgnoreCase("")){
-           limparDadosPaciente();
-           setMensagemRetornoErro("preencha todos os campos corretamente");
-           return "error";
-        }else{
+        limparDadosPaciente();
+        if(nome.length() < 3){
+            setMensagemRetornoErro("Forneça um nome válido!", 0);
+            return "error";
+        }
+        if(dataNasc == null){
+            setMensagemRetornoErro("Forneça uma data válida!", 1);
+            return "error";
+        }
+        if(logradouro.length() < 3){
+            setMensagemRetornoErro("Forneça um nome de rua válido!", 2);
+            return "error";
+        }
+        if(numero.length() < 0){
+            try{
+                Integer.parseInt(numero);
+            }catch(Exception e){
+                setMensagemRetornoErro("Número inválido!", 3);
+                return "error";
+            }
+            setMensagemRetornoErro("Número inválido!", 3);
+            return "error";
+        }
+        if(bairro.length() < 3){
+            setMensagemRetornoErro("Forneça um nome de bairro válido!", 4);
+            return "error";
+        }
+        if(cidade.length() < 3){
+            setMensagemRetornoErro("Forneça um nome de cidade válido!", 5);
+            return "error";            
+        }
+        else{
             PacienteDAO pacienteDAO = new PacienteDAO();
             pacienteDAO.setIdPaciente(null);
             pacienteDAO.setNome(nome);
@@ -167,7 +192,7 @@ public class PacienteBean {
             }
             else{
                 limparDadosPaciente();
-                setMensagemRetornoErro("Paciente já cadastrado");
+                setMensagemRetornoErro("Paciente já cadastrado", 6);
                 return "error";
             }            
         }
@@ -177,12 +202,12 @@ public class PacienteBean {
         limparDadosPaciente();
         PacienteDAO pacienteDAO = new PacienteDAO();
         if (pacienteDAO.getPacientes()!=null){
-            List<PacienteBean> pacienteBeans = new ArrayList();
+            List<PacienteBean> pacienteBean = new ArrayList();
             for (PacienteDAO p: pacienteDAO.getPacientes()){
-                pacienteBeans.add(new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 
+                pacienteBean.add(new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 
                         p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf()));
             }
-            return pacienteBeans;
+            return pacienteBean;
         }
         return null;
     }
@@ -216,21 +241,40 @@ public class PacienteBean {
                 dataNasc = pacienteDAO2.getDataNasc();
                 return "ok";
             }else{
-                setMensagemRetornoErro("Usuário não cadastrado.");
+                setMensagemRetornoErro("Usuário não cadastrado.", 6);
                 return "error";
             }
         }catch(Exception e){
-            setMensagemRetornoErro("Usuário não cadastrado.");
+            setMensagemRetornoErro("Usuário não cadastrado.", 6);
             return "error";
         }
     }    
     
     public String alterarPaciente(){
-        if(nome.equalsIgnoreCase("") || dataNasc == null || logradouro.equalsIgnoreCase("")
-               || numero.equalsIgnoreCase("") || bairro.equalsIgnoreCase("") ||
-              cidade.equalsIgnoreCase("") || uf.equalsIgnoreCase("")){
-           setMensagemRetornoErro("preencha todos os campos corretamente");
-           return "error";
+        if(nome.length() < 3){
+            setMensagemRetornoErro("Forneça um nome válido!", 0);
+            return "error";
+        }else if(dataNasc == null) {
+            setMensagemRetornoErro("Forneça uma data válida!", 1);
+            return "error";
+        }else if(logradouro.length() < 3){
+            setMensagemRetornoErro("Forneça um nome de rua válido!", 2);
+            return "error";
+        }else if(numero.length() < 0){
+            try{
+                Integer.parseInt(numero);
+            }catch(Exception e){
+                setMensagemRetornoErro("Número inválido!", 3);
+                return "error";
+            }
+            setMensagemRetornoErro("Número inválido!", 3);
+            return "error";
+        }else if(bairro.length() < 3){
+            setMensagemRetornoErro("Forneça um nome de bairro válido!", 4);
+            return "error";
+        }else if(cidade.length() < 3){
+            setMensagemRetornoErro("Forneça um nome de cidade válido!", 5);
+            return "error";            
         }else{
             PacienteDAO p = new PacienteDAO(idPaciente, nome, dataNasc, logradouro, numero, bairro, cidade, uf);
             if (p.alterarPaciente()){
@@ -238,7 +282,7 @@ public class PacienteBean {
                 setMensagemRetornoOK("alteração realizada com sucesso");
                 return "ok";
             }else{
-                setMensagemRetornoErro("Erro ao alterar paciente");
+                setMensagemRetornoErro("Erro ao alterar paciente", 6);
                 return "erro";
             }
         }
@@ -261,7 +305,7 @@ public class PacienteBean {
             return "ok_alterar";
         }
         else{
-            setMensagemRetornoErro("Por favor, selecione um paciente");
+            setMensagemRetornoErro("Por favor, selecione um paciente", 6);
             return "error";
         }
     }    
@@ -276,8 +320,16 @@ public class PacienteBean {
         setNumero("");
         setIdPaciente(null);
         setUf("");
-        setMensagemRetornoErro("");
+        limparMensagemErro();
         setMensagemRetornoOK("");
+    }
+    
+    public void limparMensagemErro(){
+        int i = 0;
+        while(i < mensagemRetornoErro.length){
+            setMensagemRetornoErro(null, i);
+            i++;
+        }        
     }
     
     public String listar(){

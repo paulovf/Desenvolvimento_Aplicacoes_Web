@@ -176,27 +176,17 @@ public class PacienteDAO {
     }
 
     public void deletarPaciente(){
-        System.out.println("0");
         try{
-            System.out.println("1");
             if(conecta() != null){
-                System.out.println("2" + idPaciente);
                 Paciente p = conecta().find(Paciente.class, idPaciente);
-                System.out.println("3");
                 conecta().getTransaction().begin();
-                System.out.println("4");
                 conecta().remove(p);
-                System.out.println("5");
                 conecta().getTransaction().commit();
-                System.out.println("6");
             }
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
-                System.out.println("7");
                 conecta().getTransaction().rollback();
             }
-            e.printStackTrace();
-            System.out.println("8");
         }        
     }
     
@@ -217,7 +207,6 @@ public class PacienteDAO {
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
             }
-            e.printStackTrace();
         }        
         return null;
     }
