@@ -26,14 +26,13 @@
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="../home.jsp">Home</a>
+                        <a class="dropdown-toggle" href="../home.jsp">Home</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../paciente/cadastroPaciente.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="../paciente/alterarPaciente.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="../paciente/excluirPaciente.jsp">Excluir</a></li>
+                            <li><a tabindex="-1" href="../paciente/pesquisarPaciente.jsp">Pesquisar Paciente</a></li>
                             <li><a tabindex="-1" href="../paciente/listarPaciente.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -41,8 +40,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Médico</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../medico/cadastroMedico.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="../medico/alterarMedico.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="../medico/excluirMedico.jsp">Excluir</a></li>
+                            <li><a tabindex="-1" href="../medico/pesquisarMedico.jsp">Pesquisar Médico</a></li>
                             <li><a tabindex="-1" href="../medico/listarMedico.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -50,8 +48,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Exame</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="../exame/cadastroExame.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="../exame/alterarExame.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="../exame/excluirExame.jsp">Excluir</a></li>
+                            <li><a tabindex="-1" href="../exame/pesquisarExame.jsp">Pesquisar Exame</a></li>
                             <li><a tabindex="-1" href="../exame/listarExame.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -59,8 +56,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Agenda</a>
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="cadastroAgenda.jsp">Cadastro</a></li>
-                            <li><a tabindex="-1" href="alterarAgenda.jsp">Alterar</a></li>
-                            <li><a tabindex="-1" href="excluirAgenda.jsp">Excluir</a></li>
+                            <li><a tabindex="-1" href="pesquisarAgenda.jsp">Pesquisar Agenda</a></li>
                             <li><a tabindex="-1" href="listarAgenda.jsp">Listar</a></li>
                         </ul>
                     </li>
@@ -73,22 +69,28 @@
             </div>        
             <div class="container">
                 <f:view>
-                    <h3>Cadastro de Agendas:<br /><br />
+                    <h3>Cadastro de Agendas:</h3><br /><br />
+                    <h5>
                         <h:form id="cadastro" prependId="false">
-                            Médico: <h:inputText id="idMedico" value="#{Agenda.idMedico}"/><br />
-                            Paciente: <h:inputText id="idPaciente" value="#{Agenda.idPaciente}"/><br />
-                            Exame: <h:inputText id="idExame" value="#{Agenda.idExame}"/><br />
+                            Médico: <h:inputText id="idMedico" value="#{Agenda.idMedico}"/>&nbsp;&nbsp;
+                            <h:outputText value="#{Agenda.mensagemRetornoErro[0]}" style="color:#ff0000"/><br />
+                            Paciente: <h:inputText id="idPaciente" value="#{Agenda.idPaciente}"/>&nbsp;&nbsp;
+                            <h:outputText value="#{Agenda.mensagemRetornoErro[1]}" style="color:#ff0000"/><br />
+                            Exame: <h:inputText id="idExame" value="#{Agenda.idExame}"/>&nbsp;&nbsp;
+                            <h:outputText value="#{Agenda.mensagemRetornoErro[2]}" style="color:#ff0000"/><br />
                             Data e Hora: <h:inputText id="dataHora" value="#{Agenda.dataHora}">
                                      <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-                            </h:inputText><br />
-                            Resultado: <h:inputText id="resultado" value="#{Agenda.resultado}"/><br />
+                            </h:inputText>&nbsp;&nbsp;
+                            <h:outputText value="#{Agenda.mensagemRetornoErro[3]}" style="color:#ff0000"/><br />
+                            Resultado: <h:inputText id="resultado" value="#{Agenda.resultado}"/>&nbsp;&nbsp;
+                            <h:outputText value="#{Agenda.mensagemRetornoErro[4]}" style="color:#ff0000"/><br />
                             Observação: <h:inputText id="obs" value="#{Agenda.obs}"/><br /><br />
-                            <h:commandButton action="#{Agenda.cadastrarAgenda()}" value="Cadastrar Exame"/>
+                            <h:commandButton action="#{Agenda.cadastrarAgenda()}" value="Cadastrar Agenda"/>
                             &nbsp;&nbsp;
-                            <h:outputText value="#{Agenda.mensagemRetornoErro}" style="color:#ff0000"/>
+                            <h:outputText value="#{Agenda.mensagemRetornoErro[5]}" style="color:#ff0000"/>
                             <h:outputText value="#{Agenda.mensagemRetornoOK}" style="color:#00CC00"/>                            
                         </h:form>
-                    </h3>
+                    </h5>
                 </f:view>
             </div>            
         </div>

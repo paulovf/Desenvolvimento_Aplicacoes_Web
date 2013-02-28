@@ -31,7 +31,7 @@ public class AgendaBean {
     private PacienteBean pacienteBean;
     private MedicoBean medicoBean;
     private ExameBean exameBean;
-    private String mensagemRetornoErro, mensagemRetornoOK;
+    private String mensagemRetornoErro[] = new String[6], mensagemRetornoOK;
 
     public AgendaBean() {
     }
@@ -125,12 +125,12 @@ public class AgendaBean {
         this.agendaBeans = agendaBeans;
     }
 
-    public String getMensagemRetornoErro() {
+    public String[] getMensagemRetornoErro() {
         return mensagemRetornoErro;
     }
 
-    public void setMensagemRetornoErro(String mensagemRetornoErro) {
-        this.mensagemRetornoErro = mensagemRetornoErro;
+    public void setMensagemRetornoErro(String mensagemRetornoErro, Integer indice) {
+        this.mensagemRetornoErro[indice] = mensagemRetornoErro;
     }
 
     public String getMensagemRetornoOK() {
@@ -142,18 +142,43 @@ public class AgendaBean {
     }
 
     public String cadastrarAgenda() {
-        try{
-            AgendaDAO agenda = new AgendaDAO(dataHora, idPaciente, idMedico, idExame, obs, resultado);
-            if (agenda.cadastrarAgenda()){
-                limparDsdosAgenda();
-                setMensagemRetornoOK("Agenda Cadastrada com Sucesso");
-                return "ok";
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        limparMensagemErro();
+        if(idMedico == null){
+            setMensagemRetornoErro("selecione um médico!", 0);
+            return "error";
         }
-        setMensagemRetornoErro("Erro ao cadastrar Agenda!");
-        return "error";
+        if(idPaciente == null){
+            setMensagemRetornoErro("selecione um paciente!", 1);
+            return "error";
+        }
+        if(idExame == null){
+            setMensagemRetornoErro("selecione um exame!", 2);
+            return "error";
+        }if(dataHora == null){
+            setMensagemRetornoErro("Forneça uma data e hora para o agendamento!", 3);
+            return "error";
+        }if(resultado.length() <= 3){
+            setMensagemRetornoErro("Forneça um resultado!", 4);
+            return "error";
+        }else{
+            AgendaDAO agendaDAO = new AgendaDAO();
+            agendaDAO.setIdExame(idExame);
+            agendaDAO.setIdMedico(idMedico);
+            agendaDAO.setIdPaciente(idPaciente);
+            agendaDAO.setDataHora(dataHora);
+            agendaDAO.setObs(obs);
+            agendaDAO.setResultado(resultado);
+            if (agendaDAO.obterAgenda() == null){
+                agendaDAO.cadastrarAgenda();
+                limparDsdosAgenda();
+                setMensagemRetornoOK("Agenda cadastarda com sucesso!");
+                return "ok";
+            }else{
+                limparDsdosAgenda();
+                setMensagemRetornoErro("Agenda já cadastrada nesta data", 5);
+                return "error";
+            }
+        }
     }
 
     public DataModel<AgendaBean> obterAgendas() {
@@ -267,7 +292,15 @@ public class AgendaBean {
         setIdPaciente(null);
         setObs("");
         setResultado("");
-        setMensagemRetornoErro("");
         setMensagemRetornoOK("");
+        limparMensagemErro();
+    }
+    
+    public void limparMensagemErro(){
+        int i = 0;
+        while(i < mensagemRetornoErro.length){
+            mensagemRetornoErro[i] = null;
+            i++;
+        }
     }
 }
