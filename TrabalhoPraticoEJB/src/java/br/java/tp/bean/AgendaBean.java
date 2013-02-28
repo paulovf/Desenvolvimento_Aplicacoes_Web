@@ -174,7 +174,7 @@ public class AgendaBean {
                 
                 ExameBean exame = new ExameBean();
                 exame.setIdExame(a.getIdExame());
-                exameBean = exame.obterExames();
+                exameBean = exame.obterExames(exame.getNome());
                 
                 agenda.setPacienteBean(pacienteBean);
                 agenda.setMedicoBean(medicoBean);

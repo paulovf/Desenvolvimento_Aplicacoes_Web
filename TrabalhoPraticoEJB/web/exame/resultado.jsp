@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Lista de Exames</title>
+        <title>Pesquisar Exames</title>
         <link href="../css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="../css/bootstrap-responsive.css" rel="stylesheet" media="screen">
         <link href="../css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
@@ -21,8 +21,7 @@
     </head>
     <body>
         <script src="../js/jquery.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/mascara.js"></script>
+        <script src="../js/bootstrap.min.js"></script>        
         <div class="container">
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
@@ -71,47 +70,21 @@
             <div class="container">
                 <f:view>
                     <h:form>
-                    <h3>Relação de Exames:</h3><br /><br />
+                    <h3>Pesquisar Exame:</h3><br />
                         <h5>
-                            <h:dataTable id="listaExames" 
-                                         value="#{Exame.listarExames()}" var="ex"
-                                     border="2" width="100%" cellpadding="2" cellspacing="2">
-                                <f:facet name="header">
-                                    <h:outputText value="Lista de Exames"/>
-                                </f:facet>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value=""/>
-                                    </f:facet>
-                                    <h:commandLink action="#{Exame.removerExame(ex.idExame)}">
-                                        <img src="../img/excluir.png" border="0" width="20" height="20" />
-                                    </h:commandLink>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="ID"/>
-                                    </f:facet>                            
-                                    <h:outputText value="#{ex.idExame}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Nome"/>
-                                    </f:facet>
-                                    <h:commandLink action="#{Exame.loadExame(ex.nome)}">
-                                        <h:outputText value="#{ex.nome}" />
-                                    </h:commandLink>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Valor"/>
-                                    </f:facet>
-                                    R$: <h:outputText value="#{ex.valor}" />
-                                </h:column>                                        
-                            </h:dataTable>
+                            <ul>
+                                <li><u>Nome:</u> &nbsp;&nbsp;&nbsp;<h:outputText id="nome" value="#{Exame.nome}" /></li>
+                                <li><u>Valor: R$: </u> &nbsp;&nbsp;&nbsp;<h:outputText id="valor" value="#{Exame.valor}" /></li>
+                            </ul>
                         </h5>
-                        <br /><br />
-                        <h:outputText value="#{Exame.mensagemRetornoErro[2]}" style="color:#ff0000"/>
+                        <h:commandButton action="alterarExame.jsp" value="Alterar"/>&nbsp;&nbsp;&nbsp;
+                        <h:commandButton action="#{Exame.removerExame(Exame.idExame)}" value="Excluir"/>
+                        <h:outputText value="#{Exame.mensagemRetornoErro[6]}" style="color:#ff0000"/>
                         <h:outputText value="#{Exame.mensagemRetornoOK}" style="color:#00CC00"/>
+                        <br /><br />
+                        <h:commandLink action="pesquisarExame.jsp">
+                            <img src="../img/voltar.jpg" border="0" width="190" height="33" />
+                        </h:commandLink>                         
                     </h:form>
                 </f:view>
             </div>            

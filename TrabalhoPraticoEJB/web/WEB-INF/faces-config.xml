@@ -48,15 +48,46 @@
 
     <!-- Regras de mapeamento para cadastro de exames-->
     <navigation-rule>
-            <from-view-id>/exame/cadastroExame.jsp</from-view-id>
+            <from-view-id>/exame/listarExame.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok_alterar</from-outcome>
+                    <to-view-id>/exame/alterarExame.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/exame/alterarExame.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/exame/listarExame.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>    
+    <navigation-rule>
+            <from-view-id>/exame/pesquisarExame.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/exame/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/exame/resultado.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/exame/pesquisarExame.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/exame/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/exame/cadastrarExame.jsp</from-view-id>
             <navigation-case>
                     <from-outcome>ok</from-outcome>
                     <to-view-id>/home.jsp</to-view-id>
             </navigation-case>
-            
             <navigation-case>
-                    <from-outcome>/error</from-outcome>
-                    <to-view-id>/exame/cadastroExame.jsp</to-view-id>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/exame/cadastrarExame.jsp</to-view-id>
             </navigation-case>
     </navigation-rule>
     

@@ -18,7 +18,7 @@ public class ExameBean {
     private Integer idExame;
     private boolean achou;
     private List<ExameBean> exameBeans = new ArrayList();
-    private String mensagemRetornoErro, mensagemRetornoOK;
+    private String mensagemRetornoErro[] = new String[3], mensagemRetornoOK;
 
     public ExameBean() {
     }
@@ -53,12 +53,12 @@ public class ExameBean {
         this.idExame = idExame;
     }
 
-    public String getMensagemRetornoErro() {
+    public String[] getMensagemRetornoErro() {
         return mensagemRetornoErro;
     }
 
-    public void setMensagemRetornoErro(String mensagemRetornoErro) {
-        this.mensagemRetornoErro = mensagemRetornoErro;
+    public void setMensagemRetornoErro(String mensagemRetornoErro, Integer indice) {
+        this.mensagemRetornoErro[indice] = mensagemRetornoErro;
     }
 
     public String getMensagemRetornoOK() {
@@ -86,36 +86,36 @@ public class ExameBean {
     }
     
     public String cadastrarExame(){
-        if(nome.equalsIgnoreCase("")){
-            limparDadosExame();
-            setMensagemRetornoErro("Forneça um nome válido");
-            return "error";
-        }else if (valor <= 0.0){
-            limparDadosExame();
-            setMensagemRetornoErro("Forneça um valor válido");
+        limparMensagemErro();
+        if(nome.length() < 3){
+            setMensagemRetornoErro("Forneça um nome válido", 0);
             return "error";
         }
-        else{
-                if (validarExame().equals("ok")){
-                    ExameDAO exameDAO = new ExameDAO();
-                    exameDAO.setIdExame(null);
-                    exameDAO.setNome(nome);
-                    exameDAO.setValor(valor);
-                    exameDAO.cadastrarExame();
-                    limparDadosExame();
-                    setMensagemRetornoOK("Exame cadastrado com sucesso!");
-                    return "ok";
-                }else{
-                    limparDadosExame();
-                    setMensagemRetornoErro("Exame já cadastrado");
-                    return "error";
-                }
+        if(valor <= 0.0){
+            setMensagemRetornoErro("Forneça um valor válido!", 1);
+            return "error";
+        }else{
+            ExameDAO exameDAO = new ExameDAO();
+            exameDAO.setIdExame(null);
+            exameDAO.setValor(valor);
+            exameDAO.setNome(nome);
+            if (exameDAO.getExame() == null){
+                exameDAO.cadastrarExame();
+                limparDadosExame();
+                setMensagemRetornoOK("Exame cadastardo com sucesso!");
+                return "ok";
+            }else{
+                limparDadosExame();
+                setMensagemRetornoErro("Exame já cadastrado", 2);
+                return "error";
+            }
         }
     }
     
-    public List<ExameBean> listarExame(){
+    public List<ExameBean> listarExames(){
+        limparDadosExame();
         ExameDAO exameDAO = new ExameDAO();
-        if (exameDAO.getIdExame()!=null){
+        if (exameDAO.getExames()!=null){
             List<ExameBean> exameBean = new ArrayList();
             for (ExameDAO e: exameDAO.getExames()){
                 exameBean.add(new ExameBean(e.getNome(), e.getValor(), e.getIdExame()));
@@ -130,36 +130,86 @@ public class ExameBean {
         exameDAO.deletarExame();
     }
     
-    public ExameBean obterExames(){
-        ExameDAO e = new ExameDAO(idExame);
+    public ExameBean obterExames(String nome){
+        limparDadosExame();
+        ExameDAO e = new ExameDAO(nome);
+        e = e.getExame();
         return new ExameBean(e.getNome(), e.getValor(), e.getIdExame());
     }
     
-    public String validarExame(){
-        ExameDAO exameDAO = new ExameDAO(nome, valor, idExame);
-        ExameDAO exameDAO2 = exameDAO.getExame();
-        if(exameDAO2 != null){
+    public String obterExame(){
+        try{
+            ExameDAO e = new ExameDAO(nome);
+            ExameDAO exameDAO2 = e.getExame();
+            if (exameDAO2.getIdExame() != null){
+                idExame = exameDAO2.getIdExame();
+                nome = exameDAO2.getNome();
+                valor = exameDAO2.getValor();
+                return "ok";
+            }else{
+                setMensagemRetornoErro("Exame não cadastrado.", 2);
+                return "error";
+            }
+        }catch(Exception e){
+            setMensagemRetornoErro("Exame não cadastrado.", 2);
             return "error";
         }
-        else{
-            return "ok";
+    }    
+    
+    public String alterarExame(){
+        limparMensagemErro();
+        if(nome.length() < 3){
+            setMensagemRetornoErro("Forneça um nome válido", 0);
+            return "error";
+        }
+        if(valor <= 0){
+            setMensagemRetornoErro("Forneça um valor válido!", 1);
+            return "error";
+        }else{
+            ExameDAO e = new ExameDAO(nome, valor, idExame);
+            if (e.alterarExame()){
+                limparDadosExame();
+                setMensagemRetornoOK("alteração realizada com sucesso");
+                return "ok";
+            }else{
+                setMensagemRetornoErro("Erro ao alterar Exame", 2);
+                return "erro";
+            }
         }
     }
+    
+    public String loadExame(String nome){
+        limparDadosExame();
+        ExameDAO exameDAO = new ExameDAO(nome);
+        ExameDAO e = exameDAO.getExame();
+        if(e != null){
+            limparDadosExame();
+            idExame = e.getIdExame();
+            this.nome = e.getNome();
+            valor = e.getValor();
+            return "ok_alterar";
+        }
+        else{
+            setMensagemRetornoErro("Por favor, selecione um Exame", 2);
+            return "error";
+        }
+    }    
        
     public void limparDadosExame(){
         setIdExame(null);
         setNome("");
         setValor(0);
-        setMensagemRetornoOK("");
-        setMensagemRetornoErro("");
+        limparMensagemErro();
     }
     
-    public String listar(){
-        return "listar";
-    }    
-    
-    public void alterarExame(){
-        ExameDAO e = new ExameDAO(nome, valor, idExame);
-        e.alterarExame();
+    public void limparMensagemErro(){
+        int i = 0;
+        while(i < mensagemRetornoErro.length){
+            mensagemRetornoErro[i] = null;
+            i++;
+        }
     }
+     
+    
+
 }

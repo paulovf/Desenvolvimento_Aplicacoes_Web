@@ -27,6 +27,10 @@ public class ExameDAO {
         this.idExame = idExame;
     }
 
+    public ExameDAO(String nome) {
+        this.nome = nome;
+    }
+
     public ExameDAO(String nome, float valor, Integer idExame) {
         this.nome = nome;
         this.valor = valor;
@@ -87,7 +91,7 @@ public class ExameDAO {
         }
     }
     
-    public void alterarExame(){
+    public boolean alterarExame(){
         try{
             if(conecta() != null){
                 Exame e = conecta().find(Exame.class, idExame);
@@ -97,12 +101,15 @@ public class ExameDAO {
                 conecta().getTransaction().begin();
                 conecta().persist(e);
                 conecta().getTransaction().commit();
+                return true;
             }
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
-            }                                
-        }          
+            }
+            return false;
+        }
+        return false;
     }
 
     public void deletarExame(){
