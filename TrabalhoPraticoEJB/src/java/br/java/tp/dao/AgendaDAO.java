@@ -122,10 +122,18 @@ public class AgendaDAO{
         }
     }
 
-    public List<AgendaDAO> obterAgendas() {
+    public List<AgendaDAO> obterAgendas(Date dataInicial, Date dataFinal) {
         EntityManager em = conecta();
         try {
-            Query q = em.createQuery("SELECT a FROM Agenda a");
+            String consulta;
+            Query q;
+            if (dataInicial != null) {
+                consulta = "SELECT a FROM Agenda a WHERE dataHora BETWEEN :dataInicio AND :dataFinal";
+                q = em.createQuery(consulta).setParameter("dataInicio", dataInicial).setParameter("dataFinal", dataFinal);
+            } else {
+                consulta = "SELECT a FROM Agenda a";
+                q = em.createQuery(consulta);
+            }
             List<Agenda> a = q.getResultList();
             List<AgendaDAO> agenda = new ArrayList<AgendaDAO>();
             for (Agenda ag : a) {
@@ -158,6 +166,7 @@ public class AgendaDAO{
         }catch(Exception e){
             if(conecta().getTransaction().isActive()){
                 conecta().getTransaction().rollback();
+                e.printStackTrace();
             }                
         }
         
