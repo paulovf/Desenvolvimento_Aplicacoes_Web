@@ -4,6 +4,7 @@
  */
 package br.java.tp.bean;
 
+import br.java.tp.classes.AgendaRelatorio;
 import br.java.tp.dao.AgendaDAO;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,6 +22,7 @@ import javax.faces.model.ListDataModel;
  * @author paulo
  */
 public class AgendaBean {
+    private AgendaRelatorio agendaRelatorio = new AgendaRelatorio();
     private Date dataHora;
     private Integer idPaciente;
     private Integer idMedico;
@@ -141,6 +143,14 @@ public class AgendaBean {
         this.mensagemRetornoOK = mensagemRetornoOK;
     }
 
+    public AgendaRelatorio getAgendaRelatorio() {
+        return agendaRelatorio;
+    }
+
+    public void setAgendaRelatorio(AgendaRelatorio agendaRelatorio) {
+        this.agendaRelatorio = agendaRelatorio;
+    }
+
     public String cadastrarAgenda() {
         limparMensagemErro();
         if(idMedico == null){
@@ -180,16 +190,38 @@ public class AgendaBean {
         }
     }
 
-    public DataModel<AgendaBean> obterAgendas(Date dataInicial, Date dataFinal) {
+    public DataModel<AgendaBean> listaAgendas() {
         AgendaDAO agendaDAO = new AgendaDAO();
-        List<AgendaDAO> a = agendaDAO.obterAgendas(dataInicial, dataFinal);
-        if (a != null) {
-            for(AgendaDAO ag: a){
-                agendaBeans.add(new AgendaBean(ag.getDataHora(), ag.getIdPaciente(), ag.getIdMedico(), ag.getIdExame(), 
-                        ag.getObs(), ag.getResultado()));
+
+        List<AgendaDAO> listaAgenda = agendaDAO.obterAgendas(agendaRelatorio.getDataInicial(), agendaRelatorio.getDataFinal());
+        if (listaAgenda != null) {
+            agendaBeans.removeAll(agendaBeans);
+            for (AgendaDAO a : listaAgenda) {
+                AgendaBean ag = new AgendaBean(a.getDataHora(), a.getIdPaciente(), a.getIdMedico(), a.getIdExame(),
+                        a.getObs(), a.getResultado());
+
+                PacienteBean p = new PacienteBean();
+                p.setIdPaciente(a.getIdPaciente());
+                pacienteBean = p.obterPaciente(null);
+
+                ExameBean e = new ExameBean();
+                e.setIdExame(a.getIdExame());
+                exameBean = e.obterExames(null);
+                
+                MedicoBean m = new MedicoBean();
+                m.setIdMedico(a.getIdMedico());
+                medicoBean = m.obterMedico(null);                
+
+                ag.setPacienteBean(pacienteBean);
+                ag.setExameBean(exameBean);
+                ag.setMedicoBean(medicoBean);
+
+                agendaBeans.add(ag);
             }
+            //this.valor = calcula();
             return new ListDataModel(agendaBeans);
         }
+
         return null;
     }
 

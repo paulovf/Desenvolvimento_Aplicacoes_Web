@@ -71,55 +71,20 @@
             <div class="container">
                 <f:view>
                     <h:form>
-                    <h3>Relatório de Exames:</h3><br /><br />
+                        <h3>Relatório de Consultas:</h3><br /><br />
                         <h5>
-                            <h:dataTable id="listaExames" 
-                                         value="#{Agenda.listaAgendas()}" var="ag"
-                                     border="2" width="100%" cellpadding="2" cellspacing="2">
-                                <f:facet name="header">
-                                    <h:outputText value="Relatório de Agendas por período"/>
-                                </f:facet>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Data e Hora"/>
-                                    </f:facet>
-                                    <h:outputText value="#{ag.dataHora}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Médico"/>
-                                    </f:facet>                            
-                                    <h:outputText value="#{ag.medicoBean.idMedico}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Paciente"/>
-                                    </f:facet>
-                                    <h:outputText value="#{ag.pacienteBean.idPaciente}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Exame"/>
-                                    </f:facet>
-                                    <h:outputText value="#{ag.exameBean.idExame}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Resultado "/>
-                                    </f:facet>
-                                    <h:outputText value="#{ag.resultado}" />
-                                </h:column>                                  
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Obs: "/>
-                                    </f:facet>
-                                    <h:outputText value="#{ag.obs}" />
-                                </h:column>                                  
-                            </h:dataTable>
-                        </h5>
-                        <br /><br />
-                        <h:outputText value="#{Agenda.mensagemRetornoErro[2]}" style="color:#ff0000"/>
+                            Data e Hora Inicial: <h:inputText id="dataHoraI" value="#{Agenda.agendaRelatorio.dataInicial}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </h:inputText><br />
+                            Data e Hora Final: <h:inputText id="dataHoraF" value="#{Agenda.agendaRelatorio.dataFinal}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </h:inputText><br/>
+                            Relatório de Valores<h:selectBooleanCheckbox id="total" value="#{Agenda.agendaRelatorio.tipoRelatorio}"/><br /><br />
+                            <h:commandButton action="#{Agenda.agendaRelatorio.relatorio()}" value="Pesquisar"/>
+                            &nbsp;&nbsp;&nbsp;
+                        <h:outputText value="#{Agenda.mensagemRetornoErro[5]}" style="color:#ff0000"/>
                         <h:outputText value="#{Agenda.mensagemRetornoOK}" style="color:#00CC00"/>
+                        </h5>
                     </h:form>
                 </f:view>
             </div>            

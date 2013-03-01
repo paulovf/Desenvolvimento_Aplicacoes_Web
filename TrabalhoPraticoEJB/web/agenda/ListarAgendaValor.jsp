@@ -70,18 +70,54 @@
             </div>        
             <div class="container">
                 <f:view>
-                    <h:form><%--
-                        <h3>Relatório de Consultas:</h3><br /><br />
+                    <h:form>
+                    <h3>Relatório de Exames:</h3><br /><br />
                         <h5>
-                            Data e Hora Inicial: <h:inputText id="dataHoraI" value="#{Agenda.}">
-                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/><br />
-                            Data e Hora Final: <h:inputText id="dataHoraF" value="#{Agenda.dFinal}">
-                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/><br /><br />
-                            <h:commandButton action="#{Agenda.obterAgendas(Agenda.dInicial, Agenda.dFinal)}" value="Pesquisar"/>
-                            &nbsp;&nbsp;&nbsp;
-                        <h:outputText value="#{Paciente.mensagemRetornoErro[6]}" style="color:#ff0000"/>
-                        <h:outputText value="#{Paciente.mensagemRetornoOK}" style="color:#00CC00"/>
-                        </h5>--%>
+                            <h:dataTable id="listaExames" 
+                                         value="#{Agenda.agendaBeans}" var="ag"
+                                     border="2" width="100%" cellpadding="2" cellspacing="2">
+                                <f:facet name="header">
+                                    <h:outputText value="Relatório de Agendas por valor"/>
+                                </f:facet>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Data e Hora"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ag.dataHora}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Médico"/>
+                                    </f:facet>                            
+                                    <h:outputText value="#{ag.idMedico}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Paciente"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ag.idPaciente}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Exame"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ag.idExame}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Valor"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ag.exameBean.valor}"/>
+                                </h:column>
+                        
+                                <f:facet name="footer">
+                                    <h:outputLabel value="Total: #{Relatorio.valor}"/>
+                                </f:facet>                                 
+                            </h:dataTable>
+                        </h5>
+                        <br /><br />
+                        <h:outputText value="#{Agenda.mensagemRetornoErro[2]}" style="color:#ff0000"/>
+                        <h:outputText value="#{Agenda.mensagemRetornoOK}" style="color:#00CC00"/>
                     </h:form>
                 </f:view>
             </div>            

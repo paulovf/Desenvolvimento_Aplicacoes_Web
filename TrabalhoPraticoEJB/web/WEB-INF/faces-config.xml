@@ -49,6 +49,26 @@
                 <redirect></redirect>
             </navigation-case>             
     </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/agenda/pesquisarAgenda.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/agenda/listarAgenda.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                    <from-outcome>ok_valor</from-outcome>
+                    <to-view-id>/agenda/listarAgendaValor.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/agenda/pesquisarAgenda.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>login</from-outcome>
+                <to-view-id>/index.jsp</to-view-id>
+                <redirect></redirect>
+            </navigation-case>             
+    </navigation-rule>    
 
     <!-- Regras de mapeamento para cadastro de exames-->
     <navigation-rule>

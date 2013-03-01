@@ -122,7 +122,7 @@ public class AgendaDAO{
         }
     }
 
-    public List<AgendaDAO> obterAgendas(Date dataInicial, Date dataFinal) {
+    public List<AgendaDAO> obterAgendas(String dataInicial, String dataFinal) {
         EntityManager em = conecta();
         try {
             String consulta;
