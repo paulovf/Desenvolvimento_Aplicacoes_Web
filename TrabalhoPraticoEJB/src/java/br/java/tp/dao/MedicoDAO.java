@@ -147,7 +147,26 @@ public class MedicoDAO {
         } catch (Exception e){
             return null;
         }
-    }  
+    }
+    
+    public MedicoDAO getMedico2(){
+        try{
+            EntityManager em = conecta();
+            if (em!=null){
+                String consulta = "SELECT m FROM Medico m WHERE m.nome="+nome;
+                Query q = em.createQuery(consulta);
+                List<Medico> resultado = q.getResultList();
+                MedicoDAO medico = new MedicoDAO();
+                for (Medico m: resultado){
+                    medico = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico());
+                }
+                return medico;
+            }
+            return null;
+        } catch (Exception e){
+            return null;
+        }
+    }     
     
     public List<MedicoDAO> getMedicos(){
         try{

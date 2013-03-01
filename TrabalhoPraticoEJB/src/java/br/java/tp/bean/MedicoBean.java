@@ -98,7 +98,6 @@ public class MedicoBean {
     }
         
     public String cadastrarMedico(){
-        limparDadosMedico();
         if(nome.length() < 3){
             setMensagemRetornoErro("Forneça um nome válido", 0);
             return "error";
@@ -119,7 +118,7 @@ public class MedicoBean {
             medicoDAO.setIdMedico(null);
             medicoDAO.setCrm(crm);
             medicoDAO.setNome(nome);
-            if (medicoDAO.getMedico() == null){
+            if (medicoDAO.getMedico2() == null){
                 medicoDAO.cadastrarMedico();
                 limparDadosMedico();
                 setMensagemRetornoOK("Médico cadastardo com sucesso!");
@@ -155,6 +154,15 @@ public class MedicoBean {
         MedicoDAO m = new MedicoDAO(idMedico);
         m = m.getMedico();
         return new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico());
+    }
+    
+    public String obterMedico2(){
+        limparDadosMedico();
+        MedicoDAO m = new MedicoDAO(idMedico);
+        if (m.getMedico() != null)            
+            return "ok";
+        else
+            return "error";
     }
     
     public String alterarMedico(){
@@ -201,6 +209,11 @@ public class MedicoBean {
             setMensagemRetornoErro("Por favor, selecione um Médico", 2);
             return "error";
         }
+    }
+    
+    public String getNomeMedico(Integer idMedico){
+        MedicoDAO m = new MedicoDAO(idMedico);
+        return m.getMedico().getNome();
     }
        
     public void limparDadosMedico(){

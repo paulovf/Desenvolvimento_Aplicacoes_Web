@@ -145,7 +145,26 @@ public class ExameDAO {
         } catch (Exception e){
             return null;
         }
-    }   
+    }
+    
+    public ExameDAO getExame2(){
+        try{
+            EntityManager em = conecta();
+            if (em!=null){
+                String consulta = "SELECT e FROM Exame e WHERE e.nome="+nome;
+                Query q = em.createQuery(consulta);
+                List<Exame> resultado = q.getResultList();
+                ExameDAO exame = new ExameDAO();
+                for (Exame e: resultado){
+                    exame = new ExameDAO(e.getNome(), e.getValor(), e.getIdExame());
+                }
+                return exame;
+            }
+            return null;
+        } catch (Exception e){
+            return null;
+        }
+    }     
     
     public List<ExameDAO> getExames(){
         try{

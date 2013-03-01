@@ -204,7 +204,7 @@ public class AgendaBean {
             agendaDAO.setObs(obs);
             agendaDAO.setResultado(resultado);
             if (agendaDAO.cadastrarAgenda()){
-                limparDsdosAgenda();
+                limparDsdosAgenda();                
                 setMensagemRetornoOK("Agenda cadastarda com sucesso!");
                 return "ok";
             }else{
@@ -233,21 +233,26 @@ public class AgendaBean {
             for (AgendaDAO a : listaAgenda) {
                 AgendaBean ag = new AgendaBean(a.getDataHora(), a.getIdPaciente(), a.getIdMedico(), a.getIdExame(),
                         a.getObs(), a.getResultado());
+                
                 try{
-                    PacienteBean p = new PacienteBean(a.getIdPaciente());
-                    MedicoBean m = new MedicoBean(a.getIdMedico());
-                    ExameBean e = new ExameBean(a.getIdExame());
+                    System.out.println(ag.getIdExame());                    
+                    exameBean = new ExameBean(ag.getIdExame());
+                    pacienteBean = new PacienteBean(ag.getIdPaciente());
+                    medicoBean = new MedicoBean(ag.getIdMedico());
 
-                    ag.setPacienteBean(p.obterPaciente());
-                    ag.setExameBean(e.obterExames());
-                    ag.getExameBean().setValor(e.getValor());
-                    ag.setMedicoBean(m.obterMedico());
+                    PacienteBean p = pacienteBean.obterPaciente();
+                    MedicoBean m = medicoBean.obterMedico();
+                    ExameBean e = exameBean.obterExames();
+                    
+                    System.out.println("----" + e.getValor());
 
+                    ag.setPacienteBean(p);
+                    ag.setMedicoBean(m);
+                    ag.setExameBean(e);
                     agendaBeans.add(ag);
-
                 }catch(Exception e){
                     e.printStackTrace();
-                }
+                }                
             }
             total = calcula();
             return new ListDataModel(agendaBeans);

@@ -87,21 +87,21 @@
                                 </h:column>                                
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Paciente"/>
-                                    </f:facet>
-                                    <h:outputText value="#{ag.idPaciente}" />
+                                        <h:outputText value="Médico"/>
+                                    </f:facet>                            
+                                    <h:outputText value="#{Medico.getNomeMedico(ag.idMedico)}" />
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Médico"/>
+                                        <h:outputText value="Paciente"/>
                                     </f:facet>
-                                    <h:outputText value="#{ag.idMedico}" />
-                                </h:column>                                
+                                    <h:outputText value="#{Paciente.getNomePaciente(ag.idPaciente)}" />
+                                </h:column>
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="Exame"/>
                                     </f:facet>
-                                    <h:outputText value="#{ag.idExame}" />
+                                    <h:outputText value="#{Exame.getNomeExame(ag.idExame)}" />
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">

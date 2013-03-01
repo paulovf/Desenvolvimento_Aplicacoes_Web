@@ -36,14 +36,6 @@
     <navigation-rule>
             <from-view-id>/agenda/cadastroAgenda.jsp</from-view-id>
             <navigation-case>
-                    <from-outcome>ok</from-outcome>
-                    <to-view-id>/agenda/cadastroAgenda.jsp</to-view-id>
-            </navigation-case>            
-            <navigation-case>
-                    <from-outcome>error</from-outcome>
-                    <to-view-id>/agenda/cadastroAgenda.jsp</to-view-id>
-            </navigation-case>
-            <navigation-case>
                 <from-outcome>login</from-outcome>
                 <to-view-id>/index.jsp</to-view-id>
                 <redirect></redirect>
@@ -111,6 +103,24 @@
                 <redirect></redirect>
             </navigation-case>             
     </navigation-rule>
+   <navigation-rule>
+            <from-view-id>/exame/pesquisarExame.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/exame/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/exame/resultado.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/exame/pesquisarExame.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/exame/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>    
     
     <!-- Regras de mapeamento para cadastro de paciente-->
     <navigation-rule>
@@ -152,7 +162,25 @@
                 <to-view-id>/index.jsp</to-view-id>
                 <redirect></redirect>
             </navigation-case>   
-    </navigation-rule>    
+    </navigation-rule>
+   <navigation-rule>
+            <from-view-id>/paciente/pesquisarPaciente.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/paciente/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/paciente/resultado.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/paciente/pesquisarPaciente.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/paciente/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>  
 
     <!-- Regras de mapeamento para cadastro de médico-->
     <navigation-rule>
@@ -195,6 +223,24 @@
                 <redirect></redirect>
             </navigation-case>             
     </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/medico/pesquisarMedico.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/medico/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+            <from-view-id>/medico/resultado.jsp</from-view-id>
+            <navigation-case>
+                    <from-outcome>ok</from-outcome>
+                    <to-view-id>/medico/pesquisarMedico.jsp</to-view-id>
+            </navigation-case>
+            <navigation-case>
+                    <from-outcome>error</from-outcome>
+                    <to-view-id>/medico/resultado.jsp</to-view-id>
+            </navigation-case>
+    </navigation-rule>    
     
     <!-- Regras de mapeamento para cadastro de ussuários-->
     <navigation-rule>

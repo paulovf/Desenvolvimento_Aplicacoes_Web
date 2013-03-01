@@ -27,7 +27,7 @@
                     <h3>Login no Sistema:<br /><br />
                         <h:form id="cadastro" prependId="false">
                             Login <h:inputText id="nome" value="#{Usuarios.login}" maxlength="60" /><br />
-                            Senha <h:inputText id="crm" value="#{Usuarios.senha}" maxlength="15" /><br /><br />
+                            Senha <h:inputSecret id="crm" value="#{Usuarios.senha}" maxlength="15" /><br /><br />
                             <h:commandButton action="#{Usuarios.validarLogin()}" value="Login"/>
                             &nbsp;&nbsp;
                             <h:outputText value="#{Usuarios.mensagemRetornoErro}" style="color:#ff0000"/>

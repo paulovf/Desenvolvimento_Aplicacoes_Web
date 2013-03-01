@@ -210,6 +210,26 @@ public class PacienteDAO {
         }
     }
     
+    public PacienteDAO getPaciente2(){
+       try{
+            EntityManager em = conecta();
+            if (em!=null){
+                String consulta = "SELECT p FROM Paciente p WHERE p.nome="+nome;
+                Query q = em.createQuery(consulta);
+                List<Paciente> resultado = q.getResultList();
+                PacienteDAO paciente = new PacienteDAO();
+                for (Paciente p: resultado){
+                    paciente = new PacienteDAO(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 
+                            p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
+                }
+                return paciente;
+            }
+            return null;
+        } catch (Exception e){
+            return null;
+        }
+    }    
+    
     public List<PacienteDAO> getPacientes(){
         try{
             if(conecta() != null){

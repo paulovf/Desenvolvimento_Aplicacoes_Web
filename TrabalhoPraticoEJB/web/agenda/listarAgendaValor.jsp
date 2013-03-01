@@ -89,30 +89,33 @@
                                     <f:facet name="header">
                                         <h:outputText value="Médico"/>
                                     </f:facet>                            
-                                    <h:outputText value="#{ag.idMedico}" />
+                                    <h:outputText value="#{Medico.getNomeMedico(ag.idMedico)}" />
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="Paciente"/>
                                     </f:facet>
-                                    <h:outputText value="#{ag.idPaciente}" />
+                                    <h:outputText value="#{Paciente.getNomePaciente(ag.idPaciente)}" />
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="Exame"/>
                                     </f:facet>
-                                    <h:outputText value="#{ag.idExame}" />
+                                    <h:outputText value="#{Exame.getNomeExame(ag.idExame)}" />
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="Valor"/>
                                     </f:facet>
                                     <h:outputText value="#{ag.exameBean.valor}"/>
-                                </h:column>
-                        
+                                </h:column>                      
                                 <f:facet name="footer">
-                                    <h:outputLabel value="Total: #{Agenda.total}"/>
-                                </f:facet>                                 
+                                    <h:outputText value="#{Agenda.total}">
+                                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" 
+                                                         minIntegerDigits="1" maxIntegerDigits="6" 
+                                                         groupingUsed="false" />                                                                        
+                                    </h:outputText>
+                                </f:facet>
                             </h:dataTable>
                         </h5>
                         <br /><br />
@@ -120,7 +123,7 @@
                         <h:outputText value="#{Agenda.mensagemRetornoOK}" style="color:#00CC00"/>
                     </h:form>
                 </f:view>
-            </div>            
+            </div>
         </div>
     </body>
-</html>                
+</html>

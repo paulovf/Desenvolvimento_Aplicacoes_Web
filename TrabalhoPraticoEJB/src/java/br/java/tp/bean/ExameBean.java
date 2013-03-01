@@ -98,7 +98,6 @@ public class ExameBean {
     }
     
     public String cadastrarExame(){
-        limparMensagemErro();
         if(nome.length() < 3){
             setMensagemRetornoErro("Forneça um nome válido", 0);
             return "error";
@@ -111,7 +110,7 @@ public class ExameBean {
             exameDAO.setIdExame(null);
             exameDAO.setValor(valor);
             exameDAO.setNome(nome);
-            if (exameDAO.getExame() == null){
+            if (exameDAO.getExame2() == null){
                 exameDAO.cadastrarExame();
                 limparDadosExame();
                 setMensagemRetornoOK("Exame cadastardo com sucesso!");
@@ -143,11 +142,18 @@ public class ExameBean {
     }
     
     public ExameBean obterExames(){
-        limparDadosExame();
         ExameDAO e = new ExameDAO(idExame);
         e = e.getExame();
         return new ExameBean(e.getNome(), e.getValor(), e.getIdExame());
     }
+    
+    public String obterExames2(){
+        ExameDAO e = new ExameDAO(idExame);
+        if (e.getExame() != null)
+            return "ok";
+        else
+            return "error";
+    }    
     
     public String alterarExame(){
         limparMensagemErro();
@@ -186,6 +192,11 @@ public class ExameBean {
             setMensagemRetornoErro("Por favor, selecione um Exame", 2);
             return "error";
         }
+    }
+    
+    public String getNomeExame(Integer idExame){
+        ExameDAO e = new ExameDAO(idExame);
+        return e.getExame().getNome();
     }    
        
     public void limparDadosExame(){

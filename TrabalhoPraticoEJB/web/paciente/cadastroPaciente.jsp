@@ -75,7 +75,7 @@
                         <h:form id="cadastro" prependId="false">
                             Nome: <h:inputText id="nome" value="#{Paciente.nome}" maxlength="60"/>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[0]}" style="color:#ff0000"/><br />
-                            Data de Nascimento: <h:inputText id="dataNasc" value="#{Paciente.dataNasc}" onkeypress="return dateMask(this, event);">
+                            Data de Nascimento: <h:inputText id="dataNasc" value="#{Paciente.dataNasc}">
                             <f:convertDateTime pattern="dd/mm/yyyy" />
                             </h:inputText>&nbsp;&nbsp;
                             <h:outputText value="#{Paciente.mensagemRetornoErro[1]}" style="color:#ff0000"/><br />

@@ -151,7 +151,6 @@ public class PacienteBean {
     }
         
     public String cadastrarPaciente(){
-        limparDadosPaciente();
         if(nome.length() < 3){
             setMensagemRetornoErro("Forneça um nome válido!", 0);
             return "error";
@@ -192,7 +191,7 @@ public class PacienteBean {
             pacienteDAO.setBairro(bairro);
             pacienteDAO.setCidade(cidade);
             pacienteDAO.setUf(uf);
-            if(pacienteDAO.getPaciente() == null){
+            if(pacienteDAO.getPaciente2() == null){
                 pacienteDAO.cadastrarPaciente();
                 limparDadosPaciente();
                 setMensagemRetornoOK("Paciente cadastrado com sucesso!");
@@ -231,7 +230,16 @@ public class PacienteBean {
         p = p.getPaciente();
         return new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(),
               p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
-    } 
+    }
+    
+    public String obterPaciente2(){
+        limparDadosPaciente();
+        PacienteDAO p = new PacienteDAO(nome);
+        if(p.getPaciente() != null)
+            return "ok";
+        else
+            return "error";
+    }    
     
     public String alterarPaciente(){
         if(nome.length() < 3){
@@ -292,6 +300,11 @@ public class PacienteBean {
             return "error";
         }
     }    
+    
+    public String getNomePaciente(Integer idPaciente){
+        PacienteDAO p = new PacienteDAO(idPaciente);
+        return p.getPaciente().getNome();
+    }     
     
     public void limparDadosPaciente(){
         setIdPaciente(null);
