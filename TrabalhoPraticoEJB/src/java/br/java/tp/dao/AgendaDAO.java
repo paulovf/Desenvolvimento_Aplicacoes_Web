@@ -124,28 +124,36 @@ public class AgendaDAO{
 
     public List<AgendaDAO> obterAgendas(String dataInicial, String dataFinal) {
         EntityManager em = conecta();
+        System.out.println(dataFinal);
+        System.out.println(dataInicial);
         try {
             String consulta;
             Query q;
+            System.out.println("00");
             if (dataInicial != null) {
                 consulta = "SELECT a FROM Agenda a WHERE dataHora BETWEEN :dataInicio AND :dataFinal";
                 q = em.createQuery(consulta).setParameter("dataInicio", dataInicial).setParameter("dataFinal", dataFinal);
+                System.out.println("11");
             } else {
                 consulta = "SELECT a FROM Agenda a";
                 q = em.createQuery(consulta);
+                System.out.println("22");
             }
             List<Agenda> a = q.getResultList();
             List<AgendaDAO> agenda = new ArrayList<AgendaDAO>();
+            System.out.println("33");
             for (Agenda ag : a) {
                 AgendaPK apk = ag.getAgendaPK();
                 agenda.add(new AgendaDAO(apk.getDataHora(), apk.getIdPaciente(), apk.getIdMedico(), apk.getIdExame(),
                         ag.getObs(), ag.getResultado()));
             }
+            System.out.println("44");
             return agenda;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
+            e.printStackTrace();
             return null;
         }
     }

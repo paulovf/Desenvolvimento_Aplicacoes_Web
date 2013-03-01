@@ -225,37 +225,13 @@ public class PacienteBean {
         pacienteDAO.deletarPaciente();
     }
     
-    public PacienteBean obterPaciente(String nome){
+    public PacienteBean obterPaciente(){
         limparDadosPaciente();
-        PacienteDAO p = new PacienteDAO(nome);
+        PacienteDAO p = new PacienteDAO(idPaciente);
         p = p.getPaciente();
         return new PacienteBean(p.getIdPaciente(), p.getNome(), p.getDataNasc(),
               p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
-    }
-    
-    public String obterPaciente(){
-        try{
-            PacienteDAO p = new PacienteDAO(nome);
-            PacienteDAO pacienteDAO2 = p.getPaciente();
-            if (pacienteDAO2.getIdPaciente() != null){
-                idPaciente = pacienteDAO2.getIdPaciente();
-                nome = pacienteDAO2.getNome();
-                logradouro = pacienteDAO2.getLogradouro();
-                numero = pacienteDAO2.getNumero();
-                bairro = pacienteDAO2.getBairro();
-                cidade = pacienteDAO2.getBairro();
-                uf = pacienteDAO2.getUf();
-                dataNasc = pacienteDAO2.getDataNasc();
-                return "ok";
-            }else{
-                setMensagemRetornoErro("Usuário não cadastrado.", 6);
-                return "error";
-            }
-        }catch(Exception e){
-            setMensagemRetornoErro("Usuário não cadastrado.", 6);
-            return "error";
-        }
-    }    
+    } 
     
     public String alterarPaciente(){
         if(nome.length() < 3){

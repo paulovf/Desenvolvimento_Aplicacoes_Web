@@ -73,14 +73,10 @@
                     <h:form>
                         <h3>Relatório de Consultas:</h3><br /><br />
                         <h5>
-                            Data e Hora Inicial: <h:inputText id="dataHoraI" value="#{Agenda.agendaRelatorio.dataInicial}" >
-                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-                            </h:inputText><br />
-                            Data e Hora Final: <h:inputText id="dataHoraF" value="#{Agenda.agendaRelatorio.dataFinal}" >
-                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-                            </h:inputText><br/>
-                            Relatório de Valores<h:selectBooleanCheckbox id="total" value="#{Agenda.agendaRelatorio.tipoRelatorio}"/><br /><br />
-                            <h:commandButton action="#{Agenda.agendaRelatorio.relatorio()}" value="Pesquisar"/>
+                            Data e Hora Inicial: <h:inputText id="dataHoraI" value="#{Agenda.dataInicial}" /><br />
+                            Data e Hora Final: <h:inputText id="dataHoraF" value="#{Agenda.dataFinal}" /><br/>
+                            Relatório de Valores<h:selectBooleanCheckbox id="total" value="#{Agenda.tipoRelatorio}"/><br /><br />
+                            <h:commandButton action="#{Agenda.relatorio()}" value="Pesquisar"/>
                             &nbsp;&nbsp;&nbsp;
                         <h:outputText value="#{Agenda.mensagemRetornoErro[5]}" style="color:#ff0000"/>
                         <h:outputText value="#{Agenda.mensagemRetornoOK}" style="color:#00CC00"/>

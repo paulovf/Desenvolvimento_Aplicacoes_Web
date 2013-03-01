@@ -130,24 +130,22 @@ public class ExameDAO {
     
     public ExameDAO getExame(){
         try{
-            if(conecta() != null){
-                Query q = conecta().createQuery("SELECT e FROM Exame e WHERE e.nome =:nome");
-                q.setParameter("nome", nome);
-                if (q.getSingleResult()!=null){
-                    Exame e = (Exame) q.getSingleResult();
-                    ExameDAO exameDAO = new ExameDAO(e.getNome(), e.getValor(), e.getIdExame());
-                    return exameDAO;
+            EntityManager em = conecta();
+            if (em!=null){
+                String consulta = "SELECT e FROM Exame e WHERE e.idExame="+idExame;
+                Query q = em.createQuery(consulta);
+                List<Exame> resultado = q.getResultList();
+                ExameDAO exame = new ExameDAO();
+                for (Exame e: resultado){
+                    exame = new ExameDAO(e.getNome(), e.getValor(), e.getIdExame());
                 }
+                return exame;
             }
             return null;
-        }catch(Exception e){
-            if(conecta().getTransaction().isActive()){
-                conecta().getTransaction().rollback();
-            }                
+        } catch (Exception e){
+            return null;
         }
-        
-        return null;
-    }
+    }   
     
     public List<ExameDAO> getExames(){
         try{

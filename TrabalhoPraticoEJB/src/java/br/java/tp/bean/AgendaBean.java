@@ -4,7 +4,6 @@
  */
 package br.java.tp.bean;
 
-import br.java.tp.classes.AgendaRelatorio;
 import br.java.tp.dao.AgendaDAO;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,14 +21,16 @@ import javax.faces.model.ListDataModel;
  * @author paulo
  */
 public class AgendaBean {
-    private AgendaRelatorio agendaRelatorio = new AgendaRelatorio();
+    private String dataInicial, dataFinal;
+    private boolean tipoRelatorio;
+    private float total;
     private Date dataHora;
     private Integer idPaciente;
     private Integer idMedico;
     private Integer idExame;
     private String obs;
     private String resultado;
-    private List<AgendaBean> agendaBeans = new ArrayList<AgendaBean>();
+    private List<AgendaBean> agendaBeans = new ArrayList();
     private PacienteBean pacienteBean;
     private MedicoBean medicoBean;
     private ExameBean exameBean;
@@ -143,13 +144,37 @@ public class AgendaBean {
         this.mensagemRetornoOK = mensagemRetornoOK;
     }
 
-    public AgendaRelatorio getAgendaRelatorio() {
-        return agendaRelatorio;
+    public String getDataInicial() {
+        return dataInicial;
     }
 
-    public void setAgendaRelatorio(AgendaRelatorio agendaRelatorio) {
-        this.agendaRelatorio = agendaRelatorio;
+    public void setDataInicial(String dataInicial) {
+        this.dataInicial = dataInicial;
     }
+
+    public String getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(String dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public boolean isTipoRelatorio() {
+        return tipoRelatorio;
+    }
+
+    public void setTipoRelatorio(boolean tipoRelatorio) {
+        this.tipoRelatorio = tipoRelatorio;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }    
 
     public String cadastrarAgenda() {
         limparMensagemErro();
@@ -189,41 +214,54 @@ public class AgendaBean {
             }
         }
     }
+    
+    public String relatorio() {
+        dataInicial = dataInicial.substring(6, 10) + "/" + dataInicial.substring(3, 5) + "/" + dataInicial.substring(0, 2);
+        dataFinal = dataFinal.substring(6, 10) + "/" + dataFinal.substring(3, 5) + "/" + dataFinal.substring(0, 2);
+        if (tipoRelatorio) {
+            return "ok_valor";
+        }
+        return "ok";
+    }    
 
     public DataModel<AgendaBean> listaAgendas() {
         AgendaDAO agendaDAO = new AgendaDAO();
 
-        List<AgendaDAO> listaAgenda = agendaDAO.obterAgendas(agendaRelatorio.getDataInicial(), agendaRelatorio.getDataFinal());
+        List<AgendaDAO> listaAgenda = agendaDAO.obterAgendas(dataInicial, dataFinal);
         if (listaAgenda != null) {
             agendaBeans.removeAll(agendaBeans);
             for (AgendaDAO a : listaAgenda) {
                 AgendaBean ag = new AgendaBean(a.getDataHora(), a.getIdPaciente(), a.getIdMedico(), a.getIdExame(),
                         a.getObs(), a.getResultado());
+                try{
+                    PacienteBean p = new PacienteBean(a.getIdPaciente());
+                    MedicoBean m = new MedicoBean(a.getIdMedico());
+                    ExameBean e = new ExameBean(a.getIdExame());
 
-                PacienteBean p = new PacienteBean();
-                p.setIdPaciente(a.getIdPaciente());
-                pacienteBean = p.obterPaciente(null);
+                    ag.setPacienteBean(p.obterPaciente());
+                    ag.setExameBean(e.obterExames());
+                    ag.getExameBean().setValor(e.getValor());
+                    ag.setMedicoBean(m.obterMedico());
 
-                ExameBean e = new ExameBean();
-                e.setIdExame(a.getIdExame());
-                exameBean = e.obterExames(null);
-                
-                MedicoBean m = new MedicoBean();
-                m.setIdMedico(a.getIdMedico());
-                medicoBean = m.obterMedico(null);                
+                    agendaBeans.add(ag);
 
-                ag.setPacienteBean(pacienteBean);
-                ag.setExameBean(exameBean);
-                ag.setMedicoBean(medicoBean);
-
-                agendaBeans.add(ag);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
-            //this.valor = calcula();
+            total = calcula();
             return new ListDataModel(agendaBeans);
         }
-
         return null;
     }
+    
+    public float calcula() {
+         float total = 0;
+         for (AgendaBean a : agendaBeans) {
+             total += a.getExameBean().getValor();
+         }
+         return total;
+     }    
 
     public String loadAgendamento() throws ParseException {
         Map parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();

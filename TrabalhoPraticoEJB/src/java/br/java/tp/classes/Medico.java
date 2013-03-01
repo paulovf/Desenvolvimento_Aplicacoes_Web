@@ -5,9 +5,7 @@
 package br.java.tp.classes;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,16 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Paulo Vitor
+ * @author paulo
  */
 @Entity
 @Table(name = "medico")
@@ -35,8 +31,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Medico.findByNome", query = "SELECT m FROM Medico m WHERE m.nome = :nome"),
     @NamedQuery(name = "Medico.findByCrm", query = "SELECT m FROM Medico m WHERE m.crm = :crm")})
 public class Medico implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medico")
-    private List<Agenda> agendaList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,15 +108,6 @@ public class Medico implements Serializable {
     @Override
     public String toString() {
         return "br.java.tp.classes.Medico[ idMedico=" + idMedico + " ]";
-    }
-
-    @XmlTransient
-    public List<Agenda> getAgendaList() {
-        return agendaList;
-    }
-
-    public void setAgendaList(List<Agenda> agendaList) {
-        this.agendaList = agendaList;
     }
     
 }

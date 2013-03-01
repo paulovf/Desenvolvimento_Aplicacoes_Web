@@ -74,7 +74,7 @@
                     <h3>Relatório de Exames:</h3><br /><br />
                         <h5>
                             <h:dataTable id="listaExames" 
-                                         value="#{Agenda.agendaBeans}" var="ag"
+                                         value="#{Agenda.listaAgendas()}" var="ag"
                                      border="2" width="100%" cellpadding="2" cellspacing="2">
                                 <f:facet name="header">
                                     <h:outputText value="Relatório de Agendas por valor"/>
@@ -111,7 +111,7 @@
                                 </h:column>
                         
                                 <f:facet name="footer">
-                                    <h:outputLabel value="Total: #{Relatorio.valor}"/>
+                                    <h:outputLabel value="Total: #{Agenda.total}"/>
                                 </f:facet>                                 
                             </h:dataTable>
                         </h5>

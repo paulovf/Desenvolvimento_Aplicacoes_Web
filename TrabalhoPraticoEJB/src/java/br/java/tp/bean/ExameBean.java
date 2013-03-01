@@ -25,6 +25,10 @@ public class ExameBean {
     public ExameBean() {
     }
 
+    public ExameBean(Integer idExame) {
+        this.idExame = idExame;
+    }    
+
     public ExameBean(String nome, float valor, Integer idExame) {
         this.nome = nome;
         this.valor = valor;
@@ -138,31 +142,12 @@ public class ExameBean {
         exameDAO.deletarExame();
     }
     
-    public ExameBean obterExames(String nome){
+    public ExameBean obterExames(){
         limparDadosExame();
-        ExameDAO e = new ExameDAO(nome);
+        ExameDAO e = new ExameDAO(idExame);
         e = e.getExame();
         return new ExameBean(e.getNome(), e.getValor(), e.getIdExame());
     }
-    
-    public String obterExame(){
-        try{
-            ExameDAO e = new ExameDAO(nome);
-            ExameDAO exameDAO2 = e.getExame();
-            if (exameDAO2.getIdExame() != null){
-                idExame = exameDAO2.getIdExame();
-                nome = exameDAO2.getNome();
-                valor = exameDAO2.getValor();
-                return "ok";
-            }else{
-                setMensagemRetornoErro("Exame não cadastrado.", 2);
-                return "error";
-            }
-        }catch(Exception e){
-            setMensagemRetornoErro("Exame não cadastrado.", 2);
-            return "error";
-        }
-    }    
     
     public String alterarExame(){
         limparMensagemErro();

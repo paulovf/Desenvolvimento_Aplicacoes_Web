@@ -132,24 +132,22 @@ public class MedicoDAO {
     
     public MedicoDAO getMedico(){
         try{
-            if(conecta() != null){
-                Query q = conecta().createQuery("SELECT m FROM Medico m WHERE m.nome =:nome");
-                q.setParameter("nome", nome);
-                if (q.getSingleResult()!=null){
-                    Medico m = (Medico) q.getSingleResult();
-                    MedicoDAO medicoDAO = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico());
-                    return medicoDAO;
+            EntityManager em = conecta();
+            if (em!=null){
+                String consulta = "SELECT m FROM Medico m WHERE m.idMedico="+idMedico;
+                Query q = em.createQuery(consulta);
+                List<Medico> resultado = q.getResultList();
+                MedicoDAO medico = new MedicoDAO();
+                for (Medico m: resultado){
+                    medico = new MedicoDAO(m.getNome(), m.getCrm(), m.getIdMedico());
                 }
+                return medico;
             }
             return null;
-        }catch(Exception e){
-            if(conecta().getTransaction().isActive()){
-                conecta().getTransaction().rollback();
-            }
+        } catch (Exception e){
+            return null;
         }
-        
-        return null;
-    }
+    }  
     
     public List<MedicoDAO> getMedicos(){
         try{

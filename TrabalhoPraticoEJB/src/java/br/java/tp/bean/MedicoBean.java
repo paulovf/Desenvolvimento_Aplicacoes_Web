@@ -25,6 +25,10 @@ public class MedicoBean {
     public MedicoBean() 
     {}
 
+    public MedicoBean(Integer idMedico) {
+        this.idMedico = idMedico;
+    }
+    
     public MedicoBean(String nome, String crm, Integer idMedico) {
         this.nome = nome;
         this.crm = crm;
@@ -146,30 +150,11 @@ public class MedicoBean {
         medicoDAO.deletarMedico();
     }
     
-    public MedicoBean obterMedico(String nome){
+    public MedicoBean obterMedico(){
         limparDadosMedico();
-        MedicoDAO m = new MedicoDAO(nome);
+        MedicoDAO m = new MedicoDAO(idMedico);
         m = m.getMedico();
         return new MedicoBean(m.getNome(), m.getCrm(), m.getIdMedico());
-    }
-    
-    public String obterMedico(){
-        try{
-            MedicoDAO m = new MedicoDAO(nome);
-            MedicoDAO medicoDAO2 = m.getMedico();
-            if (medicoDAO2.getIdMedico() != null){
-                idMedico = medicoDAO2.getIdMedico();
-                nome = medicoDAO2.getNome();
-                crm = medicoDAO2.getCrm();
-                return "ok";
-            }else{
-                setMensagemRetornoErro("Medico não cadastrado.", 2);
-                return "error";
-            }
-        }catch(Exception e){
-            setMensagemRetornoErro("Medico não cadastrado.", 2);
-            return "error";
-        }
     }
     
     public String alterarMedico(){

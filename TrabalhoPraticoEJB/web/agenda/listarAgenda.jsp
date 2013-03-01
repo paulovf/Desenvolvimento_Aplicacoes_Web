@@ -84,37 +84,37 @@
                                         <h:outputText value="Data e Hora"/>
                                     </f:facet>
                                     <h:outputText value="#{ag.dataHora}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Médico"/>
-                                    </f:facet>                            
-                                    <h:outputText value="#{ag.medicoBean.idMedico}" />
-                                </h:column>
+                                </h:column>                                
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="Paciente"/>
                                     </f:facet>
-                                    <h:outputText value="#{ag.pacienteBean.idPaciente}" />
+                                    <h:outputText value="#{ag.idPaciente}" />
                                 </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Médico"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ag.idMedico}" />
+                                </h:column>                                
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="Exame"/>
                                     </f:facet>
-                                    <h:outputText value="#{ag.exameBean.idExame}" />
+                                    <h:outputText value="#{ag.idExame}" />
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Resultado "/>
+                                        <h:outputText value="resultado"/>
                                     </f:facet>
                                     <h:outputText value="#{ag.resultado}" />
-                                </h:column>                                  
+                                </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Obs: "/>
+                                        <h:outputText value="OBS:"/>
                                     </f:facet>
                                     <h:outputText value="#{ag.obs}" />
-                                </h:column>                                  
+                                </h:column>                                
                             </h:dataTable>
                         </h5>
                         <br /><br />

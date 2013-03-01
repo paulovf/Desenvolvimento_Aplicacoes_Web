@@ -4,7 +4,6 @@
  */
 package br.java.tp.classes;
 
-import java.util.Date;
 
 /**
  *

@@ -191,24 +191,23 @@ public class PacienteDAO {
     }
     
     public PacienteDAO getPaciente(){
-        try{
-            if(conecta() != null){
-                Query q = conecta().createQuery("SELECT p FROM Paciente p WHERE p.nome =:nome");
-                q.setParameter("nome", nome);
-                if (q.getSingleResult()!=null){
-                    Paciente p = (Paciente) q.getSingleResult();
-                    PacienteDAO pacienteDAO = new PacienteDAO(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 
+       try{
+            EntityManager em = conecta();
+            if (em!=null){
+                String consulta = "SELECT p FROM Paciente p WHERE p.idPaciente="+idPaciente;
+                Query q = em.createQuery(consulta);
+                List<Paciente> resultado = q.getResultList();
+                PacienteDAO paciente = new PacienteDAO();
+                for (Paciente p: resultado){
+                    paciente = new PacienteDAO(p.getIdPaciente(), p.getNome(), p.getDataNasc(), 
                             p.getLogradouro(), p.getNumero(), p.getBairro(), p.getCidade(), p.getUf());
-                    return pacienteDAO;
                 }
+                return paciente;
             }
             return null;
-        }catch(Exception e){
-            if(conecta().getTransaction().isActive()){
-                conecta().getTransaction().rollback();
-            }
-        }        
-        return null;
+        } catch (Exception e){
+            return null;
+        }
     }
     
     public List<PacienteDAO> getPacientes(){
