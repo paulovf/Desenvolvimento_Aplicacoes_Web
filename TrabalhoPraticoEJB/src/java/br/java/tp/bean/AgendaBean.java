@@ -142,25 +142,32 @@ public class AgendaBean {
     }
 
     public String cadastrarAgenda() {
+        System.out.println("0");
         limparMensagemErro();
         if(idMedico == null){
             setMensagemRetornoErro("selecione um médico!", 0);
+            System.out.println("1");
             return "error";
         }
         if(idPaciente == null){
             setMensagemRetornoErro("selecione um paciente!", 1);
+            System.out.println("2");
             return "error";
         }
         if(idExame == null){
             setMensagemRetornoErro("selecione um exame!", 2);
+            System.out.println("3");
             return "error";
         }if(dataHora == null){
             setMensagemRetornoErro("Forneça uma data e hora para o agendamento!", 3);
+            System.out.println("4");
             return "error";
         }if(resultado.length() <= 3){
             setMensagemRetornoErro("Forneça um resultado!", 4);
+            System.out.println("5");
             return "error";
         }else{
+            System.out.println("6");
             AgendaDAO agendaDAO = new AgendaDAO();
             agendaDAO.setIdExame(idExame);
             agendaDAO.setIdMedico(idMedico);
@@ -172,10 +179,12 @@ public class AgendaBean {
                 agendaDAO.cadastrarAgenda();
                 limparDsdosAgenda();
                 setMensagemRetornoOK("Agenda cadastarda com sucesso!");
+                System.out.println("7");
                 return "ok";
             }else{
                 limparDsdosAgenda();
                 setMensagemRetornoErro("Agenda já cadastrada nesta data", 5);
+                System.out.println("8");
                 return "error";
             }
         }

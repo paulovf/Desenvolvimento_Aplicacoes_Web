@@ -8,6 +8,7 @@ import br.java.tp.dao.PacienteDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -23,7 +24,8 @@ public class PacienteBean {
     private String cidade;
     private String uf;
     private boolean achou;
-    private List<PacienteBean> pacienteBeans = new ArrayList();
+    private List<PacienteBean> pacienteBeans = new ArrayList<PacienteBean>();
+    private List<SelectItem> pacientes = new ArrayList<SelectItem>();
     private String mensagemRetornoErro[] = new String[7], mensagemRetornoOK;
 
     public PacienteBean() 
@@ -134,8 +136,14 @@ public class PacienteBean {
         this.mensagemRetornoOK = mensagemRetornoOK;
     }
 
-    public List<PacienteBean> getPacienteBeans() {
-        return pacienteBeans;
+    public List<SelectItem> getPacienteBeans() {
+        PacienteDAO paciente = new PacienteDAO();
+        pacientes.removeAll(pacientes);
+        for (PacienteDAO e : paciente.getPacientes()) {
+            pacientes.add(new SelectItem(e.getIdPaciente(), e.getNome()));
+
+        }
+        return pacientes;
     }
 
     public void setPacienteBeans(List<PacienteBean> pacienteBeans) {

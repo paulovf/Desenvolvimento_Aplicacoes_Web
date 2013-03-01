@@ -7,6 +7,7 @@ package br.java.tp.bean;
 import br.java.tp.dao.ExameDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -17,7 +18,8 @@ public class ExameBean {
     private float valor;
     private Integer idExame;
     private boolean achou;
-    private List<ExameBean> exameBeans = new ArrayList();
+    private List<ExameBean> exameBeans = new ArrayList<ExameBean>();
+    private List<SelectItem> exames = new ArrayList<SelectItem>();
     private String mensagemRetornoErro[] = new String[3], mensagemRetornoOK;
 
     public ExameBean() {
@@ -37,8 +39,14 @@ public class ExameBean {
         this.achou = achou;
     }
 
-    public List<ExameBean> getExameBeans() {
-        return exameBeans;
+    public List<SelectItem> getExameBeans() {
+        ExameDAO exame = new ExameDAO();
+        exames.removeAll(exames);
+        for (ExameDAO e : exame.getExames()) {
+            exames.add(new SelectItem(e.getIdExame(), e.getNome()));
+
+        }
+        return exames;
     }
 
     public void setExameBeans(List<ExameBean> exameBeans) {

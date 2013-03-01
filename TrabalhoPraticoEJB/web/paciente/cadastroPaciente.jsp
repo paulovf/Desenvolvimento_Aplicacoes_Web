@@ -22,10 +22,7 @@
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/mascara.js"></script>        
     </head>
-    <body>
-        <%
-            if (session.getAttribute("login") != null || session.getAttribute("senha") != null) {
-                out.println("Clique <a href='../logoff.jsp'>aqui</a> para sair do sistema<br/><br/><br/><br/>");%>        
+    <body>      
         <div class="container">
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
@@ -66,7 +63,7 @@
                     </li>
                 </ul>
                 <div class="pull-right">
-                    <a href="../index.jsp" class="pull-right">
+                    <a href="../logoff.jsp" class="pull-right">
                         <button class="btn btn-small btn-inverse">LogOff</button>
                     </a>
                 </div>
@@ -128,11 +125,6 @@
                     </h5>
                 </f:view>
             </div>            
-        </div>
-        <%
-            } else {
-                out.println("Você não está logado no sistema. <br/> Clique <a href='index.jsp'>Aqui</a> para logar-se.<br/><br/>");
-            }
-        %>         
+        </div>       
     </body>
 </html>

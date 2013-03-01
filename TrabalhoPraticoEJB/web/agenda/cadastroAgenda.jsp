@@ -22,6 +22,7 @@
     <body>
         <script src="../js/jquery.js"></script>
         <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/mascara.js"></script>
         <div class="container">
             <div class="nav-collapse navbar-static">
                 <ul class="nav nav-tabs">
@@ -72,11 +73,17 @@
                     <h3>Cadastro de Agendas:</h3><br /><br />
                     <h5>
                         <h:form id="cadastro" prependId="false">
-                            Médico: <h:inputText id="idMedico" value="#{Agenda.idMedico}"/>&nbsp;&nbsp;
+                            Médico: <h:selectOneMenu value="#{Agenda.idMedico}" id="medico">
+                                <f:selectItems value="#{Medico.medicoBeans}" var="med" itemLabel="#{med.nome}" itemValue="#{med.idMedico}"/>
+                            </h:selectOneMenu>&nbsp;&nbsp;
                             <h:outputText value="#{Agenda.mensagemRetornoErro[0]}" style="color:#ff0000"/><br />
-                            Paciente: <h:inputText id="idPaciente" value="#{Agenda.idPaciente}"/>&nbsp;&nbsp;
-                            <h:outputText value="#{Agenda.mensagemRetornoErro[1]}" style="color:#ff0000"/><br />
-                            Exame: <h:inputText id="idExame" value="#{Agenda.idExame}"/>&nbsp;&nbsp;
+                            Paciente: <h:selectOneMenu value="#{Agenda.idPaciente}" id="paciente">
+                                <f:selectItems value="#{Paciente.pacienteBeans}" var="pac" itemLabel="#{pac.nome}" itemValue="#{pac.idPaciente}"/>
+                            </h:selectOneMenu>&nbsp;&nbsp;
+                            <h:outputText value="#{Agenda.mensagemRetornoErro[1]}" style="color:#ff0000"/><br />                            
+                            Exame: <h:selectOneMenu value="#{Agenda.idExame}" id="exame">
+                                <f:selectItems value="#{Exame.exameBeans}" var="ex" itemLabel="#{ex.nome}" itemValue="#{es.idExame}"/>
+                            </h:selectOneMenu>&nbsp;&nbsp;
                             <h:outputText value="#{Agenda.mensagemRetornoErro[2]}" style="color:#ff0000"/><br />
                             Data e Hora: <h:inputText id="dataHora" value="#{Agenda.dataHora}">
                                      <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>

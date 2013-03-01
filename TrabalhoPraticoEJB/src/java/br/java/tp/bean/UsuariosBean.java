@@ -5,8 +5,13 @@
 package br.java.tp.bean;
 
 import br.java.tp.dao.UsuariosDAO;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -142,19 +147,31 @@ public class UsuariosBean {
     }
         
     public String validarLogin(){
+        FacesContext contexto = FacesContext.getCurrentInstance();
+        Map<String, Object> sessao = contexto.getExternalContext().getSessionMap();
+        if(sessao.containsKey("login")){
+            return "logado";
+        }
         UsuariosDAO usuariosDAO = new UsuariosDAO(nome, login, senha, id);
         UsuariosDAO usuarioDAO2 = usuariosDAO.validarUsuarios();
         if(usuarioDAO2 != null){
             if(usuarioDAO2.getSenha().equalsIgnoreCase(senha)){
-                return "ok";
+                sessao.put("login", login);
+                return "login_ok";
             }else{
                 setMensagemRetornoErro("Usuário não cadastrado ou login incorreto");
                 return "error";
             }
         }
         else{
-            setMensagemRetornoOK("Usuário não cadastrado ou login incorreto");
-            return "error";
+            try{
+                setMensagemRetornoOK("Usuário não cadastrado ou login incorreto");
+                ExternalContext contextoExterno = contexto.getExternalContext();
+                contextoExterno.redirect("index.jsp");
+            }catch(Exception e){
+                System.out.println("Erro: " + e.getMessage());
+            }
+            return "login";
         }
     }
        

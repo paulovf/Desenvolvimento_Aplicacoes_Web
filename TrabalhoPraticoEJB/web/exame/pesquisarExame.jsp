@@ -63,7 +63,7 @@
                     </li>
                 </ul>
                 <div class="pull-right">
-                    <a href="../index.jsp" class="pull-right">
+                    <a href="../logoff.jsp" class="pull-right">
                         <button class="btn btn-small btn-inverse">LogOff</button>
                     </a>
                 </div>

@@ -7,6 +7,7 @@ package br.java.tp.bean;
 import br.java.tp.dao.MedicoDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -17,7 +18,8 @@ public class MedicoBean {
     private String crm;
     private Integer idMedico;
     private boolean achou;
-    private List<MedicoBean> medicoBeans = new ArrayList();
+    private List<MedicoBean> medicoBeans = new ArrayList<MedicoBean>();
+    private List<SelectItem> medicos = new ArrayList<SelectItem>();
     private String mensagemRetornoErro[] = new String[3], mensagemRetornoOK;
     
     public MedicoBean() 
@@ -77,8 +79,14 @@ public class MedicoBean {
         this.mensagemRetornoOK = mensagemRetornoOK;
     }
 
-    public List<MedicoBean> getMedicoBeans() {
-        return medicoBeans;
+    public List<SelectItem> getMedicoBeans() {
+        MedicoDAO medico = new MedicoDAO();
+        medicos.removeAll(medicos);
+        for (MedicoDAO e : medico.getMedicos()) {
+            medicos.add(new SelectItem(e.getIdMedico(), e.getNome()));
+
+        }
+        return medicos;
     }
 
     public void setMedicoBeans(List<MedicoBean> medicoBeans) {
